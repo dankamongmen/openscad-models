@@ -19,6 +19,9 @@ difference(){
         translate([140, i * 23, 0]){
             cube([5, 10, 5]);
         }
+        translate([140, i * 23 - 2, 0]){
+            cube([2, 14, 5]);
+        }
     }
 }
 translate([135,0,0]){
@@ -34,5 +37,8 @@ translate([135,135,0]){
 for(i = [1:5]){
     translate([i * 23, 145, 0]){
         cube([10, 5, 5]);
+    }
+    translate([i * 23 - 2, 148, 0]){
+        cube([14, 2, 5]);
     }
 }
