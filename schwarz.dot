@@ -1,19 +1,31 @@
 digraph G {
-		compound=true
-		rankdir=LR;
+	compound=true
+	subgraph clusterLeftSide {
+		label="Left side";
+		style=filled;
+		subgraph clusterFlex {
+		  label="Flex-Bays";
+			style=filled;
+			color=springgreen;
+		  Monsoon [label="Monsoon D5" style=filled fillcolor=steelblue shape=egg fontcolor=white];
+		  BayUSB31 [style=filled fillcolor=seagreen shape=hexagon];
+		  BayUSB20 [style=filled fillcolor=seagreen shape=hexagon];
+		  BayUSB30 [style=filled fillcolor=seagreen shape=hexagon];
+		  Noctua2000 [label="iPPC-2000" shape=Msquare style=filled fillcolor=black fontcolor=white];
+		}
 		subgraph clusterStartech {
-		  label="StarTech bay";
+			label="StarTech bay";
 			style=filled;
 			color=seashell;
 			{ rank=same; ZR52RB6R ZR514WNY ZR55P0EE ZJV2VZG8 }
 		}
-	  subgraph clusterMobo {
-		  label="Aorus Master TRX40";
+		subgraph clusterMobo {
+			label="Aorus Master TRX40";
 			style=filled;
 			color=grey;
 			shape=Msquare;
 			subgraph clusterMemory {
-			  fillcolor=thistle;
+				fillcolor=thistle;
 				label="";
 				subgraph clusterChannelA {
 					label="Channel A";
@@ -79,22 +91,15 @@ digraph G {
 				label="Headers";
 				style=filled;
 				fillcolor=chocolate1;
-				ARGB0 [label="ARGB 0" shape=invtriangle]
-				ARGB1 [label="ARGB 1" shape=invtriangle]
-				DRGB0 [label="DRGB 0" shape=invtriangle]
-				DRGB1 [label="DRGB 1" shape=invtriangle]
-				USB20 [label="USB2 0" shape=invtriangle]
-				USB21 [label="USB2 1" shape=invtriangle]
-				USB30 [label="USB3 0" shape=invtriangle]
-				USB31 [label="USB3 1" shape=invtriangle]
-				FAN0 [label="CPU Fan 0" shape=invtriangle]
-				FAN1 [label="CPU Fan 1" shape=invtriangle]
-				FAN2 [label="Sys Fan 0" shape=invtriangle]
-				FAN3 [label="Sys Fan 1" shape=invtriangle]
-				FAN4 [label="Sys Fan 2" shape=invtriangle]
-				FAN5 [label="Sys Fan 3" shape=invtriangle]
+				node [shape=record];
+				  pins [label="<ARGB0>ARGB0|<ARGB1>ARGB1|<DRGB0>DRGB0|<DRGB1>DRGB1|<USB20>USB20|<USB21>USB21|<USB30>USB30|<USB31>USB31|<USB3g2>USB3g2"];
+        node [shape=record];
+				  fans [label="<FAN0>CPU Fan 0|<FAN1>CPU Fan 1|<FAN2>Sys Fan 1|<FAN3>Sys Fan 2|<FAN4>Sys Fan 3|<FAN5>Sys Fan 4"];
 			}
-	  }
+		}
+		BayUSB30 -> pins:USB30
+		BayUSB20 -> pins:USB31
+		BayUSB31 -> pins:USB3g2
 		LSI -> ZR52RB6R
 		LSI -> ZR514WNY
 		LSI -> ZR55P0EE
@@ -114,9 +119,25 @@ digraph G {
 		DIMM5 [style=filled fillcolor=grey shape=box3d]
 		DIMM6 [style=filled fillcolor=grey shape=box3d]
 		DIMM7 [style=filled fillcolor=grey shape=box3d]
+		Corsair [label="Corsair iCUE Commander Core XT" style=filled fillcolor=wheat shape=pentagon]
+		Corsair->CorsairLEDs
+		CorsairLEDs [label="4x Corsair ARGBs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
+		GTS360 [style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
+		Monsoon -> XFLOW240A [penwidth=10];
+		XFLOW240A -> DiyHZ [penwidth=10];
+		XFLOW240A [style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
+		DiyHZ [style=filled fillcolor=steelblue shape=Mcircle fontcolor=white];
+		GPU -> CPU [penwidth=10 ltail=clusterEKVector lhead=clusterMonoblock];
+		CPU -> GTS360 [penwidth=10 ltail=clusterMonoblock];
+	  pins:ARGB1->CPU [lhead=clusterMonoblock]
+		Noctua2000 -> fans:FAN5
+	}
+	subgraph clusterRightside {
+		label="Right side";
+		style=filled;
 		subgraph clusterCages {
 			labelloc="b";
-		  label="Cages";
+			label="Cages";
 			style="filled";
 			color="azure";
 			ZJV38QZV [shape=component];
@@ -128,28 +149,6 @@ digraph G {
 			ZCH0DFDJ [shape=component];
 			ZJV335TN [shape=component];
 		}
-		subgraph clusterLoop {
-		  labelloc="b";
-			label="Loop";
-			style="filled";
-			color="darkorange";
-			Quantum [style=filled fillcolor=steelblue shape=egg fontcolor=white];
-			Monsoon [style=filled fillcolor=steelblue shape=egg fontcolor=white];
-			GTS360 [style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
-			GTR360 [style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
-			XFLOW240A [style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
-			XFLOW240B [style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
-		  DiyHZ [style=filled fillcolor=steelblue shape=Mcircle fontcolor=white];
-		}
-		XFLOW240B -> Monsoon [penwidth=10];
-		Monsoon -> XFLOW240A [penwidth=10];
-		XFLOW240A -> DiyHZ [penwidth=10];
-		DiyHZ -> Quantum [penwidth=10];
-		Quantum -> GPU [penwidth=10 lhead=clusterEKVector];
-		GPU -> CPU [penwidth=10 ltail=clusterEKVector lhead=clusterMonoblock];
-		CPU -> GTS360 [penwidth=10 ltail=clusterMonoblock];
-		GTS360 -> GTR360 [penwidth=10];
-		GTR360 -> XFLOW240B [penwidth=10];
 		PSU->ZJV38QZV;
 		PSU->ZJV3KZSD;
 		PSU->ZJV4BHS3;
@@ -166,41 +165,50 @@ digraph G {
 		ZJV1427X [fillcolor=palegreen style=filled];
 		ZCH0DFDJ [fillcolor=palegreen style=filled];
 		ZJV335TN [fillcolor=palegreen style=filled];
-		PSU->ZR52RB6R [lhead=clusterStartech];
-		PSU->GPU;
-		PSU->CPU [lhead=clusterMobo];
-		PSU->Quantum;
-		PSU->Monsoon;
-		PSU->DiyHZ;
-		PSU [label="EVGA Supernova T2 850" style=filled fillcolor=salmon shape=doubleoctagon]
-		Corsair [label="Corsair iCUE Commander Core XT" style=filled fillcolor=wheat shape=pentagon]
-		CorsairLEDs [label="4x Corsair ARGBs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
-		subgraph clusterRoof {
-		  label="Ventilated top";
-			style=filled;
-			Noctua140A [shape=Msquare style=filled fillcolor=black fontcolor=white];
-			Noctua140B [shape=Msquare style=filled fillcolor=black fontcolor=white];
-			Noctua140C [shape=Msquare style=filled fillcolor=black fontcolor=white];
-			Noctua140D [shape=Msquare style=filled fillcolor=black fontcolor=white];
-			LEDS0 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050 LEDs"];
-		}
-		Corsair->CorsairLEDs
-		Corsair->Noctua140A
-		Corsair->Noctua140B
-		Corsair->Noctua140C
-		Corsair->Noctua140D
-		Inverter [label="Monsoon Inverter" style=filled fillcolor=wheat shape=pentagon]
-	  PSU->Corsair	
-		PSU->Inverter
-		ARGB0->Quantum
-		ARGB1->CPU [lhead=clusterMonoblock]
-		DRGB0->LEDS0
-	  LEDS1 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050 LEDs"];
-		DRGB1->LEDS1
-		Monsoon -> Corsair [color=khaki4]
+		GTR360 -> XFLOW240B [penwidth=10];
+		GTR360 [label="Hardware Labs GTR360" style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
+		XFLOW240B [label="Hardware Labs XFLOW 240" style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
+		LEDS1 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050 LEDs"];
 		NXZT [label="NXZT USB Hub" style=filled fillcolor=pink4 style=filled]
-		Corsair -> NXZT
-		NXZT -> USB20
 		Arduino [shape=oval style=filled fillcolor=seashell3 label="MEGA 2560"]
+		Geiger [shape=oval style=filled fillcolor=darkorange label="Geiger counter"]
+		Arduino -> Geiger
 		NXZT -> Arduino
+		Inverter [label="Monsoon Inverter" style=filled fillcolor=wheat shape=pentagon]
+		PSU->Inverter
+		PSU->NXZT
+	}
+	Quantum [label="EKWB Quantum Kinetic FLT240" style=filled fillcolor=steelblue shape=egg fontcolor=white];
+	XFLOW240B -> Monsoon [penwidth=10];
+	DiyHZ -> Quantum [penwidth=10];
+	Quantum -> GPU [penwidth=10 lhead=clusterEKVector];
+	GTS360 -> GTR360 [penwidth=10];
+	PSU->ZR52RB6R [lhead=clusterStartech];
+	PSU->GPU;
+	PSU->CPU [lhead=clusterMobo];
+	PSU->Quantum;
+	PSU->Monsoon;
+	PSU->DiyHZ;
+	PSU [label="EVGA Supernova T2 850" style=filled fillcolor=salmon shape=doubleoctagon]
+	subgraph clusterRoof {
+		label="Ventilated top";
+		style=filled;
+		Noctua140A [shape=Msquare style=filled fillcolor=black fontcolor=white];
+		Noctua140B [shape=Msquare style=filled fillcolor=black fontcolor=white];
+		Noctua140C [shape=Msquare style=filled fillcolor=black fontcolor=white];
+		Noctua140D [shape=Msquare style=filled fillcolor=black fontcolor=white];
+		LEDS0 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050 LEDs"];
+	}
+	Corsair->Noctua140A
+	Corsair->Noctua140B
+	Corsair->Noctua140C
+	Corsair->Noctua140D
+	PSU->Corsair
+	pins:ARGB0->Quantum
+	pins:DRGB0->LEDS0
+	pins:DRGB1->LEDS1
+	Monsoon -> Corsair [color=khaki4]
+	Quantum -> fans:FAN3 [color=khaki4]
+	NXZT -> pins:USB20
+	Corsair -> pins:USB21
 }
