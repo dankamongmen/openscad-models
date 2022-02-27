@@ -11,16 +11,14 @@ graph G {
 		  BayUSB31 [label="USB 3.1" style=filled fillcolor=seagreen shape=hexagon];
 		  BayUSB20 [label="USB 2.0" style=filled fillcolor=seagreen shape=hexagon];
 		  BayUSB30 [label="USB 3.0" style=filled fillcolor=seagreen shape=hexagon];
-		  Noctua2000 [label="iPPC-2000" shape=Msquare style=filled fillcolor=black fontcolor=white];
+		  Noctua2000 [label="Noctua\niPPC-2000" shape=Msquare style=filled fillcolor=black fontcolor=white];
 		}
 		subgraph clusterStartech {
 			label="StarTech bay";
 			style=filled;
 			color=seashell;
-			ZR52RB6R
-			ZR514WNY
-			ZR55P0EE
-			ZJV2VZG8
+		  node [shape=record];
+				bay [style=filled fillcolor=white label="{ <STECH0>ZR52RB6R|<STECH1>ZR514WNY|<STECH2>ZR55P0EE|<STECH3>ZJV2VZG8 }"]
 		}
 		subgraph clusterMobo {
 			label="Aorus Master TRX40";
@@ -35,7 +33,7 @@ graph G {
 				  m2s [style=filled fillcolor=white label="{ <WD0>SN750|<WD1>SN750|<OPTANE>Optane }"]
 			}
 			subgraph clusterMonoblock {
-				label="EKWB Monoblock";
+				label="EKWB monoblock";
 				style=filled;
 				fillcolor=lightskyblue;
 				CPU [style=filled fillcolor=hotpink shape=doublecircle label="AMD\n3970X"];
@@ -88,20 +86,16 @@ graph G {
 		BayUSB30--pins:USB30
 		BayUSB20--pins:USB31
 		BayUSB31--pins:USB3g2
-		LSI--ZR52RB6R
-		LSI--ZR514WNY
-		LSI--ZR55P0EE
-		LSI--ZJV2VZG8
-		ZR52RB6R [shape=component fillcolor=palegreen style=filled];
-		ZR514WNY [shape=component fillcolor=palegreen style=filled];
-		ZR55P0EE [shape=component fillcolor=palegreen style=filled];
-		ZJV2VZG8 [shape=component fillcolor=palegreen style=filled];
+		LSI--bay:STECH0
+		LSI--bay:STECH1
+		LSI--bay:STECH2
+		LSI--bay:STECH3
 		GPU [style=filled fillcolor=greenyellow shape=parallelogram]
 		LSI [style=filled fillcolor=greenyellow shape=parallelogram]
 		ASM [style=filled fillcolor=greenyellow shape=parallelogram]
 		Corsair [label="Corsair iCUE\nCommander Core XT" style=filled fillcolor=wheat shape=pentagon]
 		Corsair--CorsairLEDs
-		CorsairLEDs [label="4x Corsair ARGBs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
+		CorsairLEDs [label="Corsair\nARGBs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
 		GTS360 [label="Hardware Labs\nGTS360" style=filled fillcolor=steelblue shape=trapezium fontcolor=white dir=forward];
 		Monsoon--XFLOW240A [color=steelblue3 penwidth=5 dir=forward];
 		XFLOW240A--DiyHZ [color=steelblue2 penwidth=5 dir=forward];
@@ -111,66 +105,61 @@ graph G {
 		CPU--GTS360 [color=slateblue4 penwidth=5 ltail=clusterMonoblock dir=forward];
 	  pins:ARGB1--CPU [lhead=clusterMonoblock]
 		Noctua2000--fans:FAN6A
-	  Quantum [label="EKWB Quantum Kinetic FLT240" style=filled fillcolor=steelblue shape=egg fontcolor=white];
+	  Quantum [label="EKWB Quantum\nKinetic FLT240 D5" style=filled fillcolor=steelblue shape=egg fontcolor=white];
+	  CCFLs [label="Monsoon\nCCFLs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
 	}
 	subgraph clusterRightside {
 		label="Right side";
 		style=filled;
 		subgraph clusterCages {
-			labelloc="b";
 			label="Cages";
 			style="filled";
 			color="azure";
-			ZJV38QZV [shape=component];
-			ZJV3KZSD [shape=component];
-			ZJV4BHS3 [shape=component];
-			ZJV3CTCY [shape=component];
-			ZR51L41Y [shape=component];
-			ZJV1427X [shape=component];
-			ZCH0DFDJ [shape=component];
-			ZJV335TN [shape=component];
+			node [shape=record];
+				caged [style=filled fillcolor=white label="{ <CAGE0>ZR55ZJHQ|<CAGE1>ZJV38QZV|<CAGE2>ZJV3KZSD|<CAGE3>ZJV4BHS3|<CAGE4>ZJV3CTCY|<CAGE5>ZR51L41Y|<CAGE6>ZJV1427X|<CAGE7>ZCH0DFDJ|<CAGE8>ZJV335TN }"]
+			Noctua120A [label="Noctua\nNF-F12" shape=Msquare style=filled fillcolor=black fontcolor=white];
+			Noctua120B [label="Noctua\nNF-F12" shape=Msquare style=filled fillcolor=black fontcolor=white];
+			Noctua120C [label="Noctua\nNF-F12" shape=Msquare style=filled fillcolor=black fontcolor=white];
 		}
-		PSU--ZJV38QZV [color=red penwidth=5 dir=forward];
-		PSU--ZJV3KZSD [color=red penwidth=5 dir=forward];
-		PSU--ZJV4BHS3 [color=red penwidth=5 dir=forward];
-		PSU--ZJV3CTCY [color=red penwidth=5 dir=forward];
-		PSU--ZR51L41Y [color=red penwidth=5 dir=forward];
-		PSU--ZJV1427X [color=red penwidth=5 dir=forward];
-		PSU--ZCH0DFDJ [color=red penwidth=5 dir=forward];
-		PSU--ZJV335TN [color=red penwidth=5 dir=forward];
-		ZJV38QZV [fillcolor=palegreen style=filled];
-		ZJV3KZSD [fillcolor=palegreen style=filled];
-		ZJV4BHS3 [fillcolor=palegreen style=filled];
-		ZJV3CTCY [fillcolor=palegreen style=filled];
-		ZR51L41Y [fillcolor=palegreen style=filled];
-		ZJV1427X [fillcolor=palegreen style=filled];
-		ZCH0DFDJ [fillcolor=palegreen style=filled];
-		ZJV335TN [fillcolor=palegreen style=filled];
+		PSU--BayUSB30 [color=orange penwidth=5 dir=forward];
+		PSU--BayUSB31 [color=orange penwidth=5 dir=forward];
+		PSU--BayUSB20 [color=orange penwidth=5 dir=forward];
+		PSU--caged:CAGE0 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE1 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE2 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE3 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE4 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE5 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE6 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE7 [color=red penwidth=5 dir=forward];
+		PSU--caged:CAGE8 [color=red penwidth=5 dir=forward];
 		GTR360--XFLOW240B [dir=forward color=slateblue1 penwidth=5];
 		GTR360 [label="Hardware Labs\nGTR360" style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
 		XFLOW240B [label="Hardware Labs\nXFLOW 240" style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
-		LEDS1 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050 LEDs"];
-		NXZT [label="NXZT USB Hub" style=filled fillcolor=pink4 style=filled]
+		LEDS1 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050\nLEDs"];
+		NXZT [label="NXZT\nUSB Hub" style=filled fillcolor=pink4 style=filled]
 		Arduino [shape=oval style=filled fillcolor=seashell3 label="MEGA 2560"]
 		Geiger [shape=oval style=filled fillcolor=darkorange label="Geiger counter"]
 		Arduino--Geiger
 		NXZT--Arduino
-		Inverter [label="Monsoon Inverter" style=filled fillcolor=wheat shape=pentagon]
+		Inverter [label="Monsoon\nInverter" style=filled fillcolor=wheat shape=pentagon]
 		PSU--Inverter [color=green penwidth=5 dir=forward];
 		PSU--NXZT [color=orange penwidth=5 dir=forward]
 	}
+	Inverter--CCFLs [color=green penwidth=5 dir=forward]
 	XFLOW240B--Monsoon [color=steelblue4 penwidth=5 dir=forward];
 	DiyHZ--Quantum [color=steelblue1 penwidth=5 dir=forward];
 	Quantum--GPU [color=skyblue penwidth=5 lhead=clusterEKVector dir=forward];
 	GTS360--GTR360 [color=slateblue2 penwidth=5 dir=forward];
-	PSU--ZR52RB6R [lhead=clusterStartech color=red penwidth=5 dir=forward];
+	PSU--bay:STECH0 [lhead=clusterStartech color=red penwidth=5 dir=forward];
+	PSU--bay:STECH2 [lhead=clusterStartech color=red penwidth=5 dir=forward];
 	PSU--GPU [color=green penwidth=5 dir=forward];
 	PSU--CPU [lhead=clusterMobo color=green penwidth=5 dir=forward];
 	PSU--Quantum [color=green penwidth=5 dir=forward];
 	PSU--Monsoon [color=green penwidth=5 dir=forward];
 	PSU--Monsoon [color=orange penwidth=5 dir=forward];
 	PSU--DiyHZ [color=orange penwidth=5 dir=forward];
-	PSU [label="EVGA Supernova T2 850" style=filled fillcolor=salmon shape=doubleoctagon]
+	PSU [label="EVGA Supernova\nT2 850" style=filled fillcolor=salmon shape=doubleoctagon]
 	subgraph clusterRoof {
 		label="Ventilated top";
 		style=filled;
@@ -178,7 +167,7 @@ graph G {
 		Noctua140B [label="Noctua\nAF-14" shape=Msquare style=filled fillcolor=black fontcolor=white];
 		Noctua140C [label="Noctua\nAF-14" shape=Msquare style=filled fillcolor=black fontcolor=white];
 		Noctua140D [label="Noctua\nAF-14" shape=Msquare style=filled fillcolor=black fontcolor=white];
-		LEDS0 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050 LEDs"];
+		LEDS0 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050\nLEDs"];
 	}
 	Corsair--Noctua140A
 	Corsair--Noctua140B
