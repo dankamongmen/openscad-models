@@ -16,11 +16,11 @@ difference(){
        cube([130, 130, 5]);
     }
     for(i = [1:5]){
-        translate([140, i * 23, 0]){
-            cube([5, 10, 5]);
+        translate([140, i * 23 - .5, 0]){
+            cube([5, 11, 5]);
         }
-        translate([140, i * 23 - 2, 0]){
-            cube([2, 14, 5]);
+        translate([139.5, i * 23 - 2.5, 0]){
+            cube([2.5, 15, 5]);
         }
     }
 }
