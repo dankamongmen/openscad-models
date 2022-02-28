@@ -23,7 +23,7 @@ graph G {
 		subgraph clusterMobo {
 			label="Aorus Master TRX40";
 			style=filled;
-			color=grey;
+			color=gold;
 			shape=Msquare;
 			subgraph clusterM2s {
 				label="M.2 complex";
@@ -33,7 +33,7 @@ graph G {
 				  m2s [style=filled fillcolor=white label="{ <WD0>SN750|<WD1>SN750|<OPTANE>Optane }"]
 			}
 			subgraph clusterMonoblock {
-				label="EKWB monoblock";
+				label="EKWB Aorus\nMaster monoblock";
 				style=filled;
 				fillcolor=lightskyblue;
 				CPU [style=filled fillcolor=hotpink shape=doublecircle label="AMD\n3970X"];
@@ -42,13 +42,13 @@ graph G {
 				label="PCIe slots";
 				style=filled;
 				fillcolor=ivory;
-				LSI [label="LSI SAS2008 x8"];
-				ASM [label="ASMedia\n1166 x1"];
+		    LSI [label="LSI\nSAS2008 x8" style=filled fillcolor=greenyellow shape=rectangle]
+		    ASM [label="ASMedia\n1166 x1" style=filled fillcolor=greenyellow shape=rectangle]
 				subgraph clusterEKVector {
 					label="EK Vector";
 					style=filled;
 					fillcolor=lightskyblue;
-					GPU [label="EVGA RTX 2070\nSuper x16"];
+					GPU [label="EVGA RTX 2070\nSuper x16" style=filled fillcolor=greenyellow shape=rectangle]
 				}
 				subgraph clusterHyperX {
 					label="ASUS HyperX";
@@ -65,6 +65,7 @@ graph G {
         node [shape=record];
 					dimms [style=filled fillcolor=white label="{ <DIMM0>DIMM A1|<DIMM1>DIMM A2|<DIMM2>DIMM B1|<DIMM3>DIMM B2|<DIMM4>DIMM C1|<DIMM5>DIMM C2|<DIMM6>DIMM D1|<DIMM7>DIMM D2 }"]
 		  }
+			AMDFCH [label="AMD Fusion\nController Hub" style=filled fillcolor=lemonchiffon shape=rectangle];
 			subgraph clusterHeaders {
 				label="Headers";
 				style=filled;
@@ -72,9 +73,31 @@ graph G {
 				node [shape=record];
 				  pins [style=filled fillcolor=white label="{ <ARGB0>ARGB0|<ARGB1>ARGB1|<DRGB0>DRGB0|<DRGB1>DRGB1|<USB20>USB20|<USB21>USB21|<USB30>USB30|<USB31>USB31|<USB3g2>USB3g2 }"];
         node [shape=record];
-				  fans [style=filled fillcolor=white label="{ <FAN0>CPU Fan 0|<FAN1>CPU Fan 1|<FAN2>Sys Fan 1|<FAN3>Sys Fan 2|<FAN5A>Sys Fan 5A|<FAN5B>Sys Fan 5B|<FAN6A>Sys Fan 6A|<FAN6B>Sys Fan 6B }"];
+				  fans [style=filled fillcolor=white label="{ <FAN0>CPU Fan 0|<FAN1>CPU Fan 1|<FAN2>Sys Fan 1|<FAN3>Sys Fan 2|<FAN5A>Sys Fan 5A|<FAN5B>Sys Fan 5B|<FAN6A>Sys Fan 6A|<FAN6B>Sys Fan 6B|<ETEMP0>Temp 0|<ETEMP1>Temp 1 }"];
 			}
 		}
+		Silverstone [label="Silverstone\nfan controller" style=filled shape=rectangle fillcolor=silver]
+		subgraph clusterULeft {
+		  label="Upper left complex"
+			style=filled
+			fillcolor=steelblue
+			fontcolor=white
+		  node [shape=plaintext];
+			  uleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gts360">Hardware Labs GTS360</TD></TR><TR><TD PORT="uleftfan0">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan1">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan2">Noctua iPPC-2000</TD></TR></TABLE>>]
+		}
+		Silverstone--uleft:uleftfan0
+		Silverstone--uleft:uleftfan1
+		Silverstone--uleft:uleftfan2
+		subgraph clusterLLeft {
+		  label="Lower left complex"
+			style=filled
+			fillcolor=steelblue
+			fontcolor=white
+		  node [shape=plaintext];
+		    lleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="xflow240a">Hardware Labs XFLOW 240</TD></TR><TR><TD PORT="lleftfan0">Noctua NF-A12x25</TD></TR><TR><TD PORT="lleftfan1">Noctua NF-A12x25</TD></TR></TABLE>>];
+    }
+		lleft:lleftfan0--fans:FAN6B
+		lleft:lleftfan1--fans:FAN6B
 		dimms:DIMM0--CPU
 		dimms:DIMM1--CPU
 		dimms:DIMM2--CPU
@@ -90,22 +113,17 @@ graph G {
 		LSI--bay:STECH1
 		LSI--bay:STECH2
 		LSI--bay:STECH3
-		GPU [style=filled fillcolor=greenyellow shape=parallelogram]
-		LSI [style=filled fillcolor=greenyellow shape=parallelogram]
-		ASM [style=filled fillcolor=greenyellow shape=parallelogram]
 		Corsair [label="Corsair iCUE\nCommander Core XT" style=filled fillcolor=wheat shape=pentagon]
 		Corsair--CorsairLEDs
 		CorsairLEDs [label="Corsair\nARGBs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
-		GTS360 [label="Hardware Labs\nGTS360" style=filled fillcolor=steelblue shape=trapezium fontcolor=white dir=forward];
-		Monsoon--XFLOW240A [color=steelblue3 penwidth=5 dir=forward];
-		XFLOW240A--DiyHZ [color=steelblue2 penwidth=5 dir=forward];
-		XFLOW240A [label="Hardware Labs\nXFLOW 240" style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
+		Monsoon--lleft:xflow240a [color=steelblue3 penwidth=5 dir=forward];
+		lleft:xflow240a--DiyHZ [color=steelblue2 penwidth=5 dir=forward];
+		DiyHZ--fans:FAN5A
 		DiyHZ [style=filled fillcolor=steelblue shape=Mcircle fontcolor=white dir=forward];
 		GPU--CPU [color=slateblue3 penwidth=5 ltail=clusterEKVector lhead=clusterMonoblock dir=forward];
-		CPU--GTS360 [color=slateblue4 penwidth=5 ltail=clusterMonoblock dir=forward];
+		CPU--uleft:gts360 [color=slateblue4 penwidth=5 ltail=clusterMonoblock dir=forward];
 	  pins:ARGB1--CPU [lhead=clusterMonoblock]
-		Noctua2000--fans:FAN6A
-	  Quantum [label="EKWB Quantum\nKinetic FLT240 D5" style=filled fillcolor=steelblue shape=egg fontcolor=white];
+	  Quantum [label="EKWB Quantum\nKinetic FLT240 D5" style=filled fillcolor=steelblue shape=rectangle fontcolor=white];
 	  CCFLs [label="Monsoon\nCCFLs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
 	}
 	subgraph clusterRightside {
@@ -116,10 +134,7 @@ graph G {
 			style="filled";
 			color="azure";
 			node [shape=record];
-				caged [style=filled fillcolor=white label="{ <CAGE0>ZR55ZJHQ|<CAGE1>ZJV38QZV|<CAGE2>ZJV3KZSD|<CAGE3>ZJV4BHS3|<CAGE4>ZJV3CTCY|<CAGE5>ZR51L41Y|<CAGE6>ZJV1427X|<CAGE7>ZCH0DFDJ|<CAGE8>ZJV335TN }"]
-			Noctua120A [label="Noctua\nNF-F12" shape=Msquare style=filled fillcolor=black fontcolor=white];
-			Noctua120B [label="Noctua\nNF-F12" shape=Msquare style=filled fillcolor=black fontcolor=white];
-			Noctua120C [label="Noctua\nNF-F12" shape=Msquare style=filled fillcolor=black fontcolor=white];
+				caged [style=filled fillcolor=white label="{ <CAGE0>ZR55ZJHQ|<CAGE1>ZJV38QZV|<CAGE2>ZJV3KZSD|<CAGE3>ZJV4BHS3|<CAGE4>ZJV3CTCY|<CAGE5>ZR51L41Y|<CAGE6>ZJV1427X|<CAGE7>ZCH0DFDJ|<CAGE8>ZJV335TN|<CAGEFAN0>Noctua NF-F12|<CAGEFAN1>Noctua NF-F12|<CAGEFAN2>Noctua NF-F12 }"]
 		}
 		PSU--BayUSB30 [color=orange penwidth=5 dir=forward];
 		PSU--BayUSB31 [color=orange penwidth=5 dir=forward];
@@ -133,9 +148,25 @@ graph G {
 		PSU--caged:CAGE6 [color=red penwidth=5 dir=forward];
 		PSU--caged:CAGE7 [color=red penwidth=5 dir=forward];
 		PSU--caged:CAGE8 [color=red penwidth=5 dir=forward];
-		GTR360--XFLOW240B [dir=forward color=slateblue1 penwidth=5];
-		GTR360 [label="Hardware Labs\nGTR360" style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
-		XFLOW240B [label="Hardware Labs\nXFLOW 240" style=filled fillcolor=steelblue shape=trapezium fontcolor=white];
+		subgraph clusterURight {
+		  label="Upper right complex"
+			style=filled
+			fillcolor=steelblue
+			fontcolor=white
+		  node [shape=plaintext];
+			  uright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gtr360">Hardware Labs GTR360</TD></TR><TR><TD PORT="urightfan0">Vardar EVO 120ER</TD></TR><TR><TD PORT="urightfan1">Vardar EVO 120ER</TD></TR><TR><TD PORT="urightfan2">Noctua NF-A15</TD></TR></TABLE>>]
+		}
+		subgraph clusterLRight {
+		  label="Lower right complex"
+			style=filled
+			fillcolor=steelblue
+			fontcolor=white
+		  node [shape=plaintext];
+		    lright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="xflow240b">Hardware Labs XFLOW 240</TD></TR><TR><TD PORT="lrightfan0">Noctua NF-P12 Redux</TD></TR><TR><TD PORT="lrightfan1">Noctua NF-P12 Redux</TD></TR></TABLE>>];
+    }
+		lright:lrightfan0--fans:FAN6A
+		lright:lrightfan1--fans:FAN6A
+		uright:gtr360--lright:xflow240b [dir=forward color=slateblue1 penwidth=5];
 		LEDS1 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050\nLEDs"];
 		NXZT [label="NXZT\nUSB Hub" style=filled fillcolor=pink4 style=filled]
 		Arduino [shape=oval style=filled fillcolor=seashell3 label="MEGA 2560"]
@@ -145,12 +176,23 @@ graph G {
 		Inverter [label="Monsoon\nInverter" style=filled fillcolor=wheat shape=pentagon]
 		PSU--Inverter [color=green penwidth=5 dir=forward];
 		PSU--NXZT [color=orange penwidth=5 dir=forward]
+		caged:CAGEFAN0--FanSplitter
+		caged:CAGEFAN1--FanSplitter
+		caged:CAGEFAN2--FanSplitter
+	  FanSplitter [label="Fan splitter" style=filled fillcolor=black fontcolor=white shape=rectangle]
 	}
+  Noctua2000--FanSplitter
+	PSU--Silverstone [color=green penwidth=5 dir=forward];
+	Silverstone--uright:urightfan0
+	Silverstone--uright:urightfan1
+	Silverstone--uright:urightfan2
+	FanSplitter--fans:FAN5B
+	Silverstone--fans:FAN0
 	Inverter--CCFLs [color=green penwidth=5 dir=forward]
-	XFLOW240B--Monsoon [color=steelblue4 penwidth=5 dir=forward];
+	lright:xflow240b--Monsoon [color=steelblue4 penwidth=5 dir=forward];
 	DiyHZ--Quantum [color=steelblue1 penwidth=5 dir=forward];
 	Quantum--GPU [color=skyblue penwidth=5 lhead=clusterEKVector dir=forward];
-	GTS360--GTR360 [color=slateblue2 penwidth=5 dir=forward];
+	uleft:gts360--uright:gtr360 [color=slateblue2 penwidth=5 dir=forward];
 	PSU--bay:STECH0 [lhead=clusterStartech color=red penwidth=5 dir=forward];
 	PSU--bay:STECH2 [lhead=clusterStartech color=red penwidth=5 dir=forward];
 	PSU--GPU [color=green penwidth=5 dir=forward];
@@ -163,22 +205,30 @@ graph G {
 	subgraph clusterRoof {
 		label="Ventilated top";
 		style=filled;
-		Noctua140A [label="Noctua\nAF-14" shape=Msquare style=filled fillcolor=black fontcolor=white];
-		Noctua140B [label="Noctua\nAF-14" shape=Msquare style=filled fillcolor=black fontcolor=white];
-		Noctua140C [label="Noctua\nAF-14" shape=Msquare style=filled fillcolor=black fontcolor=white];
-		Noctua140D [label="Noctua\nAF-14" shape=Msquare style=filled fillcolor=black fontcolor=white];
 		LEDS0 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050\nLEDs"];
+		node [shape=plaintext];
+			top [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="Noctua140A">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140B">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140C">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140D">Noctua AF-14</TD></TR></TABLE>>];
 	}
-	Corsair--Noctua140A
-	Corsair--Noctua140B
-	Corsair--Noctua140C
-	Corsair--Noctua140D
+	AMDFCH--caged:CAGE0
+	AMDFCH--caged:CAGE1
+	AMDFCH--caged:CAGE2
+	AMDFCH--caged:CAGE3
+	AMDFCH--caged:CAGE4
+	AMDFCH--caged:CAGE5
+	AMDFCH--caged:CAGE6
+	AMDFCH--caged:CAGE7
+	ASM--caged:CAGE8
+	Corsair--top:Noctua140A
+	Corsair--top:Noctua140B
+	Corsair--top:Noctua140C
+	Corsair--top:Noctua140D
 	PSU--Corsair [color=orange penwidth=5]
 	pins:ARGB0--Quantum
 	pins:DRGB0--LEDS0
 	pins:DRGB1--LEDS1
-	Monsoon--Corsair [color=khaki4]
-	Quantum--fans:FAN3 [color=khaki4]
+	Monsoon--Corsair
+	Quantum--fans:ETEMP0
+	Quantum--fans:FAN3
 	NXZT--pins:USB20
 	Corsair--pins:USB21
 }
