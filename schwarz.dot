@@ -23,7 +23,7 @@ graph G {
 		subgraph clusterMobo {
 			label="Aorus Master TRX40";
 			style=filled;
-			color=gold;
+			color=khaki;
 			shape=Msquare;
 			subgraph clusterM2s {
 				label="M.2 complex";
@@ -169,11 +169,11 @@ graph G {
 		uright:gtr360--lright:xflow240b [dir=forward color=slateblue1 penwidth=5];
 		LEDS1 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050\nLEDs"];
 		NXZT [label="NXZT\nUSB Hub" style=filled fillcolor=pink4 style=filled]
-		Arduino [shape=oval style=filled fillcolor=seashell3 label="MEGA 2560"]
-		Geiger [shape=oval style=filled fillcolor=darkorange label="Geiger counter"]
+		Arduino [shape=rectangle style=filled fillcolor=seashell3 label="Elegoo\nMEGA 2560"]
+		Geiger [shape=rectangle style=filled fillcolor=darkorange label="RHElectronics\nGeiger counter"]
 		Arduino--Geiger
 		NXZT--Arduino
-		Inverter [label="Monsoon\nInverter" style=filled fillcolor=wheat shape=pentagon]
+		Inverter [label="Monsoon\ninverter" style=filled fillcolor=wheat shape=pentagon]
 		PSU--Inverter [color=green penwidth=5 dir=forward];
 		PSU--NXZT [color=orange penwidth=5 dir=forward]
 		caged:CAGEFAN0--FanSplitter
@@ -201,7 +201,7 @@ graph G {
 	PSU--Monsoon [color=green penwidth=5 dir=forward];
 	PSU--Monsoon [color=orange penwidth=5 dir=forward];
 	PSU--DiyHZ [color=orange penwidth=5 dir=forward];
-	PSU [label="EVGA Supernova\nT2 850" style=filled fillcolor=salmon shape=doubleoctagon]
+	PSU [label="EVGA Supernova\nTitanium T2 850" style=filled fillcolor=salmon shape=doubleoctagon]
 	subgraph clusterRoof {
 		label="Ventilated top";
 		style=filled;
