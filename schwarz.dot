@@ -83,7 +83,7 @@ graph G {
 			fillcolor=steelblue
 			fontcolor=white
 		  node [shape=plaintext];
-			  uleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gts360">Hardware Labs GTS360</TD></TR><TR><TD PORT="uleftfan0">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan1">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan2">Noctua iPPC-2000</TD></TR></TABLE>>]
+			  uleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gts360">Hardware Labs GTS360</TD></TR><TR><TD PORT="uleftfan0">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan1">Noctua iPPC-2000</TD></TR><TR><TD PORT="uleftfan2">Noctua NF-F12</TD></TR></TABLE>>]
 		}
 		Silverstone--uleft:uleftfan0
 		Silverstone--uleft:uleftfan1
@@ -154,7 +154,7 @@ graph G {
 			fillcolor=steelblue
 			fontcolor=white
 		  node [shape=plaintext];
-			  uright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gtr360">Hardware Labs GTR360</TD></TR><TR><TD PORT="urightfan0">Vardar EVO 120ER</TD></TR><TR><TD PORT="urightfan1">Vardar EVO 120ER</TD></TR><TR><TD PORT="urightfan2">Noctua NF-A15</TD></TR></TABLE>>]
+			  uright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gtr360">Hardware Labs GTR360</TD></TR><TR><TD PORT="urightfan0">Vardar EVO 120ER</TD></TR><TR><TD PORT="urightfan1">Noctua NF-P12</TD></TR><TR><TD PORT="urightfan2">Vardar EVO 120ER</TD></TR></TABLE>>]
 		}
 		subgraph clusterLRight {
 		  label="Lower right complex"
