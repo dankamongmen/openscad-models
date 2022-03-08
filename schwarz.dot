@@ -11,7 +11,7 @@ graph G {
 		  BayUSB31 [label="USB 3.1" style=filled fillcolor=seagreen shape=hexagon];
 		  BayUSB20 [label="USB 2.0" style=filled fillcolor=seagreen shape=hexagon];
 		  BayUSB30 [label="USB 3.0" style=filled fillcolor=seagreen shape=hexagon];
-		  Noctua2000 [label="Noctua\niPPC-2000" shape=Msquare style=filled fillcolor=black fontcolor=white];
+		  Noctua2000 [label="Noctua NF-F12\niPPC-2000" shape=Msquare style=filled fillcolor=black fontcolor=white];
 		}
 		subgraph clusterStartech {
 			label="StarTech bay";
@@ -43,7 +43,7 @@ graph G {
 				style=filled;
 				fillcolor=ivory;
 		    LSI [label="LSI\nSAS2008 x8" style=filled fillcolor=greenyellow shape=rectangle]
-		    ASM [label="ASMedia\n1166 x1" style=filled fillcolor=greenyellow shape=rectangle]
+		    ASM [label="LSI\nSAS2008 x8" style=filled fillcolor=greenyellow shape=rectangle]
 				subgraph clusterEKVector {
 					label="EK Vector";
 					style=filled;
@@ -83,7 +83,7 @@ graph G {
 			fillcolor=steelblue
 			fontcolor=white
 		  node [shape=plaintext];
-			  uleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gts360">Hardware Labs GTS360</TD></TR><TR><TD PORT="uleftfan0">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan1">Noctua iPPC-2000</TD></TR><TR><TD PORT="uleftfan2">Noctua NF-F12</TD></TR></TABLE>>]
+			  uleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gts360">Hardware Labs GTS360</TD></TR><TR><TD PORT="uleftfan0">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan1">Noctua NF-F12 iPPC-2000</TD></TR><TR><TD PORT="uleftfan2">Noctua NF-F12</TD></TR></TABLE>>]
 		}
 		Silverstone--uleft:uleftfan0
 		Silverstone--uleft:uleftfan1
@@ -134,7 +134,7 @@ graph G {
 			style="filled";
 			color="azure";
 			node [shape=record];
-				caged [style=filled fillcolor=white label="{ <CAGE0>ZR55ZJHQ|<CAGE1>ZJV38QZV|<CAGE2>ZJV3KZSD|<CAGE3>ZJV4BHS3|<CAGE4>ZJV3CTCY|<CAGE5>ZR51L41Y|<CAGE6>ZJV1427X|<CAGE7>ZCH0DFDJ|<CAGE8>ZJV335TN|<CAGEFAN0>Noctua NF-F12|<CAGEFAN1>Noctua NF-F12|<CAGEFAN2>Noctua NF-F12 }"]
+				caged [style=filled fillcolor=white label="{ <CAGE0>ZR55ZJHQ|<CAGE1>ZJV38QZV|<CAGE2>ZJV3KZSD|<CAGE3>ZJV4BHS3|<CAGE4>ZJV3CTCY|<CAGE5>ZR51L41Y|<CAGE6>ZJV1427X|<CAGE7>ZCH0DFDJ|<CAGE8>ZJV335TN|<CAGEFAN0>Noctua NF-S12 FLX|<CAGEFAN1>Noctua NF-S12A PWM|<CAGEFAN2>Noctua NF-S12A PWM|<CAGEFAN3>Noctua NF-F12 iPPC-3000 }"]
 		}
 		PSU--BayUSB30 [color=orange penwidth=5 dir=forward];
 		PSU--BayUSB31 [color=orange penwidth=5 dir=forward];
@@ -186,8 +186,8 @@ graph G {
 	Silverstone--uright:urightfan0
 	Silverstone--uright:urightfan1
 	Silverstone--uright:urightfan2
-	FanSplitter--fans:FAN5B
 	Silverstone--fans:FAN0
+	FanSplitter--fans:FAN5B
 	Inverter--CCFLs [color=green penwidth=5 dir=forward]
 	lright:xflow240b--Monsoon [color=steelblue4 penwidth=5 dir=forward];
 	DiyHZ--Quantum [color=steelblue1 penwidth=5 dir=forward];
