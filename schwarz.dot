@@ -4,7 +4,7 @@ graph G {
 		label="Left side";
 		style=filled;
 		subgraph clusterFlex {
-		  label="Flex-Bays";
+		  label="5.25\" Flex-Bays";
 			style=filled;
 			color=honeydew1;
 		  Monsoon [label="Monsoon D5" style=filled fillcolor=steelblue shape=egg fontcolor=white];
@@ -12,13 +12,20 @@ graph G {
 		  BayUSB20 [label="USB 2.0" style=filled fillcolor=seagreen shape=hexagon];
 		  BayUSB30 [label="USB 3.0" style=filled fillcolor=seagreen shape=hexagon];
 		  Noctua2000 [label="Noctua NF-F12\niPPC-2000" shape=Msquare style=filled fillcolor=black fontcolor=white];
-		}
-		subgraph clusterStartech {
-			label="StarTech bay";
-			style=filled;
-			color=seashell;
-		  node [shape=record];
-				bay [style=filled fillcolor=white label="{ <STECH0>ZR52RB6R|<STECH1>ZR514WNY|<STECH2>ZR55P0EE|<STECH3>ZJV2VZG8 }"]
+			subgraph clusterStartech {
+				label="StarTech 3.5\" bay";
+				style=filled;
+				color=seashell;
+				node [shape=record];
+					stbay [style=filled fillcolor=white label="{ <STECH0>ZR52RB6R|<STECH1>ZR514WNY|<STECH2>ZR55P0EE|<STECH3>ZJV2VZG8 }"]
+			}
+			subgraph clusterIcydock {
+				label="IcyDock 2.5\" bay";
+				style=filled;
+				color=seashell;
+				node [shape=record];
+					idbay [style=filled fillcolor=white label="{ <IDOCK0>Empty|<IDOCK1>Empty|<IDOCK2>Empty|<IDOCK3>Empty }"]
+			}
 		}
 		subgraph clusterMobo {
 			label="Aorus Master TRX40";
@@ -51,11 +58,11 @@ graph G {
 					GPU [label="EVGA RTX 2070\nSuper x16" style=filled fillcolor=greenyellow shape=rectangle]
 				}
 				subgraph clusterHyperX {
-					label="ASUS HyperX";
+					label="ASUS HyperX\nx4x4x4x4";
 					style=filled;
 					fillcolor=bisque;
 					node [shape=record];
-					  ssds [style=filled fillcolor=white label="{ <SAM0>EVO 970|<SAM1>EVO 970}"]
+					  ssds [style=filled fillcolor=white label="{ <SAM0>EVO 970|<SAM1>EVO 970|<SAM2>Empty|<SAM3>Empty}"]
 				}
 			}
 			subgraph clusterMemory {
@@ -109,10 +116,10 @@ graph G {
 		BayUSB30--pins:USB30
 		BayUSB20--pins:USB31
 		BayUSB31--pins:USB3g2
-		LSI--bay:STECH0
-		LSI--bay:STECH1
-		LSI--bay:STECH2
-		LSI--bay:STECH3
+		LSI--stbay:STECH0
+		LSI--stbay:STECH1
+		LSI--stbay:STECH2
+		LSI--stbay:STECH3
 		Corsair [label="Corsair iCUE\nCommander Core XT" style=filled fillcolor=wheat shape=pentagon]
 		Corsair--CorsairLEDs
 		CorsairLEDs [label="Corsair\nARGBs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
@@ -162,7 +169,7 @@ graph G {
 			fillcolor=steelblue
 			fontcolor=white
 		  node [shape=plaintext];
-		    lright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="xflow240b">Hardware Labs XFLOW 240</TD></TR><TR><TD PORT="lrightfan0">Noctua NF-P12 Redux</TD></TR><TR><TD PORT="lrightfan1">Noctua NF-P12 Redux</TD></TR></TABLE>>];
+		    lright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="xflow240b">Hardware Labs XFLOW 240</TD></TR><TR><TD PORT="lrightfan0">Noctua NF-P12 1700-redux</TD></TR><TR><TD PORT="lrightfan1">Noctua NF-P12 1700-redux</TD></TR></TABLE>>];
     }
 		lright:lrightfan0--fans:FAN6A
 		lright:lrightfan1--fans:FAN6A
@@ -193,8 +200,9 @@ graph G {
 	DiyHZ--Quantum [color=steelblue1 penwidth=5 dir=forward];
 	Quantum--GPU [color=skyblue penwidth=5 lhead=clusterEKVector dir=forward];
 	uleft:gts360--uright:gtr360 [color=slateblue2 penwidth=5 dir=forward];
-	PSU--bay:STECH0 [lhead=clusterStartech color=red penwidth=5 dir=forward];
-	PSU--bay:STECH2 [lhead=clusterStartech color=red penwidth=5 dir=forward];
+	PSU--stbay:STECH0 [lhead=clusterStartech color=red penwidth=5 dir=forward];
+	PSU--stbay:STECH0 [lhead=clusterStartech color=red penwidth=5 dir=forward];
+	PSU--idbay:IDOCK0 [lhead=clusterIcydock color=red penwidth=5 dir=forward];
 	PSU--GPU [color=green penwidth=5 dir=forward];
 	PSU--CPU [lhead=clusterMobo color=green penwidth=5 dir=forward];
 	PSU--Quantum [color=green penwidth=5 dir=forward];
