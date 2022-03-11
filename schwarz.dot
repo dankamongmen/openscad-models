@@ -120,6 +120,10 @@ graph G {
 		LSI--stbay:STECH1
 		LSI--stbay:STECH2
 		LSI--stbay:STECH3
+		LSI--idbay:IDOCK0
+		LSI--idbay:IDOCK1
+		LSI--idbay:IDOCK2
+		LSI--idbay:IDOCK3
 		Corsair [label="Corsair iCUE\nCommander Core XT" style=filled fillcolor=wheat shape=pentagon]
 		Corsair--CorsairLEDs
 		CorsairLEDs [label="Corsair\nARGBs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
@@ -132,6 +136,14 @@ graph G {
 	  pins:ARGB1--CPU [lhead=clusterMonoblock]
 	  Quantum [label="EKWB Quantum\nKinetic FLT240 D5" style=filled fillcolor=steelblue shape=rectangle fontcolor=white];
 	  CCFLs [label="Monsoon\nCCFLs" style=filled fillcolor=blueviolet fontcolor=white shape=diamond]
+		subgraph clusterRoof {
+			label="Ventilated top";
+			style=filled;
+			fillcolor=white;
+			LEDS0 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050\nLEDs"];
+	/*		node [shape=plaintext];
+				top [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="Noctua140A">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140B">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140C">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140D">Noctua AF-14</TD></TR></TABLE>>];*/
+		}
 	}
 	subgraph clusterRightside {
 		label="Right side";
@@ -210,13 +222,6 @@ graph G {
 	PSU--Monsoon [color=orange penwidth=5 dir=forward];
 	PSU--DiyHZ [color=orange penwidth=5 dir=forward];
 	PSU [label="EVGA Supernova\nTitanium T2 850" style=filled fillcolor=salmon shape=doubleoctagon]
-	subgraph clusterRoof {
-		label="Ventilated top";
-		style=filled;
-		LEDS0 [shape=diamond fontcolor=white fillcolor=blueviolet style=filled label="S5050\nLEDs"];
-		node [shape=plaintext];
-			top [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="Noctua140A">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140B">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140C">Noctua AF-14</TD></TR><TR><TD PORT="Noctua140D">Noctua AF-14</TD></TR></TABLE>>];
-	}
 	AMDFCH--caged:CAGE0
 	AMDFCH--caged:CAGE1
 	AMDFCH--caged:CAGE2
@@ -226,10 +231,10 @@ graph G {
 	AMDFCH--caged:CAGE6
 	AMDFCH--caged:CAGE7
 	ASM--caged:CAGE8
-	Corsair--top:Noctua140A
+	/*Corsair--top:Noctua140A
 	Corsair--top:Noctua140B
 	Corsair--top:Noctua140C
-	Corsair--top:Noctua140D
+	Corsair--top:Noctua140D*/
 	PSU--Corsair [color=orange penwidth=5]
 	pins:ARGB0--Quantum
 	pins:DRGB0--LEDS0
