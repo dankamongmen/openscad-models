@@ -24,39 +24,15 @@ translate([62,8,5.5]) rotate([0,90,0]) cylinder(r=2,h=2,center=true);
 
 pci_bracket();
 rotate([0,90,0]){
-translate([-0.5, 0, 0]){
+translate([-0.5, -3, -40]){
     difference(){
-    cube([5,5,5]);
-        translate([1,1,0]){
-        cube([3,3,5]);
-            cube([1,5,5]);
+    cube([10,12,90]);
+        translate([1,3,0]){
+            cube([6,6,90]);
+            cube([2,9,90]);
         }
     }
 }
 }
-rotate([0,90,0]){
-translate([-0.5, 0, -20]){
-    difference(){
-    cube([5,5,5]);
-        translate([1,1,0]){
-        cube([3,3,5]);
-            cube([1,5,5]);
-        }
-    }
-}
-}
-rotate([0,90,0]){
-translate([-0.5, 0, 20]){
-    difference(){
-    cube([5,5,5]);
-        translate([1,1,0]){
-        cube([3,3,5]);
-            cube([1,5,5]);
-        }
-    }
-}
-}
-
-
 
 $fn=50;
