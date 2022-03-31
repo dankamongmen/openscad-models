@@ -1,4 +1,4 @@
-thickness=1.5;
+thickness=1;
 
 module pci_bracket() {
 union() {
