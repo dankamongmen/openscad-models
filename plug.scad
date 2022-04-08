@@ -1,40 +1,36 @@
+s=9.5;
+t=10;
 difference(){
     union(){
-        cylinder(10, 10, 10);
-        translate([0,-10,0]){
-          cube([30,20,10]);
+        cylinder(t, s, s);
+        translate([0,-s,0]){
+          cube([30,s*2,t]);
         }
         translate([30,0,0]){
-          cylinder(10, 10, 10);
+          cylinder(t , s, s);
         }
     }
     union(){
-        cylinder(10, 8, 8);
+        cylinder(15, 8, 8);
         translate([1, -8, 0]){
-            cube([28, 16, 10]);
+            cube([28, 16, 15]);
         }
         translate([30, 0, 0]){
-            cylinder(10, 8, 8);
+            cylinder(15, 8, 8);
         }
     }
 }
-difference(){
-    translate([15,0,0]){
-        rotate([0,0,270]){
-            cylinder(r=55, h=5, $fn=3);
-        }
-    }
-    union(){
-        translate([15,0,1]){
-            rotate([0,0,270]){
-                cylinder(r=50, h=3, $fn=3);
+c=50;
+translate([-10,-40.5,-12]){
+    difference(){
+        cube([c,c,12]);
+        union(){
+            translate([2.5, 0, 1]){
+                cube([c - 5, c - 5, 10]);
             }
-        }
-        translate([-20, 10, 1]){
-            cube([70, 35,3]);
-        }
-        translate([0, -40, 1]){
-            cube([40,10,3]);
+            translate([10,32,2]){
+                cube([30,18,12]);
+            }
         }
     }
 }
