@@ -1,4 +1,4 @@
-s=9.5;
+s=9;
 t=10;
 difference(){
     union(){
@@ -21,14 +21,14 @@ difference(){
     }
 }
 c=50;
-translate([-10,-40.5,-12]){
+translate([-10, -61, -12]){
     difference(){
-        cube([c,c,12]);
+        cube([c,c+20,12]);
         union(){
             translate([2.5, 0, 1]){
                 cube([c - 5, c - 5, 10]);
             }
-            translate([10,32,2]){
+            translate([10,52,2]){
                 cube([30,18,12]);
             }
         }
