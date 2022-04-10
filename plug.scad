@@ -46,4 +46,8 @@ difference(){
             cylinder(15, s - 1, s - 1);
         }
     }
+    // side hole
+    translate([-35, -30, -5]){
+      cube([50, 20, 10]);
+    }
 }
