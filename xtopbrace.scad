@@ -6,6 +6,7 @@ w = 146.1;
 
 // we want to look like a 120mm fan
 iw = 120;
+hw = 105; // screw hole centers are 105mm apart
 
 // the mounts are 26mm
 m = 26;
@@ -17,8 +18,12 @@ m = 26;
 // device in the next bay up
 h = 16;
 
-// thin out at 1mm on each side
-i = 1;
+// brace we're topping is 1.5mm wide. give it
+// an extra half mm.
+i = 2;
+
+// 5.55mm diameter screws
+sw = 5.55 / 2;
 
 translate([-w/2, 0, 0]){
     translate([-1, 0, -h]){
@@ -29,7 +34,29 @@ translate([-w/2, 0, 0]){
     }
     // upper support (what the pump mates)
     translate([(w - iw) / 2, 0, 0]){
-        cube([iw, m, h]);
+        difference(){
+            cube([iw, m, h]);
+            union(){
+                translate([(iw - hw) / 2, 13, h - 3]){
+                    cylinder(h - 3, sw, true);
+                }
+                translate([(iw - hw) / 2 + hw, 13, h - 3]){
+                    cylinder(h - 3, sw, true);
+                }
+                translate([19, 9, h - 4]){
+                    linear_extrude(4){
+                        text("schwarzgerät");
+                    }
+                }
+                translate([19, 4, 4]){
+                    rotate([90, 0, 0]){
+                        linear_extrude(4){
+                            text("schwarzgerät");
+                        }
+                    }
+                }
+            }
+        }
     }
     // common layer
     translate([i, 0, 0]){
@@ -42,7 +69,7 @@ translate([-w/2, 0, 0]){
     translate([w - i, 0, 0]){
         cube([i + 1, m, 1]);
     }
-    translate([w, 0, -h]){
+    translate([w + i - 1, 0, -h]){
         cube([1, m, h]);
     }
 }
