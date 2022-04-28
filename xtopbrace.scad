@@ -9,7 +9,7 @@ iw = 120;
 hw = 105; // screw hole centers are 105mm apart
 
 // the mounts are 26mm
-m = 26;
+m = 47;
 
 // we need a 16mm tall core to match the height
 // of the other mount, sitting atop two fans and
@@ -37,16 +37,11 @@ translate([-w/2, 0, 0]){
         difference(){
             cube([iw, m, h]);
             union(){
-                translate([(iw - hw) / 2, 13, h - 2]){
+                translate([(iw - hw) / 2, m / 2, h - 2]){
                     cylinder(h - 2, sw, true);
                 }
-                translate([(iw - hw) / 2 + hw, 13, h - 2]){
+                translate([(iw - hw) / 2 + hw, m / 2, h - 2]){
                     cylinder(h - 2, sw, true);
-                }
-                translate([19, 9, h - 4]){
-                    linear_extrude(4){
-                        text("schwarzgerät");
-                    }
                 }
                 translate([19, 4, 4]){
                     rotate([90, 0, 0]){
