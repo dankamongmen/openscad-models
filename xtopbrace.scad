@@ -26,22 +26,22 @@ i = 2;
 sw = 5.55 / 2;
 
 translate([-w/2, 0, 0]){
-    translate([-1, 0, -h]){
+    translate([-i, 0, -h]){
         cube([1, m, h]);
     }
-    translate([-1, 0, 0]){
-        cube([i + 1, m, 1]);
+    translate([-i, 0, 0]){
+        cube([i + 2, m, 1]);
     }
     // upper support (what the pump mates)
     translate([(w - iw) / 2, 0, 0]){
         difference(){
             cube([iw, m, h]);
             union(){
-                translate([(iw - hw) / 2, 13, h - 3]){
-                    cylinder(h - 3, sw, true);
+                translate([(iw - hw) / 2, 13, h - 2]){
+                    cylinder(h - 2, sw, true);
                 }
-                translate([(iw - hw) / 2 + hw, 13, h - 3]){
-                    cylinder(h - 3, sw, true);
+                translate([(iw - hw) / 2 + hw, 13, h - 2]){
+                    cylinder(h - 2, sw, true);
                 }
                 translate([19, 9, h - 4]){
                     linear_extrude(4){
