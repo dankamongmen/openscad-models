@@ -25,12 +25,14 @@ i = 2;
 // 5.55mm diameter screws
 sw = 5.55 / 2;
 
+// the wings on the sides hold us onto the
+// braces. if they're too thin, they'll break off.
+ww = 3;
+
 translate([-w/2, 0, 0]){
-    translate([-i, 0, -h]){
-        cube([1, m, h]);
-    }
-    translate([-i, 0, 0]){
-        cube([i + 2, m, 1]);
+    // left wing
+    translate([-(i + ww), 0, -h]){
+        cube([ww, m, h]);
     }
     // upper support (what the pump mates)
     translate([(w - iw) / 2, 0, 0]){
@@ -43,7 +45,7 @@ translate([-w/2, 0, 0]){
                 translate([(iw - hw) / 2 + hw, m / 2, h - 2]){
                     cylinder(h - 2, sw, true);
                 }
-                translate([19, 4, 4]){
+                translate([19, 4, 5]){
                     rotate([90, 0, 0]){
                         linear_extrude(4){
                             text("schwarzgerät");
@@ -54,17 +56,20 @@ translate([-w/2, 0, 0]){
         }
     }
     // common layer
-    translate([i, 0, 0]){
-        cube([w, m, 1]);
+    translate([-(i + ww), 0, 0]){
+        minkowski(){
+            cube([w + i * 2 + ww * 2, m, 1.5]);
+            rotate([90, 90, 0]){
+                cylinder(r = 1, h = 1);
+            }
+        }
     }
     // middle piece to wedge us atop bay mounts
     translate([i + 1, 0, -4]){
         cube([w - i * 2 - 2, m, 4]);
     }
-    translate([w - i, 0, 0]){
-        cube([i + 1, m, 1]);
-    }
-    translate([w + i - 1, 0, -h]){
-        cube([1, m, h]);
+    // right wing
+    translate([w + i, 0, -h]){
+        cube([ww, m, h]);
     }
 }
