@@ -16,7 +16,7 @@ m = 47;
 // a radiator. on the outside, though, we don't
 // want it so thicc, in case there's another
 // device in the next bay up
-h = 16;
+h = 20;
 
 // brace we're topping is 1.5mm wide. give it
 // an extra half mm.
@@ -40,12 +40,12 @@ translate([-w/2, 0, 0]){
             cube([iw, m, h]);
             union(){
                 translate([(iw - hw) / 2, m / 2, h - 2]){
-                    cylinder(h - 2, sw, true);
+                    cylinder(h, sw, true);
                 }
                 translate([(iw - hw) / 2 + hw, m / 2, h - 2]){
-                    cylinder(h - 2, sw, true);
+                    cylinder(h, sw, true);
                 }
-                translate([19, 4, 5]){
+                translate([19, 4, 7]){
                     rotate([90, 0, 0]){
                         linear_extrude(4){
                             text("schwarzgerät");
@@ -60,7 +60,7 @@ translate([-w/2, 0, 0]){
         minkowski(){
             cube([w + i * 2 + ww * 2, m, 1.5]);
             rotate([90, 90, 0]){
-                cylinder(r = 1, h = 1);
+                cylinder(r = 2, h = 2);
             }
         }
     }
