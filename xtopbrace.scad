@@ -36,8 +36,12 @@ translate([-w/2, 0, 0]){
     }
     // upper support (what the pump mates)
     translate([(w - iw) / 2, 0, 0]){
+        
         difference(){
-            cube([iw, m, h]);
+            minkowski(){
+                cube([iw, m, h]);
+                cylinder(r = 2, h = 2);
+            }
             union(){
                 translate([(iw - hw) / 2, m / 2, h - 2]){
                     cylinder(h, sw, true);
@@ -45,7 +49,7 @@ translate([-w/2, 0, 0]){
                 translate([(iw - hw) / 2 + hw, m / 2, h - 2]){
                     cylinder(h, sw, true);
                 }
-                translate([19, 4, 7]){
+                translate([19, 0, 7]){
                     rotate([90, 0, 0]){
                         linear_extrude(4){
                             text("schwarzgerät");
