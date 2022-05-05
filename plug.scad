@@ -1,7 +1,7 @@
 s=8.5;
 t=10;
 w=99;
-h=85;
+h=88;
 zh=15;
 difference(){
     translate([-w/2 + 5, -20, -zh]){
@@ -20,16 +20,24 @@ difference(){
         translate([-15, -7.5, -3]){
             cube([30, 15, 3]);
         }
+        // bottom of back is open
+        translate([-15, -22.5, -3]){
+            cube([23, 20, 3]);
+        }
         // top of back is open
         translate([-42, 55, -5]){
             cube([w + 3, 10, 5]);
         }
     }
 }
-translate([50, 0, -15])
+translate([40, -11, -15])
     rotate([0, 180, 0])
         linear_extrude(2)
-            text("schwarzgerät");
+            text("III", font="Liberation Sans:style=Bold Italic", size=70);
+translate([50, 60, -15])
+    rotate([180, 0, 270])
+        linear_extrude(2)
+            text("schwarzgerät", size=9);
 // round element (plug)
 difference(){
     union(){
@@ -44,6 +52,9 @@ difference(){
         }
     }
     union(){
+        translate([-15, -22.5, 0]){
+            cube([23, 20, 20]);
+        }
         translate([-15, 0, 0]){
             cylinder(15, s - 1, s- 1);
         }

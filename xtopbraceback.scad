@@ -26,8 +26,8 @@ difference(){
                 }
             }
         }
-        translate([85, w/2, 0]){
-            sphere(r=70);
+        translate([65, w/2 - 5, 0]){
+            sphere(r=50);
         }
     }
 }
