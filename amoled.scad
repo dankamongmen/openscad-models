@@ -55,7 +55,7 @@ difference(){
         translate([0, avm, fst]){
             cube([ahm, eh - 2 * ahm, depth - fst - 7]);
         }
-        // lapp joints on back to paste flare
+        // lap joints on back to paste flare
         translate([0, 0, depth]){
             cube([flarei - 1, eh, backdepth]);
         }
