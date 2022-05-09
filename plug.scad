@@ -21,12 +21,12 @@ difference(){
             cube([30, 15, 3]);
         }
         // bottom of back is open
-        translate([-15, -22.5, -3]){
-            cube([23, 20, 3]);
+        translate([-15, -22.5, -10]){
+            cube([23, 20, 10]);
         }
         // top of back is open
         translate([-42, 55, -5]){
-            cube([w + 3, 10, 5]);
+            cube([w + 3, 15, 5]);
         }
     }
 }
