@@ -1,7 +1,7 @@
 // through-plug + cable box for back of caselabs T10
 
 s=8.5;
-t=20;
+t=10;
 w=65;
 h=50;
 zh=15;
@@ -16,6 +16,10 @@ difference(){
         }
         // inlet on left side
         translate([40, -10, -(zh - 1)]){
+            cube([10, 20, zh]);
+        }
+        // inlet on right side
+        translate([-26, -10, -(zh - 1)]){
             cube([10, 20, zh]);
         }
         // area intersecting with plug
@@ -39,7 +43,7 @@ difference(){
             cylinder(t, s, s);
         }
         translate([-5, -s , 0]){
-          cube([30, s*2  ,t]);
+          cube([30, s*2, t]);
         }
         translate([25, 0, 0]){
           cylinder(t, s, s);
