@@ -10,7 +10,7 @@
 // a single piece, which is obviously desirable.
 
 // dimensions of two FlexBays (what we're filling)
-ew=150;
+ew=149.5;
 eh=87;
 
 // amoled device dimensions (what we're holding)
@@ -56,8 +56,8 @@ difference(){
             cube([ahm, eh - 2 * ahm, depth - fst - 7]);
         }
         // hole in the top for power hookup
-        translate([35, -10, 5]){
-            cube([20, 30, 10]);
+        translate([15, -10, 5]){
+            cube([55, 30, 10]);
         }
         // lap joints on back to paste flare
         translate([0, 0, depth]){
