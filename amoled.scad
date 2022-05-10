@@ -57,7 +57,7 @@ difference(){
         }
         // hole in the top for power hookup
         translate([15, -10, 5]){
-            cube([55, 30, 10]);
+            cube([55, 30, 15]);
         }
         // lap joints on back to paste flare
         translate([0, 0, depth]){
