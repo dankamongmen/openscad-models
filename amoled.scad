@@ -47,6 +47,20 @@ difference(){
         cube([ew, eh, depth]);
     }
     union(){
+        translate([10, eh - 2, 0]){
+            rotate([180, 0, 0]){
+                linear_extrude(4){
+                    text("\"schwarzgerät III\"", size=3, font="Liberation Sans:style=Bold Italic");
+                }
+            }
+        }
+        translate([ew - 45, eh - 2, 0]){
+            rotate([180, 0, 0]){
+                linear_extrude(4){
+                    text("nick black 2022", size=3, font="Prosto One");
+                }
+            }
+        }
         // leave out center for actual display
         translate([ahm, avm, 0]){
             cube([aw, ah, depth]);
