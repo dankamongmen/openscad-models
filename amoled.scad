@@ -11,10 +11,10 @@
 
 // dimensions of two FlexBays (what we're filling)
 ew=149.5;
-eh=87;
+eh=86.5;
 
 // amoled device dimensions (what we're holding)
-ah=75;
+ah=75.5;
 aw=140.4;
 at=1.5;
 avm = (eh - ah) / 2; // device vertical margin
@@ -60,28 +60,40 @@ difference(){
             cube([55, 30, 15]);
         }
         // lap joints on back to paste flare
+        // left
         translate([0, 0, depth]){
             cube([flarei - 1, eh, backdepth]);
+            for(i = [1:5]){
+                translate([flarei - 1, i * 15, 0]){
+                    cube([3, 5, backdepth]);
+                }
+            }
         }
+        // right
         translate([ew - flarei + 1, 0, depth]){
             cube([flarei - 1, eh, backdepth]);
+            for(i = [1:5]){
+                translate([-3, i * 15, 0]){
+                    cube([3, 5, backdepth]);
+                }
+            }
         }
     }
 }
 
 // sliders to insert + hold device (front bottom)
-translate([ahm, avm, 0]){
-    cube([aw, svm, fst]);
+translate([ahm + aw / 2, avm, 0]){
+    cube([aw / 2, svm, fst]);
 }
 // back bottom
-translate([ahm, avm, fst + at]){
-    cube([aw, 2, fst]);
+translate([ahm + aw / 2, avm, fst + at]){
+    cube([aw / 2, 2, fst]);
 }
 // front top
 translate([ahm, avm + sh + svm, 0]){
-    cube([aw, svm, fst]);
+    cube([aw / 2, svm, fst]);
 }
 // back top
 translate([ahm, sh + avm + svm + 1, fst + at]){
-    cube([aw, 2, fst]);
+    cube([aw / 2, 2, fst]);
 }
