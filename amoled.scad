@@ -82,8 +82,8 @@ difference(){
 }
 
 // sliders to insert + hold device (front bottom)
-translate([ahm + aw / 2, avm, 0]){
-    cube([aw / 2, svm, fst]);
+translate([ahm, avm, 0]){
+    cube([aw, svm, fst]);
 }
 // back bottom
 translate([ahm + aw / 2, avm, fst + at]){
@@ -91,7 +91,7 @@ translate([ahm + aw / 2, avm, fst + at]){
 }
 // front top
 translate([ahm, avm + sh + svm, 0]){
-    cube([aw / 2, svm, fst]);
+    cube([aw, svm, fst]);
 }
 // back top
 translate([ahm, sh + avm + svm + 1, fst + at]){
