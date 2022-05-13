@@ -47,17 +47,17 @@ difference(){
         cube([ew, eh, depth]);
     }
     union(){
-        translate([10, eh - 2, 4]){
+        translate([2, eh - 2, 5]){
             rotate([180, 0, 0]){
-                linear_extrude(4){
-                    text("\"schwarzgerät III\"", size=4, font="Liberation Sans:style=Bold Italic");
+                linear_extrude(5){
+                    text("“schwarzgerät III”", size=5, font="Liberation Sans:style=Italic");
                 }
             }
         }
-        translate([ew - 50, eh - 2, 4]){
+        translate([ew - 50, eh - 2, 5]){
             rotate([180, 0, 0]){
-                linear_extrude(4){
-                    text("nick black 2022", size=3, font="Prosto One");
+                linear_extrude(5){
+                    text("nick black 2022", size=4, font="Prosto One");
                 }
             }
         }
@@ -70,8 +70,8 @@ difference(){
             cube([ahm, eh - 2 * ahm, depth - fst - 7]);
         }
         // hole in the top for power hookup
-        translate([15, -10, 5]){
-            cube([55, 30, 15]);
+        translate([0, -10, 5]){
+            cube([70, 30, 15]);
         }
         // lap joints on back to paste flare
         // left
@@ -95,19 +95,30 @@ difference(){
     }
 }
 
-// sliders to insert + hold device (front bottom)
+// sliders to insert + hold device
+// front top
 translate([ahm, avm, 0]){
     cube([aw, svm, fst]);
 }
-// back bottom
-translate([ahm + aw / 2, avm, fst + at]){
-    cube([aw / 2, 2, fst]);
+// back top
+translate([ahm + aw / 2 - 5, avm, fst + at]){
+    cube([aw / 2 + 5, 2, depth]);
 }
-// front top
+// front bottom
 translate([ahm, avm + sh + svm, 0]){
     cube([aw, svm, fst]);
 }
-// back top
+// back bottom
 translate([ahm, sh + avm + svm + 1, fst + at]){
-    cube([aw / 2, 2, fst]);
+    cube([aw / 2, 3, depth - 3]);
+}
+
+// reinforce across top, but avoid HDMI
+translate([5, 0, 23]){
+    cube([ew - 14 , 10, 8]);
+}
+
+// reinforce across top of right side, but avoid power
+translate([0, 0, 10]){
+    cube([9.5, eh, 10]);
 }
