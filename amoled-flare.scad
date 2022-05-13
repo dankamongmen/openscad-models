@@ -8,13 +8,14 @@ flare = 11;
 flarei = 5;
 backdepth = 11;
 eh = 87; // device height
+gap = 0.15; // fitting tolerance
 
 difference(){
     union(){
         cube([flare + flare - 1, eh, backdepth]);
         for(i = [1:5]){
-            translate([flare + flarei, i * 15, 0]){
-                cube([10, 5, backdepth]);
+            translate([flare + flarei, i * 15 + gap, 0]){
+                cube([10, 5 - 2 * gap, backdepth]);
             }
         }
     }
