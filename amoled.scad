@@ -102,7 +102,7 @@ translate([ahm, avm, 0]){
 }
 // back top
 translate([ahm + aw / 2 - 5, avm, fst + at]){
-    cube([aw / 2 + 5, 2, depth]);
+    cube([aw / 2 + 5, 2, depth - 8]);
 }
 // front bottom
 translate([ahm, avm + sh + svm, 0]){
