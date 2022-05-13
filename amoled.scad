@@ -119,6 +119,6 @@ translate([5, 0, 23]){
 }
 
 // reinforce across top of right side, but avoid power
-translate([0, 0, 10]){
-    cube([9.5, eh, 10]);
+translate([0, 0, 12]){
+    cube([9.5, eh, 8]);
 }
