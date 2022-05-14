@@ -114,8 +114,8 @@ translate([ahm, sh + avm + svm + 1, fst + at]){
 }
 
 // reinforce across top, but avoid HDMI
-translate([5, 0, 23]){
-    cube([ew - 14 , 10, 8]);
+translate([5, 0, 25]){
+    cube([ew - 14 , 10, 6]);
 }
 
 // reinforce across top of right side, but avoid power
