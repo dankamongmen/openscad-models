@@ -35,16 +35,80 @@ backdepth=11; // flare-out depth
 flare=0; // flare width
 flarei = 5; // flare inset
 
-// border around device, filling flexbay
 difference(){
     union(){
-        translate([aw + ahm - flarei, 0, depth]){
-            cube([ahm + flare + flarei, eh, backdepth]);
+        // border around device, filling flexbay
+        difference(){
+            union(){
+                translate([aw + ahm - flarei, 0, depth]){
+                    cube([ahm + flare + flarei, eh, backdepth]);
+                }
+                translate([-flare, 0, depth]){
+                    cube([ahm + flare + flarei, eh, backdepth]);
+                }
+                cube([ew, eh, depth]);
+            }
+            union(){
+                // leave out center for actual display
+                translate([ahm, avm, 0]){
+                    cube([aw - 3, ah, depth]);
+                }
+                // cut out on the side to slide through
+                translate([0, avm, fst]){
+                    cube([ahm, eh - 2 * ahm, depth - fst - 7]);
+                }
+                // hole in the top for power hookup
+                translate([0, -10, 5]){
+                    cube([70, 30, 15]);
+                }
+                // lap joints on back to paste flare
+                // left
+                translate([0, 0, depth]){
+                    cube([flarei - 1, eh, backdepth]);
+                    for(i = [1:5]){
+                        translate([flarei - 1, i * 15, 0]){
+                            cube([3, 5, backdepth]);
+                        }
+                    }
+                }
+                // right
+                translate([ew - flarei + 1, 0, depth]){
+                    cube([flarei - 1, eh, backdepth]);
+                    for(i = [1:5]){
+                        translate([-3, i * 15, 0]){
+                            cube([3, 5, backdepth]);
+                        }
+                    }
+                }
+            }
         }
-        translate([-flare, 0, depth]){
-            cube([ahm + flare + flarei, eh, backdepth]);
+        // sliders to insert + hold device
+        // front top
+        translate([ahm, avm, 0]){
+            cube([aw, svm, fst]);
         }
-        cube([ew, eh, depth]);
+        // back top
+        translate([ahm + aw / 2 - 5, avm, fst + at]){
+            cube([aw / 2 + 5, 2, depth - 8]);
+        }
+        // front bottom
+        translate([ahm, avm + sh + svm, 0]){
+            cube([aw, svm, fst]);
+        }
+        // back bottom
+        translate([ahm, sh + avm + svm + 1, fst + at]){
+            cube([aw / 2, 3, depth - 3]);
+        }
+        
+        // reinforce across top, but avoid HDMI
+        translate([5, 0, 25]){
+            cube([ew - 14 , 10, 6]);
+        }
+        
+        // reinforce across top of right side, but avoid power
+        translate([0, 0, 12]){
+            cube([9.5, eh, 8]);
+        }
     }
     union(){
         translate([2, eh - 2, 5]){
@@ -61,64 +125,5 @@ difference(){
                 }
             }
         }
-        // leave out center for actual display
-        translate([ahm, avm, 0]){
-            cube([aw - 3, ah, depth]);
-        }
-        // cut out on the side to slide through
-        translate([0, avm, fst]){
-            cube([ahm, eh - 2 * ahm, depth - fst - 7]);
-        }
-        // hole in the top for power hookup
-        translate([0, -10, 5]){
-            cube([70, 30, 15]);
-        }
-        // lap joints on back to paste flare
-        // left
-        translate([0, 0, depth]){
-            cube([flarei - 1, eh, backdepth]);
-            for(i = [1:5]){
-                translate([flarei - 1, i * 15, 0]){
-                    cube([3, 5, backdepth]);
-                }
-            }
-        }
-        // right
-        translate([ew - flarei + 1, 0, depth]){
-            cube([flarei - 1, eh, backdepth]);
-            for(i = [1:5]){
-                translate([-3, i * 15, 0]){
-                    cube([3, 5, backdepth]);
-                }
-            }
-        }
     }
-}
-
-// sliders to insert + hold device
-// front top
-translate([ahm, avm, 0]){
-    cube([aw, svm, fst]);
-}
-// back top
-translate([ahm + aw / 2 - 5, avm, fst + at]){
-    cube([aw / 2 + 5, 2, depth - 8]);
-}
-// front bottom
-translate([ahm, avm + sh + svm, 0]){
-    cube([aw, svm, fst]);
-}
-// back bottom
-translate([ahm, sh + avm + svm + 1, fst + at]){
-    cube([aw / 2, 3, depth - 3]);
-}
-
-// reinforce across top, but avoid HDMI
-translate([5, 0, 25]){
-    cube([ew - 14 , 10, 6]);
-}
-
-// reinforce across top of right side, but avoid power
-translate([0, 0, 12]){
-    cube([9.5, eh, 8]);
 }
