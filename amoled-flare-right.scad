@@ -22,14 +22,11 @@ difference(){
         }
     }
     union(){
-        translate([10, 5, 0]){
-            rotate([180, 0, 90]){
-                hole_through("M4", l=100, cld=0.1, h=10, hcld=1);
-            }
-        }
-        translate([10, 45, 0]){
-            rotate([180, 0, 90]){
-                hole_through("M4", l=100, cld=0.1, h=10, hcld=1);
+        for(i = [23, 37, 63, 79]){
+            translate([10, i, 0]){
+                rotate([180, 0, 90]){
+                    hole_through("M4", l=100, cld=0.1, h=1, hcld=1);
+                }
             }
         }
         translate([0, eh - 2, 0]){
