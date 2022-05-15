@@ -15,17 +15,18 @@ difference(){
     union(){
         cube([flare + flare - 1, eh, depth]);
         for(i = [1:5]){
-            translate([flare + flarei, i * 15 + gap, 0]){
+            translate([-8, i * 15 + gap, 0]){
                 cube([8, 5 - 2 * gap, depth]);
             }
         }
     }
     union(){
-        translate([10, 5, 0]){
-            hole_through("M3", l=1, cld=depth, h=10, hcld=1);
-        }
-        translate([10, 45, 0]){
-            hole_through("M3", l=1, cld=depth, h=10, hcld=1);
+        for(i = [23, 37, 63, 79]){
+            translate([10, i, 0]){
+                rotate([180, 0, 90]){
+                    hole_through("M4", l=100, cld=0.1, h=1, hcld=1);
+                }
+            }
         }
     }
 }
