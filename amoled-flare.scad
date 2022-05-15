@@ -22,7 +22,7 @@ difference(){
     }
     union(){
         for(i = [23, 37, 63, 79]){
-            translate([10, i, 0]){
+            translate([10, i, -2]){
                 rotate([180, 0, 90]){
                     hole_through("M4", l=100, cld=0.1, h=1, hcld=1);
                 }
