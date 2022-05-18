@@ -3,42 +3,18 @@ graph G {
 	subgraph clusterLeftSide {
 		label="Motherboard side";
 		style=filled;
-		subgraph clusterMonoblock {
-			label="EKWB Aorus\nMaster monoblock";
-			style=filled;
-			fillcolor=lightskyblue;
-			CPU [style=filled fillcolor=hotpink shape=doublecircle label="AMD\n3970X"];
-		}
-		subgraph clusterEKVector {
-			label="EK Vector";
-			style=filled;
-			fillcolor=lightskyblue;
-			GPU [label="EVGA RTX 2070\nSuper x16" style=filled fillcolor=greenyellow shape=rectangle]
-		}
-		subgraph clusterULeft {
-		  label="Upper left complex"
-			style=filled
-			fillcolor=steelblue
-			fontcolor=white
-		  node [shape=plaintext];
-			  uleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gts360">Hardware Labs GTS360</TD></TR><TR><TD PORT="uleftfan0">Noctua NF-F12</TD></TR><TR><TD PORT="uleftfan1">Noctua NF-F12 iPPC-2000</TD></TR><TR><TD PORT="uleftfan2">Noctua NF-F12</TD></TR></TABLE>>]
-		}
-		subgraph clusterLLeft {
-		  label="Lower left complex"
-			style=filled
-			fillcolor=steelblue
-			fontcolor=white
-		  node [shape=plaintext];
-		    lleft [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD>Phanteks T30</TD></TR><TR><TD>Phanteks T30</TD></TR><TR><TD PORT="xflow240a">Hardware Labs XFLOW 240</TD></TR><TR><TD PORT="lleftfan0">Noctua NF-A12x25</TD></TR><TR><TD PORT="lleftfan1">Noctua NF-A12x25</TD></TR></TABLE>>];
-    }
-		lleft:xflow240a--NEXT [color=steelblue2 penwidth=5 dir=forward];
+		gts360 [style=filled fillcolor=black fontcolor=white label="Hardware Labs GTS360" shape=rectangle];
+		xflow240a [label="Hardware Labs XFLOW 240" style=filled fillcolor=black fontcolor=white shape=rectangle];
+		xflow240a--NEXT [color=steelblue2 penwidth=5 dir=forward];
+		Vector [label="EK Vector" style=filled fillcolor=crimson shape=rectangle];
+		Monoblock [label="EKWB Aorus\nMaster monoblock" style=filled fillcolor=crimson shape=rectangle];
 		XTOP [label="EKWB XTOP Dual D5" style=filled fillcolor=steelblue shape=rectangle fontcolor=white dir=forward];
 		Filter [style=filled fillcolor=steelblue shape=rectangle fontcolor=white dir=forward];
 		NEXT [label="Aquacomputer NEXT" style=filled fillcolor=steelblue shape=rectangle fontcolor=white dir=forward];
 		DiyHZ [style=filled fillcolor=steelblue shape=rectangle fontcolor=white dir=forward];
-		GPU--CPU [color=slateblue3 penwidth=5 ltail=clusterEKVector lhead=clusterMonoblock dir=forward];
-		CPU--DiyHZ [color=slateblue3 penwidth=5 ltail=clusterMonoblock dir=forward];
-		DiyHZ--uleft:gts360 [color=slateblue4 penwidth=5 dir=forward];
+		Vector--Monoblock [color=slateblue3 penwidth=5 dir=forward];
+		Monoblock--DiyHZ [color=slateblue3 penwidth=5 dir=forward];
+		DiyHZ--gts360 [color=slateblue4 penwidth=5 dir=forward];
 	  Quantum [label="EKWB Quantum\nKinetic FLT240 D5" style=filled fillcolor=steelblue shape=rectangle fontcolor=white];
 	}
 	subgraph clusterRightside {
@@ -49,23 +25,15 @@ graph G {
 			style=filled
 			fillcolor=steelblue
 			fontcolor=white
-		  node [shape=plaintext];
-			  uright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD PORT="gtr360">Hardware Labs GTR360</TD></TR><TR><TD PORT="urightfan0">Vardar EVO 120ER</TD></TR><TR><TD PORT="urightfan1">Noctua NF-P12</TD></TR><TR><TD PORT="urightfan2">Vardar EVO 120ER</TD></TR></TABLE>>]
 		}
-		subgraph clusterLRight {
-		  label="Lower right complex"
-			style=filled
-			fillcolor=steelblue
-			fontcolor=white
-		  node [shape=plaintext];
-		    lright [style=filled fillcolor=black fontcolor=white label=<<TABLE><TR><TD>Phanteks T30</TD></TR><TR><TD>Phanteks T30</TD></TR><TR><TD PORT="xflow240b">Hardware Labs XFLOW 240</TD></TR><TR><TD PORT="lrightfan0">Noctua NF-P12 1700-redux</TD></TR><TR><TD PORT="lrightfan1">Noctua NF-P12 1700-redux</TD></TR></TABLE>>];
-    }
-		uright:gtr360--lright:xflow240b [dir=forward color=slateblue1 penwidth=5];
+		gtr360 [style=filled fillcolor=black fontcolor=white label="Hardware Labs GTR360" shape=rectangle];
+		xflow240b [label="Hardware Labs XFLOW 240" style=filled fillcolor=black fontcolor=white shape=rectangle];
+		gtr360--xflow240b [dir=forward color=slateblue1 penwidth=5];
 	}
-	lright:xflow240b--XTOP [color=steelblue4 penwidth=5 dir=forward];
-  XTOP--lleft:xflow240a [color=steelblue2 penwidth=5 dir=forward];
+	xflow240b--XTOP [color=steelblue4 penwidth=5 dir=forward];
+  XTOP--xflow240a [color=steelblue2 penwidth=5 dir=forward];
 	NEXT--Quantum [color=steelblue1 penwidth=5 dir=forward];
 	Quantum--Filter [color=skyblue penwidth=5 dir=forward];
-	Filter--GPU [color=skyblue penwidth=5 lhead=clusterEKVector dir=forward];
-	uleft:gts360--uright:gtr360 [color=slateblue2 penwidth=5 dir=forward];
+	Filter--Vector [color=skyblue penwidth=5 dir=forward];
+	gts360--gtr360 [color=slateblue2 penwidth=5 dir=forward];
 }
