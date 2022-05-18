@@ -2,11 +2,11 @@
 
 s=8.5;
 t=10;
-w=88;
+w=99;
 h=88;
 zh=15;
 difference(){
-    translate([-w/2, -20, -zh]){
+    translate([-50, -20, -zh]){
         cube([w, h, zh]);
     }
     union(){
@@ -16,26 +16,26 @@ difference(){
         }
         // inlet on left side
         translate([40, -10, -(zh - 1)]){
-            cube([10, 20, zh]);
+            cube([10, 50, zh]);
         }
         // inlet on right side
-        translate([-46, -10, -(zh - 1)]){
+        translate([-50, -10, -(zh - 1)]){
             cube([10, 20, zh]);
         }
         // area intersecting with plug
-        translate([-5, -25, -8]){
-            cube([34, 33, 8]);
+        translate([-5, -25, -107]){
+            cube([34, 33, 10]);
         }
     }
 }
-translate([28, -10, -15])
+translate([35, -10, -15])
     rotate([0, 180, 0])
         linear_extrude(2)
-            text("III", font="Liberation Sans:style=Bold Italic", size=55);
-translate([38, 46, -15])
+            text("III", font="Liberation Sans:style=Bold Italic", size=70);
+translate([45, 60, -15])
     rotate([180, 0, 270])
         linear_extrude(2)
-            text("schwarzgerät", size=7);
+            text("schwarzgerät", size=9);
 // round element (plug)
 difference(){
     union(){
