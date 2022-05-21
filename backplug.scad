@@ -6,20 +6,20 @@ w=99;
 h=88;
 zh=15;
 difference(){
-    translate([-50, -20, -zh]){
-        cube([w, h, zh]);
+    translate([-57, -20, -zh]){
+        cube([w + 7, h, zh]);
     }
     union(){
         // main cavity, closed bottom
-        translate([-(w-10)/2, -18, -(zh -2)]){
-            cube([w - 8, h, zh - 5]);
+        translate([-(w-10)/2 - 7, -18, -(zh -2)]){
+            cube([w - 1, h, zh - 5]);
         }
         // inlet on left side
         translate([40, -10, -(zh - 1)]){
             cube([10, 50, zh]);
         }
         // inlet on right side
-        translate([-50, -10, -(zh - 1)]){
+        translate([-57, -10, -(zh - 1)]){
             cube([10, 20, zh]);
         }
         // area intersecting with plug

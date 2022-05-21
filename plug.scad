@@ -17,13 +17,17 @@ difference(){
         translate([55, -10, -(zh - 1)]){
             cube([10, 20, zh]);
         }
+        // inlet on right side
+        translate([-45, -10, -(zh - 1)]){
+            cube([10, 20, zh]);
+        }
         // area intersecting with plug
         translate([-15, -7.5, -3]){
             cube([30, 15, 3]);
         }
         // bottom of back is open
         translate([-15, -22.5, -10]){
-            cube([23, 20, 10]);
+            cube([29, 20, 10]);
         }
         // top of back is open
         translate([-42, 55, -5]){
@@ -31,14 +35,14 @@ difference(){
         }
     }
 }
-translate([40, -11, -15])
+translate([45, -11, -15])
     rotate([0, 180, 0])
         linear_extrude(2)
             text("III", font="Liberation Sans:style=Bold Italic", size=70);
-translate([50, 60, -15])
+translate([55, 58, -15])
     rotate([180, 0, 270])
         linear_extrude(2)
-            text("schwarzgerät", size=9);
+            text("schwarzgerät", size=8.5);
 // round element (plug)
 difference(){
     union(){
@@ -59,8 +63,8 @@ difference(){
         translate([-15, 0, 0]){
             cylinder(15, s - 1, s- 1);
         }
-        translate([-14, -7.5, 0]){
-            cube([28, s*2 -2, 15]);
+        translate([-14, -9, 0]){
+            cube([30, s*2 -2, 15]);
         }
         translate([15, 0, 0]){
             cylinder(15, s - 1, s - 1);
