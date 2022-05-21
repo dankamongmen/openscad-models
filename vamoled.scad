@@ -2,7 +2,7 @@
 // with vertical holds, there's less area under pressure, and we can
 // leave the top entirely unoccupied (aside from in the very front),
 // which makes HDMI/power hookups easier.
-
+include <roundedcube.scad>
 include <cyl_head_bolt.scad>
 use </home/dank/.local/share/fonts/StencilDisco.ttf>
 use </home/dank/.local/share/fonts/Stencil Brush.ttf>
@@ -20,9 +20,9 @@ devw = 140.4;
 devh = 74.76;
 
 // the visible area
-vieww = 121.76;
-viewh = 68.7;
-viewt = 8; // measured thickness of bezel section
+vieww = 121.76 + 0.3 * 2; // measured + 0.3 * 2 tolerance
+viewh = 68.7; // 68.7 measured
+viewt = 9.5; // measured thickness of bezel section
 
 frameb = 10; // 10mm for bottom frame, with text
 framet = eh - viewh - frameb;
@@ -31,10 +31,12 @@ framer = framel;
 
 backt = 5; // thickness behind the device
 frontt = insetdepth + viewt + backt;
+backw = 9;
+backdepth = 10;
 
 // we put the front on the top (z-axis wise), as it has the most delicate
 // printing to do, and we want the finest finish there
-translate([8, 0, 0]){
+translate([backw, 0, 0]){
     difference(){
         union(){
             cube([ew, eh, frontt]);
@@ -52,50 +54,66 @@ translate([8, 0, 0]){
             // cut away the top behind the device, and everything on the left,
             // where we run a power cable
             translate([0, eh - framet, 0]){
-                cube([vieww + framel, framet, backt]);
+                cube([vieww + framel, framet, backt + viewt]);
             }
-            translate([2, 2, 0]){
-                linear_extrude(frontt){
-                    text("schwarzgerät iii 2022", size=6, font="StencilDisco");
-                }
+            // we need bridge out the holes in the letters here
+            difference(){
+              translate([0, 2, 0]){
+                  linear_extrude(frontt){
+                      text("“schwarzgerät III”", size=6, font="Liberation Serif:style=Italic");
+                  }
+              }
+              // first 'a'
+              translate([23, 3, 0]){
+                cube([1, 1, frontt]);
+              }
+              // 'g'
+              translate([33, 2, 0]){
+                cube([1, 1, frontt]);
+              }
+ 
+              // 'e'
+              translate([36.5, 3, 0]){
+                cube([1, 1, frontt]);
+              }
+              // second 'a'
+              translate([43, 3, 0]){
+                cube([1, 1, frontt]);
+              }
             }
-            translate([ew - 40, 0, 0]){
+            translate([ew - 42, -1, 0]){
                 linear_extrude(frontt){
-                    text("nick black", size=8, font="Stencil Brush");
+                    text("nick black", size=9, font="Stencil Brush");
                 }
             }
         }
     }
 }
-
-flare = 11;
-flarei = 5;
-backdepth = 10;
 
 difference(){
     union(){
-        cube([8, eh - framet, backdepth]);
+        cube([backw, eh - framet, backdepth]);
     }
     union(){
-        for(i = [25, 39, 63, 79]){
-            translate([4, i, -2]){
+        for(i = [25, 39, 65, 81]){
+            translate([3, i, -2]){
                 rotate([180, 0, 90]){
-                    hole_through("M4", l=100, cld=0.1, h=1, hcld=1);
+                    hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
                 }
             }
         }
     }
 }
-translate([8 + ew, 0, 0]){
+translate([backw + ew, 0, 0]){
     difference(){
         union(){
-            cube([8, eh, backdepth]);
+          cube([backw, eh, backdepth]);
         }
         union(){
-            for(i = [25, 39, 63, 79]){
-                translate([4, i, -2]){
+            for(i = [25, 39, 65, 81]){
+                translate([6, i, -2]){
                     rotate([180, 0, 90]){
-                        hole_through("M4", l=100, cld=0.1, h=1, hcld=1);
+                        hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
                     }
                 }
             }
