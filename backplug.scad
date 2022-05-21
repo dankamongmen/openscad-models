@@ -32,10 +32,10 @@ translate([35, -10, -15])
     rotate([0, 180, 0])
         linear_extrude(2)
             text("III", font="Liberation Sans:style=Bold Italic", size=70);
-translate([45, 60, -15])
+translate([45, 58, -15])
     rotate([180, 0, 270])
         linear_extrude(2)
-            text("schwarzgerät", size=9);
+            text("schwarzgerät", size=8.5);
 // round element (plug)
 difference(){
     union(){
