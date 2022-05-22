@@ -95,7 +95,7 @@ difference(){
         cube([backw, eh - framet, backdepth]);
     }
     union(){
-        for(i = [25, 39, 65, 81]){
+        for(i = [25, 39, 66, 82]){
             translate([3, i, -2]){
                 rotate([180, 0, 90]){
                     hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
@@ -110,7 +110,7 @@ translate([backw + ew, 0, 0]){
           cube([backw, eh, backdepth]);
         }
         union(){
-            for(i = [25, 39, 65, 81]){
+            for(i = [25, 39, 66, 82]){
                 translate([6, i, -2]){
                     rotate([180, 0, 90]){
                         hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
