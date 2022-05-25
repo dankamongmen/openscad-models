@@ -10,11 +10,11 @@ difference(){
     }
     polyhedron(
       [[clips, holeh / 2, 1],
-       [clips, holeh / 2, plugh - 1],
+       [clips, holeh / 2, plugh - 2],
        [clips, -holeh / 2, 1],
-       [clips, -holeh / 2, plugh - 1],
-       [clipe, holeh / 2, plugh - 1],
-       [clipe, -holeh / 2, plugh - 1]],
+       [clips, -holeh / 2, plugh - 2],
+       [clipe, holeh / 2, plugh - 2],
+       [clipe, -holeh / 2, plugh - 2]],
       [[1, 4, 5, 3], // facing top
        [5, 4, 0, 2], // inclined plane
        [0, 1, 3, 2], // back
@@ -24,11 +24,11 @@ difference(){
     );
     polyhedron(
       [[-clips, holeh / 2, 1],
-       [-clips, holeh / 2, plugh - 1],
+       [-clips, holeh / 2, plugh - 2],
        [-clips, -holeh / 2, 1],
-       [-clips, -holeh / 2, plugh - 1],
-       [-clipe, holeh / 2, plugh - 1],
-       [-clipe, -holeh / 2, plugh - 1]],
+       [-clips, -holeh / 2, plugh - 2],
+       [-clipe, holeh / 2, plugh - 2],
+       [-clipe, -holeh / 2, plugh - 2]],
       [[1, 4, 5, 3], // facing top
        [5, 4, 0, 2], // inclined plane
        [0, 1, 3, 2], // back

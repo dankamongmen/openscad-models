@@ -58,32 +58,32 @@ translate([backw, 0, 0]){
             }
             // we need bridge out the holes in the letters here
             difference(){
-              translate([0, 2, 0]){
+              translate([0, 2.5, 0]){
                   linear_extrude(frontt){
-                      text("“schwarzgerät III”", size=6, font="Liberation Serif:style=Italic");
+                      text("“schwarzgerät III”", size=6.5, font="Liberation Serif:style=Italic");
                   }
               }
               // first 'a'
-              translate([23, 3, 0]){
-                cube([1, 1, frontt]);
+              translate([24.5, 2.7, 0]){
+                cube([0.5, 0.5, frontt]);
               }
               // 'g'
-              translate([33, 2, 0]){
-                cube([1, 1, frontt]);
+              translate([36, 2.3, 0]){
+                cube([0.5, 2, frontt]);
               }
  
               // 'e'
-              translate([36.5, 3, 0]){
+              translate([40, 4, 0]){
                 cube([1, 1, frontt]);
               }
               // second 'a'
-              translate([43, 3, 0]){
-                cube([1, 1, frontt]);
+              translate([47.5, 2, 0]){
+                cube([0.5, 2, frontt]);
               }
             }
-            translate([ew - 42, -1, 0]){
+            translate([ew - 42, 0, 0]){
                 linear_extrude(frontt){
-                    text("nick black", size=9, font="Stencil Brush");
+                    text("nick black", size=8, font="Stencil Brush");
                 }
             }
         }
@@ -96,7 +96,7 @@ difference(){
     }
     union(){
         for(i = [25, 39, 66, 82]){
-            translate([3, i, -2]){
+            translate([4, i, -2]){
                 rotate([180, 0, 90]){
                     hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
                 }
