@@ -1,0 +1,119 @@
+digraph {
+	compound=true;
+	packmode="graph";
+
+  subgraph clusterMobo {
+		label="Aorus Master TRX40";
+	  cpu0
+		cpu1
+		sys1
+		sys2
+		fanpump5a
+		fanpump5b
+		fanpump6a
+		fanpump6b
+	}
+
+  subgraph clusterCorsair {
+	  label="Corsair iCUE Commander Core XT";
+		corsair0
+		corsair1
+		corsair2
+		corsair3
+		corsair4
+		corsair5
+	}
+
+  // pwm report: darkgreen
+	// pwm control: firebrick
+	// 12v power: gold
+
+	// cpu0
+  splitter0 -> cpu0 [ color="darkgreen" ];
+	cpu0 -> splitter0 [ color="firebrick" ];
+	xtop0 -> splitter0 [ color="darkgreen" ];
+	splitter0 -> xtop0 [ color="firebrick" ];
+	splitter0 -> xtop1 [ color="firebrick" ];
+
+	// cpu1
+	silverstone -> cpu1 [ color="darkgreen" ];
+	cpu1 -> silverstone [ color="firebrick" ];
+  silverstone -> bay0 [ color="firebrick" ];
+  silverstone -> bay1 [ color="firebrick" ];
+	vardar0 -> silverstone [ color="darkgreen" ];
+	silverstone -> vardar0 [ color="firebrick" ];
+	silverstone -> vardar1 [ color="firebrick" ];
+	silverstone -> nfa12x250 [ color="firebrick" ];
+	silverstone -> phantek0 [ color="firebrick" ];
+	silverstone -> phantek1 [ color="firebrick" ];
+	silverstone -> phantek2 [ color="firebrick" ];
+  silverstone -> bay0 [ color="gold" ];
+  silverstone -> bay1 [ color="gold" ];
+	silverstone -> vardar0 [ color="gold" ];
+	silverstone -> vardar1 [ color="gold" ];
+	silverstone -> nfa12x250 [ color="gold" ];
+	silverstone -> phantek0 [ color="gold" ];
+	silverstone -> phantek1 [ color="gold" ];
+	silverstone -> phantek2 [ color="gold" ];
+
+	// sys1
+	hub12v -> sys1 [ color="darkgreen" ];
+	sys1 -> hub12v [ color="firebrick" ];
+	hub12v -> phantek3 [ color="firebrick" ];
+	hub12v -> phantek3 [ color="gold" ];
+	hub12v -> ppc2k0 [ color="firebrick" ];
+	hub12v -> ppc2k0 [ color="gold" ];
+	hub12v -> ppc2k1 [ color="firebrick" ];
+	hub12v -> ppc2k1 [ color="gold" ];
+	ppc3k -> hub12v [ color="darkgreen" ];
+	hub12v -> ppc3k [ color="firebrick" ];
+	hub12v -> ppc3k [ color="gold" ];
+
+  // sys2
+	sys2;
+
+  // fanpump5 a and b. b is ignored for reporting.
+	fanpump5b -> phantek7 [ color="gold" ];
+	fanpump5b -> phantek7 [ color="firebrick" ];
+	phantek7 -> phantek6 [ color="gold" ];
+	phantek7 -> phantek6 [ color="firebrick" ];
+	redux0 -> splitter1 [ color="darkgreen" ];
+	splitter1 -> fanpump5a [ color="darkgreen" ];
+	fanpump5a -> splitter1 [ color="firebrick" ];
+	fanpump5a -> splitter1 [ color="gold" ];
+	splitter1 -> redux0 [ color="firebrick" ];
+	splitter1 -> redux0 [ color="gold" ];
+	splitter1 -> redux1 [ color="firebrick" ];
+	splitter1 -> redux1 [ color="gold" ];
+
+  // fanpump6 a and b. b is ignored for reporting.
+	hub5v -> fanpump6a [ color="darkgreen" ];
+	fanpump6a -> hub5v [ color="firebrick" ];
+	hub5v -> nff120 [ color="firebrick" ];
+  hub5v -> nff120 [ color="gold" ];
+	phantek8 -> hub5v [ color="darkgreen" ];
+	hub5v -> phantek8 [ color="firebrick" ];
+  hub5v -> phantek8 [ color="gold" ];
+	fanpump6b -> gelid [ color="firebrick" ];
+	gelid -> nff121 [ color="firebrick" ];
+	gelid -> nff121 [ color="gold" ];
+	gelid -> nf141 [ color="firebrick" ];
+	gelid -> nf141 [ color="gold" ];
+
+	// corsair
+  nfa12x251 -> corsair0 [ color="darkgreen" ];
+  corsair0 -> nfa12x251 [ color="firebrick" ];
+  corsair0 -> nfa12x251 [ color="gold" ];
+  nfa12x252 -> corsair1 [ color="darkgreen" ];
+  corsair1 -> nfa12x252 [ color="firebrick" ];
+  corsair1 -> nfa12x252 [ color="gold" ];
+	phantek4 -> corsair2 [ color="darkgreen" ];
+	corsair2 -> phantek4 [ color="firebrick" ];
+	corsair2 -> phantek4 [ color="gold" ];
+	phantek5 -> corsair3 [ color="darkgreen" ];
+	corsair3 -> phantek5 [ color="firebrick" ];
+	corsair3 -> phantek5 [ color="gold" ];
+	nf140 -> corsair4 [ color="darkgreen" ];
+	corsair4 -> nf140 [ color="firebrick" ];
+	corsair4 -> nf140 [ color="gold" ];
+}

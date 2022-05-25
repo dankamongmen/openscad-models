@@ -1,0 +1,65 @@
+digraph G {
+	compound=true;
+  psu->mobo [ label="atx12v" ];
+	psu->cpu [ label="eps12v" ];
+
+	// top psu disk bay
+	psu->sata0;
+	sata0->disk0;
+	sata0->disk1;
+	sata0->disk2;
+	sata0->disk3;
+
+  // bottom psu disk bay
+	psu->sata1;
+	sata1->disk4;
+	sata1->disk5;
+	sata1->disk6;
+	sata1->disk7;
+
+	// top enclosure
+	psu->molex0->blacksata->bay0;
+	bay0->disk8;
+	bay0->disk9;
+	bay0->disk10;
+	bay0->disk11;
+
+	// bottom enclosure
+	psu->molex1->greensata->bay1;
+	bay1->disk12;
+	bay1->disk13;
+	bay1->disk14;
+	bay1->disk15;
+
+	// 12V + 5V
+	psu->sata2;
+	sata2->corsair;
+	sata2->hub5v;
+	sata2->gelid;
+	sata2->orangesata;
+	orangesata->biusb;
+	biusb->amoled;
+	biusb->rpi3;
+
+	// 12V top section
+	psu->molexer0 [ label="pcie0" ];
+	molexer0->bluesata;
+	bluesata->quantum;
+	bluesata->inverter;
+	bluesata->silverstone;
+	bluesata->hub12v;
+
+	// 12V bottom section
+  psu->molexer1 [ label="pcie1" ];
+	molexer1->bisata;
+	bisata->xtop0;
+	bisata->xtop1;
+
+	// mobo-powered items
+	mobo->gpu;
+	mobo->nic;
+	mobo->sas;
+	mobo->hyperx;
+
+	psu->gpu [ label="pcie2" ];
+}
