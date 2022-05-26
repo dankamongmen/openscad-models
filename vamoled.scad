@@ -16,11 +16,11 @@ insetdepth = 10;
 
 // the device in toto, including its bezel. we will hide the bezel, and must
 // hold the device.
-devw = 140.4;
+devw = 140.4 + 0.3 * 2; // measured + 0.3 * 2 tolerance;
 devh = 74.76;
 
 // the visible area
-vieww = 121.76 + 0.3 * 2; // measured + 0.3 * 2 tolerance
+vieww = 121.76;
 viewh = 68.7; // 68.7 measured
 viewt = 9.5; // measured thickness of bezel section
 
@@ -90,12 +90,13 @@ translate([backw, 0, 0]){
     }
 }
 
+holes = [25, 38.5, 66, 81.5];
 difference(){
     union(){
         cube([backw, eh - framet, backdepth]);
     }
     union(){
-        for(i = [25, 39, 66, 82]){
+        for(i = holes){
             translate([4, i, -2]){
                 rotate([180, 0, 90]){
                     hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
@@ -110,7 +111,7 @@ translate([backw + ew, 0, 0]){
           cube([backw, eh, backdepth]);
         }
         union(){
-            for(i = [25, 39, 66, 82]){
+            for(i = holes){
                 translate([6, i, -2]){
                     rotate([180, 0, 90]){
                         hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
