@@ -1,27 +1,29 @@
 digraph {
 	compound=true;
 	packmode="graph";
+  rankdir="LR";
+  node [style="rounded,filled"];
 
   subgraph clusterMobo {
 		label="Aorus Master TRX40";
-	  cpu0
-		cpu1
-		sys1
-		sys2
-		fanpump5a
-		fanpump5b
-		fanpump6a
-		fanpump6b
+	  cpu0 [shape=box];
+		cpu1 [shape=box];
+		sys1 [shape=box];
+		sys2 [shape=box];
+		fanpump5a [shape=box];
+		fanpump5b [shape=box];
+		fanpump6a [shape=box];
+		fanpump6b [shape=box];
 	}
 
   subgraph clusterCorsair {
 	  label="Corsair iCUE Commander Core XT";
-		corsair0
-		corsair1
-		corsair2
-		corsair3
-		corsair4
-		corsair5
+		corsair0 [shape=box];
+		corsair1 [shape=box];
+		corsair2 [shape=box];
+		corsair3 [shape=box];
+		corsair4 [shape=box];
+		corsair5 [shape=box];
 	}
 
   // pwm report: darkgreen
@@ -29,11 +31,15 @@ digraph {
 	// 12v power: gold
 
 	// cpu0
+	xtop0 -> splitter0 [ color="darkgreen" ];
   splitter0 -> cpu0 [ color="darkgreen" ];
 	cpu0 -> splitter0 [ color="firebrick" ];
-	xtop0 -> splitter0 [ color="darkgreen" ];
 	splitter0 -> xtop0 [ color="firebrick" ];
 	splitter0 -> xtop1 [ color="firebrick" ];
+
+  xtop0 [shape=Mdiamond, fillcolor=gold2];
+  xtop1 [shape=Mdiamond, fillcolor=gold2];
+  vario [shape=Mdiamond, fillcolor=gold2];
 
 	// cpu1
 	silverstone -> cpu1 [ color="darkgreen" ];
@@ -56,6 +62,16 @@ digraph {
 	silverstone -> phantek1 [ color="gold" ];
 	silverstone -> phantek2 [ color="gold" ];
 
+	// triangles are outflow, invtriangles are inflow
+  phantek0 [shape=triangle, color=darkolivegreen3];
+  phantek1 [shape=triangle, color=darkolivegreen3];
+  phantek2 [shape=triangle, color=darkolivegreen3];
+  bay0 [shape=triangle, color=darkolivegreen3];
+  bay1 [shape=triangle, color=darkolivegreen3];
+  vardar0 [shape=triangle, color=darkolivegreen3];
+  vardar1 [shape=triangle, color=darkolivegreen3];
+  nfa12x250 [shape=triangle, color=darkolivegreen3];
+
 	// sys1
 	hub12v -> sys1 [ color="darkgreen" ];
 	sys1 -> hub12v [ color="firebrick" ];
@@ -69,8 +85,13 @@ digraph {
 	hub12v -> ppc3k [ color="firebrick" ];
 	hub12v -> ppc3k [ color="gold" ];
 
+  phantek3 [shape=invtriangle, fillcolor=cadetblue2];
+  ppc2k0 [shape=triangle, color=darkolivegreen3];
+  ppc2k1 [shape=triangle, color=darkolivegreen3];
+  ppc3k [shape=triangle, color=darkolivegreen3];
+
   // sys2
-	sys2;
+	vario -> sys2 [ color="darkgreen" ];
 
   // fanpump5 a and b. b is ignored for reporting.
 	fanpump5b -> phantek7 [ color="gold" ];
@@ -86,6 +107,11 @@ digraph {
 	splitter1 -> redux1 [ color="firebrick" ];
 	splitter1 -> redux1 [ color="gold" ];
 
+  redux0 [shape=invtriangle, fillcolor=cadetblue2];
+  redux1 [shape=invtriangle, fillcolor=cadetblue2];
+  phantek6 [shape=invtriangle, fillcolor=cadetblue2];
+  phantek7 [shape=invtriangle, fillcolor=cadetblue2];
+
   // fanpump6 a and b. b is ignored for reporting.
 	hub5v -> fanpump6a [ color="darkgreen" ];
 	fanpump6a -> hub5v [ color="firebrick" ];
@@ -99,6 +125,16 @@ digraph {
 	gelid -> nff121 [ color="gold" ];
 	gelid -> nf141 [ color="firebrick" ];
 	gelid -> nf141 [ color="gold" ];
+
+  gelid [shape=invhouse, fillcolor=darksalmon];
+	hub5v [shape=invhouse, fillcolor=darksalmon];
+	hub12v [shape=invhouse, fillcolor=darksalmon];
+	silverstone [shape=invhouse, fillcolor=darksalmon];
+
+  nff120 [shape=invtriangle, fillcolor=cadetblue2];
+  nff121 [shape=invtriangle, fillcolor=cadetblue2];
+  nf141 [shape=invtriangle, fillcolor=cadetblue2];
+  phantek8 [shape=invtriangle, fillcolor=cadetblue2];
 
 	// corsair
   nfa12x251 -> corsair0 [ color="darkgreen" ];
@@ -116,4 +152,11 @@ digraph {
 	nf140 -> corsair4 [ color="darkgreen" ];
 	corsair4 -> nf140 [ color="firebrick" ];
 	corsair4 -> nf140 [ color="gold" ];
+
+  nfa12x251 [shape=invtriangle, fillcolor=cadetblue2];
+  nfa12x252 [shape=invtriangle, fillcolor=cadetblue2];
+  phantek4 [shape=invtriangle, fillcolor=cadetblue2];
+  phantek5 [shape=invtriangle, fillcolor=cadetblue2];
+	nf140 [shape=invtriangle, fillcolor=cadetblue2];
+
 }
