@@ -50,16 +50,16 @@ digraph {
 	silverstone -> vardar1 [ color="firebrick" ];
 	silverstone -> nfa12x250 [ color="firebrick" ];
 	silverstone -> phantek0 [ color="firebrick" ];
-	silverstone -> phantek1 [ color="firebrick" ];
-	silverstone -> phantek2 [ color="firebrick" ];
+	phantek0 -> phantek1 [ color="firebrick" ];
+	phantek1 -> phantek2 [ color="firebrick" ];
   silverstone -> bay0 [ color="gold" ];
   silverstone -> bay1 [ color="gold" ];
 	silverstone -> vardar0 [ color="gold" ];
 	silverstone -> vardar1 [ color="gold" ];
 	silverstone -> nfa12x250 [ color="gold" ];
 	silverstone -> phantek0 [ color="gold" ];
-	silverstone -> phantek1 [ color="gold" ];
-	silverstone -> phantek2 [ color="gold" ];
+	phantek0 -> phantek1 [ color="gold" ];
+	phantek1 -> phantek2 [ color="gold" ];
 
 	// triangles are outflow, invtriangles are inflow
   phantek0 [shape=triangle, color=darkolivegreen3];
@@ -146,18 +146,19 @@ digraph {
   phantek8 [shape=invtriangle, fillcolor=cadetblue2];
 
 	// corsair
-  nfa12x251 -> corsair0 [ color="darkgreen" ];
-  corsair0 -> nfa12x251 [ color="firebrick" ];
-  corsair0 -> nfa12x251 [ color="gold" ];
-  nfa12x252 -> corsair1 [ color="darkgreen" ];
-  corsair1 -> nfa12x252 [ color="firebrick" ];
-  corsair1 -> nfa12x252 [ color="gold" ];
-	phantek4 -> corsair2 [ color="darkgreen" ];
+  splitter3 -> corsair0 [ color="darkgreen" ];
+  corsair0 -> splitter3 [ color="firebrick" ];
+  corsair0 -> splitter3 [ color="gold" ];
+  nfa12x251 -> splitter3 [ color="darkgreen" ];
+  splitter3 -> nfa12x251 [ color="firebrick" ];
+  splitter3 -> nfa12x251 [ color="gold" ];
+  splitter3 -> nfa12x252 [ color="firebrick" ];
+  splitter3 -> nfa12x252 [ color="gold" ];
 	corsair2 -> phantek4 [ color="firebrick" ];
 	corsair2 -> phantek4 [ color="gold" ];
-	phantek5 -> corsair3 [ color="darkgreen" ];
-	corsair3 -> phantek5 [ color="firebrick" ];
-	corsair3 -> phantek5 [ color="gold" ];
+	phantek4 -> corsair2 [ color="darkgreen" ];
+	phantek4 -> phantek5 [ color="firebrick" ];
+	phantek4 -> phantek5 [ color="gold" ];
 	nf140 -> corsair4 [ color="darkgreen" ];
 	corsair4 -> nf140 [ color="firebrick" ];
 	corsair4 -> nf140 [ color="gold" ];
