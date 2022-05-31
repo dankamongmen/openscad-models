@@ -35,7 +35,8 @@ difference(){
         }
     }
 }
-translate([45, -11, -15])
+
+translate([45, -10, -15])
     rotate([0, 180, 0])
         linear_extrude(2)
             text("III", font="Liberation Sans:style=Bold Italic", size=70);

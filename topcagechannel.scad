@@ -7,9 +7,9 @@ sidet = 4;
 depth = 40;
 latchh = 4;
 backt = 4;
-riser = 3;
 risergap = 8; // space occupied by drive mounts
 riserspace = 2; // space occupied by drive cage
+riserdepth = 4; // how far riser descends
 
 // temporary printing quickness hack
 difference(){
@@ -39,22 +39,15 @@ union(){
           // back face
           cube([backt, height + 2 * latchh, depth]);
         }
-        sphere(2);
+        cylinder(0);
       }
       // riserlock on the top
-      translate([0, height + 1, backt]){
-        cube([sidew + backt, riser, risergap]);
+      translate([0, height + latchh - riserdepth, backt]){
+        cube([sidew + backt, riserdepth, risergap]);
         translate([0, 0, riserspace + risergap]){
-          cube([sidew + backt, riser, 2]);
+          cube([sidew + backt, riserdepth, 4]);
         }
       }
 }
-union(){
-  translate([-2, -2, -2]){
-    cube([100, 130, 100]);
-  }
-  translate([-2, 120, 30]){
-    cube([100, 100, 100]);
-  }
-}
+cube([200, height - 5, 100]);
 }
