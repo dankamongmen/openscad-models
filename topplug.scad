@@ -1,7 +1,7 @@
 holeh = 8.6;
 plugh = 10;
 clips = 16;
-clipe = 18;
+clipe = 17.5;
 difference(){
   union(){
     cylinder(plugh, r=17, true);

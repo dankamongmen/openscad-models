@@ -53,15 +53,4 @@ difference(){
           cube([sidew + backt, 4, 24]);
         }
   }
-
-  translate([104, -25, 0]){
-    linear_extrude(height = 5, center = true, convexity = 10){
-      offset(0.1)
-      scale([.5, .5, .5]){
-        rotate([0, 180, 0]){
-          import(file="exos.dxf");
-        }
-      }
-    }
-  }
 }
