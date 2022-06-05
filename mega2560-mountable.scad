@@ -6,12 +6,17 @@ union(){
     enclosure(MEGA2560);
     translate([-20,-20,25])
       cube([400,400,10]);
-    translate([0,104,0])
-      cube([10,20,40]);
+    translate([56, 92, 0]) {
+    rotate([0, 0, 0])
+      cube([4,15,40]);
+    }
+  
+    //translate([0,104,0])
+      //cube([10,20,40]);
   }
     // 2mm mounting "plate" with two M3 screw holes
-  translate([10,104,0]) {
-    rotate([0,0,90])
+  translate([56, 92, 0]) {
+    rotate([0, 0, 0])
     difference() {
       cube([4,15,40]);
       rotate([90,90,90])
