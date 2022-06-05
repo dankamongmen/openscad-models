@@ -11,17 +11,17 @@ risergap = 8; // space occupied by drive mounts
 riserspace = 2; // space occupied by drive cage
 riserdepth = 4; // how far riser descends
 
-union(){
-      minkowski(){
+difference(){
+  union(){
         union(){
           // side face, with indentations for labeling drives
           translate([backt, latchh, 0]){
             difference(){
               cube([sidew, height, sidet]);
               union(){
-                for(i = [10 : (height - 10) / 4 : 20 + (height - 10) * 3 / 4]){
-                  translate([10, i, 0]){
-                    cube([sidew - 2 * 10, 10, sidet / 2]);
+                for(i = [50 : (height - 50) / 4 : 20 + (height - 10) * 3 / 4]){
+                  translate([5, i, 0]){
+                    cube([sidew - 10, 10, sidet / 2]);
                   }
                 }
               }
@@ -37,13 +37,31 @@ union(){
           // back face
           cube([backt, height + 2 * latchh, depth]);
         }
-        cylinder(0);
-      }
-      // riserlock on the top
-      translate([0, height + latchh - riserdepth, backt]){
-        cube([sidew + backt, riserdepth, risergap]);
-        translate([0, 0, riserspace + risergap]){
-          cube([sidew + backt, riserdepth, 4]);
+        // riserlock on the top
+        translate([0, height + latchh - riserdepth, backt]){
+          cube([sidew + backt, riserdepth, risergap]);
+          translate([0, 0, riserspace + risergap]){
+            cube([sidew + backt, riserdepth, 4]);
+          }
+        }
+        
+        // riserlock on the bottom
+        translate([0, latchh, backt]){
+          cube([sidew + backt, riserdepth, risergap]);
+        }
+        translate([0, latchh + 4, risergap + backt + 4]){
+          cube([sidew + backt, 4, 24]);
+        }
+  }
+
+  translate([104, -25, 0]){
+    linear_extrude(height = 5, center = true, convexity = 10){
+      offset(0.1)
+      scale([.5, .5, .5]){
+        rotate([0, 180, 0]){
+          import(file="exos.dxf");
         }
       }
+    }
+  }
 }

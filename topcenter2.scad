@@ -1,6 +1,6 @@
 jheight = 25;
-jradius = 8.5;
-lwidth = 30;
+jradius = 9;
+lwidth = 29;
 
 module topplug(){
   hull(){
@@ -64,16 +64,22 @@ difference(){
       }
     }
 
-    // hollow vertical straightaway  
-   translate([20, 0, 30]){
-      rotate([90, 90, 0]){
-        cplug();
+  // hollow vertical straightaway, without back
+  difference(){  
+      translate([20, -25, 4]){
+        rotate([90, 90, 0]){
+          cplug();
+        }
       }
-    }
+      // remove back of vertical straightaway
+      translate([10, -50, -25]){
+        cube([10, 15, 30]);
+      }
+  }
   
     // sheared joiner
     shearAlongY([0, -30, -30]){
-      translate([20, -25, 55]){
+      translate([20, 0, lwidth]){
         rotate([90, 90, 0]){
           cplug();
         }
@@ -82,7 +88,7 @@ difference(){
 
     // hollow horizontal straightaway  
     scale([1, 1, 1]){
-      translate([-10, 20, 30]){
+      translate([-10, 20, lwidth]){
         rotate([0, 90, 0]){
           cplug(jheight / 2);
         }
@@ -97,7 +103,7 @@ difference(){
   union(){
     rotate_extrude(angle=90){
       translate([20, 3, 0]){
-        scale([0.8, 0.8, 0.8]){
+        scale([0.9, 0.9, 0.9]){
           rotate([0, 0, 90]){
             topplug();
           }
