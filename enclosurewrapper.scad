@@ -9,7 +9,22 @@ frontwidth = fanheight + tobrace;
 
 difference(){
   cube([theight, frontwidth, tofan]);
+  union(){
+    translate([hookheight, backthick, backthick]){
+      cube([theight - hookheight * 2, frontwidth, tofan]);
+    }
+    cube([theight, 4, 4]);
+  }
+}
+
+// round the corner
+difference(){
+  translate([0, 5, 5]){
+    rotate([0, 90, 0]){
+      cylinder(theight, 5, 5);
+    }
+  }
   translate([hookheight, backthick, backthick]){
-    cube([theight - hookheight * 2, frontwidth, tofan]);
+    cube([encheight, 8, 8]);
   }
 }
