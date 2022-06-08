@@ -1,7 +1,7 @@
-// fitting between mobo bottom plugs
+    // fitting between mobo bottom plugs
 
 zh = 15 - 2 * 0.3;
-midheight = 20;
+midheight = 11;
 bottom = -10;
 hook = 5;
 width = 20 + 2 * hook; // gap of 20 between them, and 5mm on each to hook
@@ -11,7 +11,7 @@ midthick = 3;
 midtall = 88 - midheight + 5;
 
 module bottom(){
-  cube([width, midheight, zh]);
+  cube([width, midheight, 20 - 2 * 0.3]);
 }
 
 difference(){
@@ -30,16 +30,16 @@ coverwidth = (width - hook * 2 - midwidth) / 2;
 
 // left half of bottom top
 translate([hook, bottom, -zh - hookheight + 1]){
-  cube([coverwidth, -bottom * 2, hookheight]);
+  cube([coverwidth, midheight, hookheight]);
 }
 // right half of bottom top
 translate([width - (coverwidth + hook), bottom, -zh - hookheight + 1]){
-  cube([coverwidth, -bottom * 2, hookheight]);
+  cube([coverwidth, midheight, hookheight]);
 }
 // middle box
 module midbox(){
   translate([(width - (midwidth + midthick * 2)) / 2, bottom, -zh + 1 - midtall]){
-    cube([midwidth + midthick * 2, -bottom * 2, midtall]);
+    cube([midwidth + midthick * 2, midheight, midtall]);
   }
 }
 
