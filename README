@@ -1,1 +1,73 @@
 i'm learning 3d modeling. these are probably not very good examples.
+
+## CaseLabs Magnum T10
+
+Most of these parts are for my
+[workstation](https://nick-black.com/dankwiki/index.php?title=Schwarzger%C3%A4t_III),
+in a CaseLabs Magnum T10 case.
+
+### Mobo side
+
+Along the bottom, two cable shrouds plug into the cross-median holes,
+and a tall, thin cable shroud plugs between them. These are printed
+with the brightest white we can find, to maximally reflect nearby LEDs.
+
+* [Bottom back plug](bottomback-plug.scad)
+* [Bottom middle plug](bottommid-plug.scad)
+* [Bottom front plug](bottomfront-plug.scad)
+
+Closer to the front, we mount an EKWB Dual XTOP pump enclosure;
+its back is mounted atop a fan, and its front atop a USB frontpiece
+mounted into a FlexBay. These are printed in black.
+
+* [XTOP back mount](xtopmount.scad)
+* [XTOP front mount](xtopbrace.scad)
+
+Around the front XTOP mount, we have two white pieces to hide
+cables going to the Corsair iCUE Commander Core XT.
+
+* [Front piece](xtopfront.scad)
+* Back piece—not yet done
+
+Above the motherboard, two more cross-median holes are plugged, these
+with thin, angular/curvilinear channels through which wires are run.
+
+* [Top front plug](cpuplug.scad)
+* Top back piece—not yet done
+
+Finally, each 4x3.5" disk enclosure has a wrapper:
+
+* [Disk enclosure wrapper](enclosurewrapper.scad)
+
+### Back
+
+The Quantum Kinetic FLT is attached with mounting brackets, but there is no
+top on this structure. We cover the top, and add a depression in which we
+place a magnet, and mount the WiFi antenna.
+
+* [Reservoir top](reservoir-part.scad)
+
+We replace one of the top corks with one containing a Molex passthrough.
+This will be used to power the Quantum Kinetic's Vario pump.
+
+* [Molex cork](top-back-molex.scad)
+
+### Front
+
+We mount a Libre Le Potato to a Waveshare 5.5" capacitive AMOLED, and slide
+the assembly into a brace, which is mounted into the top two FlexBays.
+
+* [vAMOLED brace](vamoled.scad)
+
+### PSU side
+
+We need a platform for both an Arduino MEGA 2560 and an RH Electronics
+Geiger counter.
+
+* [MEGA 2560](mega2560-mountable.scad)
+* [Geiger counter](geiger.scad)
+
+Like the mobo-side enclosures, we need a wrapper on our CaseLabs 4x3.5"
+disk cages.
+
+* [Cage wrapper](topcagechannel.scad)
