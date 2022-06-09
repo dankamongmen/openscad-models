@@ -14,8 +14,17 @@ difference(){
       cube([theight - hookheight * 2, frontwidth, tofan]);
     }
     cube([theight, 4, 4]);
+    linear_extrude(2){
+      for(ul = [1 : 4]){
+        polygon([[ul * encheight / 5 + 10, 12],
+                 [ul * encheight / 5, frontwidth - 10],
+                 [ul * encheight / 5 - 10, frontwidth - 10],
+                 [ul * encheight / 5, 12]]);
+      }
+    }
   }
 }
+
 
 // round the corner
 difference(){
