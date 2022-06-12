@@ -37,11 +37,11 @@ difference(){
 
      }
 }
-translate([35, -10, -15])
+translate([33, -10, -15])
     rotate([0, 180, 0])
         linear_extrude(2)
             text("III", font="Liberation Sans:style=Bold Italic", size=70);
-translate([45, 58, -15])
+translate([43, 58, -15])
     rotate([180, 0, 270])
         linear_extrude(2)
             text("schwarzgerät", size=8.5);
@@ -154,7 +154,7 @@ midtall = 80 - midheight + 5;
 
 // middle fitting
 module bottom(){
-  cube([width, midheight, 21 - 2 * 0.3]);
+  cube([width, midheight - 10, 21]);
 }
 
 // middle box
@@ -167,7 +167,7 @@ module midbox(){
 translate([-78, -3, 0]){  
   rotate([90, 0, 0]){
     difference(){
-      translate([0, bottom, -(mzh - 1)]){
+      translate([0, bottom - 4, -(mzh - 1)]){
         bottom();
       }
       translate([0, bottom + 1, -mzh]){
@@ -175,6 +175,10 @@ translate([-78, -3, 0]){
           bottom();
         }
       }
+    }
+    
+    translate([10, -13, -23]){
+      cube([11, 2, 10]);
     }
     
     hookheight = 5;
