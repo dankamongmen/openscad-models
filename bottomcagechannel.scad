@@ -1,5 +1,6 @@
 // cable runner from PSU to drive cages, enclosing two SATA cables with
 // four power plugs each
+// width of SATA molex power connector is 23mm (male) or 21mm (female)
 
 include <MCAD/regular_shapes.scad>
 
@@ -14,10 +15,10 @@ riserspace = 2; // space occupied by drive cage
 riserdepth = 4; // how far riser descends
 
 module octtube(){
-  tubelen = 70;
-  translate([-tubelen + backt, 25, 20]){
+  tubelen = 30;
+  translate([-tubelen + backt, 115, 20]){
     rotate([0, 90, 0]){
-      octagon_tube(tubelen, 11, 1);
+      octagon_tube(tubelen, 12, 1);
     }
   }
 }
@@ -32,9 +33,9 @@ difference(){
               union(){
                 linear_extrude(2){
                   for(ul = [1 : 4]){
-                    polygon([[16, height - ul * height / 5 + 10],
+                    polygon([[16, height - ul * height / 5 - 10],
                              [sidew - 10, height - ul * height / 5],
-                             [sidew - 10, height - ul * height / 5 - 10],
+                             [sidew - 10, height - ul * height / 5 + 10],
                              [16, height - ul * height / 5]]);
                   }
                 }
@@ -73,3 +74,16 @@ difference(){
 }
 
 octtube();
+module shearAlongX(p) {
+  multmatrix([
+    [1, 0, 0, 0],
+    [p.y / p.x, 1, 0, 0],
+    [p.z / p.x, 0, 1, 0]
+  ]) children();                
+}                   
+
+translate([-30, 8, 0]){
+  shearAlongX([1, -2, 0]){
+    octtube();
+  }
+}
