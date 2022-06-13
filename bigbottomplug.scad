@@ -90,11 +90,11 @@ translate([-130, 0, 0]){
             cube([10, 20, zh]);
         }
         // area intersecting with plug
-        translate([-15, -7.5, -3]){
+        translate([-25, -7.5, -3]){
             cube([30, 15, 3]);
         }
         // bottom of back is open
-        translate([-15, -22.5, -10]){
+        translate([-25, -22.5, -10]){
             cube([29, 20, 10]);
         }
         // top of back is open
@@ -115,27 +115,27 @@ translate([-130, 0, 0]){
   // round element (plug)
   difference(){
       union(){
-          translate([-15, 0, 0]){
+          translate([-25, 0, 0]){
               cylinder(t, s, s);
           }
-          translate([-15, -s , 0]){
+          translate([-25, -s , 0]){
             cube([30, s*2  ,t]);
           }
-          translate([15, 0, 0]){
+          translate([5, 0, 0]){
             cylinder(t , s, s);
           }
       }
       union(){
-          translate([-15, -22.5, 0]){
+          translate([-25, -22.5, 0]){
               cube([23, 20, 20]);
           }
-          translate([-15, 0, 0]){
+          translate([-25, 0, 0]){
               cylinder(15, s - 1, s- 1);
           }
-          translate([-14, -9, 0]){
+          translate([-24, -9, 0]){
               cube([30, s*2 -2, 15]);
           }
-          translate([15, 0, 0]){
+          translate([5, 0, 0]){
               cylinder(15, s - 1, s - 1);
           }
       }
@@ -147,7 +147,7 @@ midheight = 11;
 bottom = -10;
 hook = 5;
 width = 21 + 2 * hook; // gap of 20 between them, and 5mm on each to hook
-midwidth = 10; // actual width of middle *gap* (box is larger, for walls)
+midwidth = 11; // actual width of middle *gap* (box is larger, for walls)
 midthick = 3;
 // other baskets are 88 tall in their entirety; we want to rise just a bit higher up
 midtall = 80 - midheight + 5;
@@ -177,8 +177,8 @@ translate([-78, -3, 0]){
       }
     }
     
-    translate([10, -13, -23]){
-      cube([11, 2, 10]);
+    translate([9, -13, -23]){
+      cube([midwidth + 1, 3, 10]);
     }
     
     hookheight = 5;

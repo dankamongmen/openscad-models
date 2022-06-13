@@ -1,4 +1,4 @@
-encheight = 122.5; // measured
+encheight = 124; // measured (was 122.5)
 hookheight = 3; // we only have 3mm between enclosures
 backthick = 3;
 tofan = 55; // distance from edge to 80mm fan
