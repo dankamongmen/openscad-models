@@ -19,9 +19,12 @@ difference(){
             difference(){
               cube([sidew, height, sidet]);
               union(){
-                for(i = [50 : (height - 50) / 4 : 20 + (height - 10) * 3 / 4]){
-                  translate([5, i, 0]){
-                    cube([sidew - 10, 10, sidet / 2]);
+                linear_extrude(2){
+                  for(ul = [1 : 4]){
+                    polygon([[16, height - ul * height / 5 + 10],
+                             [sidew - 10, height - ul * height / 5],
+                             [sidew - 10, height - ul * height / 5 - 10],
+                             [16, height - ul * height / 5]]);
                   }
                 }
               }
