@@ -1,4 +1,4 @@
-encheight = 124; // measured (was 122.5)
+encheight = 126; // measured (was 124)
 hookheight = 3; // we only have 3mm between enclosures
 backthick = 3;
 tofan = 55; // distance from edge to 80mm fan
@@ -30,7 +30,7 @@ difference(){
             }
           }
           minkowski(){
-            translate([140, 8, -20]){
+            translate([142, 8, -20]){
               scale([0.8, 0.8, 1])
               offset(10){
                 flat();
