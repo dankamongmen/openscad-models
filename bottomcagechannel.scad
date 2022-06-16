@@ -16,7 +16,7 @@ riserdepth = 4; // how far riser descends
 
 module octtube(){
   tubelen = 30;
-  translate([-tubelen + backt, 115, 20]){
+  translate([-tubelen + backt, 115, 27]){
     rotate([0, 90, 0]){
       octagon_tube(tubelen, 12, 1);
     }
@@ -87,3 +87,6 @@ translate([-30, 8, 0]){
     octtube();
   }
 }
+
+
+
