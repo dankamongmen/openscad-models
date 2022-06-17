@@ -1,9 +1,8 @@
-// cable runner from PSU to drive cages, enclosing two SATA cables with
+/// cable runner from PSU to drive cages, enclosing two SATA cables with
 // four power plugs each
 // width of SATA molex power connector is 23mm (male) or 21mm (female)
 
-include <MCAD/regular_shapes.scad>
-
+include <joiner.scad>
 height = 136; // measured
 sidew = 60; // 30 on, 30 off
 sidet = 4;
@@ -13,15 +12,6 @@ backt = 4;
 risergap = 8; // space occupied by drive mounts
 riserspace = 2; // space occupied by drive cage
 riserdepth = 4; // how far riser descends
-
-module octtube(){
-  tubelen = 30;
-  translate([-tubelen + backt, 115, 27]){
-    rotate([0, 90, 0]){
-      octagon_tube(tubelen, 12, 1);
-    }
-  }
-}
 
 difference(){
   union(){
@@ -68,25 +58,19 @@ difference(){
           cube([sidew + backt, 4, 24]);
         }
   }
-  hull(){
-    octtube();
+  translate([0, 126, 32]){
+    rotate([0, 90, 0]){
+      cylinder(4, 5, 5);
+    }
   }
 }
 
-octtube();
-module shearAlongX(p) {
-  multmatrix([
-    [1, 0, 0, 0],
-    [p.y / p.x, 1, 0, 0],
-    [p.z / p.x, 0, 1, 0]
-  ]) children();                
-}                   
-
-translate([-30, 8, 0]){
-  shearAlongX([1, -2, 0]){
-    octtube();
+fchunk(height, sidew);
+shearAlongX([1, -1, 0]){
+  translate([-40, -40, 0]){
+    fchunk(height, sidew);
   }
 }
-
-
-
+translate([-80, 40, 0]){
+  fchunk(height, sidew);
+}

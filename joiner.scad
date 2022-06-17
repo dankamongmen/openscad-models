@@ -79,4 +79,18 @@ module dunit(length) {
   }
 }
 
-dunit(unitlength);
+module shearAlongX(p) {
+  multmatrix([
+    [1, 0, 0, 0],
+    [p.y / p.x, 1, 0, 0],
+    [p.z / p.x, 0, 1, 0]
+  ]) children();
+}
+
+module fchunk(height, sidew){
+  translate([-20, height - 10, sidew - 28]){
+    rotate([180, 90, 0]){
+      dunit(40);
+    }
+  }
+}
