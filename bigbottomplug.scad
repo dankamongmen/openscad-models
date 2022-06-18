@@ -71,7 +71,7 @@ difference(){
     }
 }
 
-translate([-130, 0, 0]){
+translate([-132, 0, 0]){
   difference(){
     translate([-w/2 + 5, -20, -zh]){
         cube([w + 7, h, zh]);
@@ -143,7 +143,7 @@ translate([-130, 0, 0]){
 }
 
 mzh = 15 - 2 * 0.3;
-midheight = 11;
+midheight = 10;
 bottom = -10;
 hook = 5;
 width = 21 + 2 * hook; // gap of 20 between them, and 5mm on each to hook
@@ -154,7 +154,7 @@ midtall = 80 - midheight + 5;
 
 // middle fitting
 module bottom(){
-  cube([width, midheight - 10, 21]);
+  cube([width, 1, 21]);
 }
 
 // middle box
@@ -177,21 +177,13 @@ translate([-78, -3, 0]){
       }
     }
     
-    translate([9, -13, -23]){
-      cube([midwidth + 1, 3, 10]);
+    translate([7, -13, -23]){
+      cube([midwidth + 3, 3, 10]);
     }
     
     hookheight = 5;
     coverwidth = (width - hook * 2 - midwidth) / 2;
     
-    // left half of bottom top
-    translate([hook, bottom, -mzh - hookheight + 1]){
-      cube([coverwidth, midheight, hookheight]);
-    }
-    // right half of bottom top
-    translate([width - (coverwidth + hook), bottom, -mzh - hookheight + 1]){
-      cube([coverwidth, midheight, hookheight]);
-    }
     
     // hollow middle box with missing back
     difference(){
