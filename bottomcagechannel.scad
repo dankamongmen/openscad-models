@@ -2,6 +2,7 @@
 // four power plugs each
 // width of SATA molex power connector is 23mm (male) or 21mm (female)
 
+use <MCAD/regular_shapes.scad>  
 include <joiner.scad>
 height = 136; // measured
 sidew = 60; // 30 on, 30 off
@@ -11,7 +12,8 @@ latchh = 4;
 backt = 4;
 risergap = 8; // space occupied by drive mounts
 riserspace = 2; // space occupied by drive cage
-riserdepth = 4; // how far riser descends
+// with 14, we're getting close to the top screw
+riserdepth = 14; // how far riser descends
 
 difference(){
   union(){
@@ -57,14 +59,40 @@ difference(){
         translate([0, latchh + 4, risergap + backt + 4]){
           cube([sidew + backt, 4, 24]);
         }
+        translate([5, 124, 15]){
+            rotate([0, 0, 30]){
+                triangle_prism(25, 5);
+            }
+        }        
+        translate([5, 76, 15]){
+            rotate([0, 0, 30]){
+                triangle_prism(25, 5);
+            }
+        }
+        // two triprisms to hold plugin
+        translate([5, 124, 15]){
+            rotate([0, 0, 30]){
+                triangle_prism(25, 5);
+            }
+        }        
+        translate([5, 76, 15]){
+            rotate([0, 0, 30]){
+                triangle_prism(25, 5);
+            }
+        }
   }
+  translate([0, 80, 15]){
+      cube([4, 40, 30]);
+  }
+  /*
   translate([0, 126, 32]){
     rotate([0, 90, 0]){
       cylinder(4, 5, 5);
     }
-  }
+  }*/
 }
 
+/*
 fchunk(height, sidew);
 shearAlongX([1, -1, 0]){
   translate([-40, -40, 0]){
@@ -74,3 +102,4 @@ shearAlongX([1, -1, 0]){
 translate([-80, 40, 0]){
   fchunk(height, sidew);
 }
+*/

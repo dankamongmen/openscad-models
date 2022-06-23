@@ -6,7 +6,7 @@ outerr = 7.5; // thickness of plug wrap
 innerplug = 45;                     // inner plug width
 cyldist = innerplug - r * 2;        // width between cylinder foci
 outerplug = innerplug + 2 * outerr; // full plug width
-distance = 102;                     // distance between extremal outer points
+distance = 92;                     // distance between extremal outer points
 plugheight = 10; // arbitrary, enough to test FIXME
 
 module plug2dsolid(){
