@@ -28,23 +28,24 @@ plugs = 3;
 totalheight = evgastudcenterheight + evgaheight + evgastudheight;
 totalwidth = 3 * evgawidth;
 
-extrawidth = 3; // per side
+extrawidth = 4; // per side
+plugwidth = 2;
 
 depth = 10; // random for now
 
 w = totalwidth + extrawidth * 2;
 // the bottom, where the plugs nestle
-translate([-w / 2, 0, 0]){
+translate([-totalwidth / 2, 0, 0]){
     difference(){
-        cube([w, 5, depth]);
+        cube([totalwidth, 5, depth]);
         union(){
             // lop off the top until we clear the plug (3 deep)
             translate([0, 4, 0]){
-                cube([w, 1, evgastudgap + evgastuddepth]);
+                cube([totalwidth, 1, evgastudgap + evgastuddepth]);
             }
             // cut out hole for stud
             translate([0, 3, evgastudgap]){
-                cube([w, 1, evgastuddepth]);
+                cube([totalwidth, 1, evgastuddepth]);
             }
         }
     }
@@ -56,7 +57,7 @@ module sidewall(){
         difference(){
             cube([extrawidth, totalheight / 2, depth]);
             translate([1 + give / 2, 1, 1]){
-                cube([1 + give, totalheight / 2 - 1, depth - 2]);
+                cube([plugwidth + give, totalheight / 2 - 1, depth - 2]);
             }
         }
     }
@@ -72,8 +73,8 @@ mirror([1, 0, 0]){
 module topsidewall(){
     translate([w / 2 - extrawidth, 0, 0]){
         cube([extrawidth, totalheight / 2, depth]);
-        translate([1 + give / 2, totalheight / 2, 1 + give]){
-            cube([1, totalheight / 2 - 1 - give, depth - 2 - give * 2]);
+        translate([1 + give, totalheight / 2, 1 + give]){
+            cube([plugwidth - give * 2, totalheight / 2 - 1 - give, depth - 2 - give * 2]);
         }
     }
 }
