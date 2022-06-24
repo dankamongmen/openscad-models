@@ -49,13 +49,6 @@ translate([-w/2, 0, 0]){
                 translate([(iw - hw) / 2 + hw, m / 2, h - 2]){
                     cylinder(h, sw, true);
                 }
-                translate([19, 0, 7]){
-                    rotate([90, 0, 0]){
-                        linear_extrude(4){
-                            text("schwarzgerät");
-                        }
-                    }
-                }
             }
         }
     }

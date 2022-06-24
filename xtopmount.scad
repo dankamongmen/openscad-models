@@ -19,13 +19,6 @@ difference(){
         translate([i2, w - i2, sh]){
             screw("M4x12", thread="modeled");
         }
-        translate([12, 22, 0]){
-            rotate([0, 0, 90]){
-                linear_extrude(3){
-                    text("schwarzgerät");
-                }
-            }
-        }
         translate([65, w/2 - 5, 0]){
             sphere(r=50);
         }
