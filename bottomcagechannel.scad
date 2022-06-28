@@ -5,7 +5,7 @@
 use <MCAD/regular_shapes.scad>  
 include <joiner.scad>
 height = 136; // measured
-sidew = 60; // 30 on, 30 off
+sidew = 150; // 30 on, 120 off
 sidet = 4;
 depth = 40;
 latchh = 4;
@@ -26,8 +26,8 @@ difference(){
                 linear_extrude(2){
                   for(ul = [1 : 4]){
                     polygon([[16, height - ul * height / 5 - 10],
-                             [sidew - 10, height - ul * height / 5],
-                             [sidew - 10, height - ul * height / 5 + 10],
+                             [sidew - 100, height - ul * height / 5],
+                             [sidew - 100, height - ul * height / 5 + 10],
                              [16, height - ul * height / 5]]);
                   }
                 }
@@ -81,8 +81,15 @@ difference(){
             }
         }
   }
-  translate([0, 80, 15]){
-      cube([4, 40, 30]);
+  union(){
+    translate([0, 80, 15]){
+        cube([4, 40, 30]);
+    }
+    // prep for corner rounding
+    cube([5, height + latchh * 2, 5]);
+    translate([150, 0, 0]){
+      cube([4, height + latchh * 2, 4]);
+    }
   }
   /*
   translate([0, 126, 32]){
@@ -90,6 +97,37 @@ difference(){
       cylinder(4, 5, 5);
     }
   }*/
+}
+
+
+// round the primary corner
+translate([6, 0, 6]){
+  difference(){
+    rotate([270, 0, 0]){
+      cylinder(height + latchh * 2, 6, 6);
+    }
+    translate([-6, 0, 0]){
+      cube([12, height + latchh * 2, 12]);
+    }
+    translate([0, 0, -6]){
+      cube([6, height + latchh * 2, 12]);
+    }
+  }
+}
+
+// round the far corner
+translate([151, 0, 3]){
+  difference(){
+    rotate([270, 0, 0]){
+      cylinder(height + latchh * 2, 3, 3);
+    }
+    translate([-3, 0, 0]){
+      cube([6, height + latchh * 2, 6]);
+    }
+    translate([3, 0, -3]){
+      cube([3, height + latchh * 2, 6]);
+    }
+  }
 }
 
 /*
