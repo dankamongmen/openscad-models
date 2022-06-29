@@ -25,10 +25,10 @@ difference(){
               union(){
                 linear_extrude(2){
                   for(ul = [1 : 4]){
-                    polygon([[16, height - ul * height / 5 - 10],
-                             [sidew - 100, height - ul * height / 5],
-                             [sidew - 100, height - ul * height / 5 + 10],
-                             [16, height - ul * height / 5]]);
+                    polygon([[sidew - 100, height - ul * height / 5 - 10],
+                             [16, height - ul * height / 5],
+                             [16, height - ul * height / 5 + 10],
+                             [sidew - 100, height - ul * height / 5]]);
                   }
                 }
               }
@@ -116,16 +116,16 @@ translate([6, 0, 6]){
 }
 
 // round the far corner
-translate([151, 0, 3]){
+translate([149, 0, 5]){
   difference(){
     rotate([270, 0, 0]){
-      cylinder(height + latchh * 2, 3, 3);
+      cylinder(height + latchh * 2, 5, 5);
     }
-    translate([-3, 0, 0]){
-      cube([6, height + latchh * 2, 6]);
+    translate([-6, 0, 0]){
+      cube([60, height + latchh * 2, 6]);
     }
-    translate([3, 0, -3]){
-      cube([3, height + latchh * 2, 6]);
+    translate([3, 0, 0]){
+      cube([3, height + latchh * 2, 4]);
     }
   }
 }

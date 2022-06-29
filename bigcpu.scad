@@ -44,9 +44,55 @@ mirror([1, 0, 0]){
   plug3d();
 }
 
-translate([-(distance / 2 + cyldist + r + outerr), r, 0]){
+// cuboid joiners on top/bottom
+translate([-(distance / 2 + cyldist + r + outerr), r - 2, 0]){
   cube([distance + (r + outerr + cyldist) * 2, 2, 4]);
 }
+translate([-(distance / 2 + cyldist + r + outerr), -r, 0]){
+  cube([distance + (r + outerr + cyldist) * 2, 2, 4]);
+}
+
+module shearAlongX(p) {
+  multmatrix([
+    [1, 0, 0, 0],
+    [p.y / p.x, 1, 0, 0],
+    [p.z / p.x, 0, 1, 0]
+  ]) children();
+}
+
+// crossbar
+shearAlongX([1, .125, 0]){
+  translate([-(distance / 2 + r + outerr), -1, 0]){
+    cube([distance + (r + outerr) * 2, 2, 4]);
+  }
+}
+shearAlongX([1, -.125, 0]){
+  translate([-(distance / 2 + r + outerr), -1, 0]){
+    cube([distance + (r + outerr) * 2, 2, 4]);
+  }
+}
+
+// inverted crossbar
+module angle(){
+  translate([0, r / 2 + 2, 0]){
+    shearAlongX([1, -.125, 0]){
+      cube([(distance + r + outerr) / 2, 2, 4]);
+    }
+  }
+}
+
+angle();
+mirror([0, 1, 0]){
+  angle();
+}
+
+mirror([1, 0, 0]){
+  angle();
+  mirror([0, 1, 0]){
+    angle();
+  }
+}
+
 
 // cpu side
 
@@ -82,13 +128,6 @@ module cplug(jh = jheight){
   }
 }
 
-module shearAlongX(p) {
-  multmatrix([
-    [1, 0, 0, 0],
-    [p.y / p.x, 1, 0, 0],
-    [p.z / p.x, 0, 1, 0]
-  ]) children();
-}
 
 module shearAlongY(p) {
   multmatrix([
@@ -175,10 +214,16 @@ translate([-90, -20, -10]){
     }
 }
 
-mirror([1, 0, 0]){
-    translate([-90, -20, -10]){
-        rotate([0, 90, 0]){
-            horn();
-        }
-    }
+// left horn gets cut off higher up
+difference(){
+  mirror([1, 0, 0]){
+      translate([-90, -20, -10]){
+          rotate([0, 90, 0]){
+              horn();
+          }
+      }
+  }
+  translate([50, -100, -100]){
+    cube([100, 80, 100]);
+  }
 }
