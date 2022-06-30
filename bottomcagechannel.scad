@@ -5,7 +5,7 @@
 use <MCAD/regular_shapes.scad>  
 include <joiner.scad>
 height = 136; // measured
-sidew = 150; // 30 on, 120 off
+sidew = 175; // 30 on, 145 off
 sidet = 4;
 depth = 40;
 latchh = 4;
@@ -25,10 +25,10 @@ difference(){
               union(){
                 linear_extrude(2){
                   for(ul = [1 : 4]){
-                    polygon([[sidew - 100, height - ul * height / 5 - 10],
-                             [16, height - ul * height / 5],
-                             [16, height - ul * height / 5 + 10],
-                             [sidew - 100, height - ul * height / 5]]);
+                    polygon([[16, height - ul * height / 5 - 10],
+                             [sidew - 100, height - ul * height / 5],
+                             [sidew - 100, height - ul * height / 5 + 10],
+                             [16, height - ul * height / 5]]);
                   }
                 }
               }
@@ -87,16 +87,16 @@ difference(){
     }
     // prep for corner rounding
     cube([5, height + latchh * 2, 5]);
-    translate([150, 0, 0]){
+    translate([sidew, 0, 0]){
       cube([4, height + latchh * 2, 4]);
     }
-  }
-  /*
-  translate([0, 126, 32]){
-    rotate([0, 90, 0]){
-      cylinder(4, 5, 5);
+    // cut off the locks past the point necessary to keep things
+    // stable -- saves printing time (and goes on more easily).
+    // half the length is more than sufficient.
+    translate([sidew / 2, latchh, 5]){
+      cube([sidew / 2 + 10, height, 40]);
     }
-  }*/
+  }
 }
 
 
@@ -116,7 +116,7 @@ translate([6, 0, 6]){
 }
 
 // round the far corner
-translate([149, 0, 5]){
+translate([sidew - 1, 0, 5]){
   difference(){
     rotate([270, 0, 0]){
       cylinder(height + latchh * 2, 5, 5);
