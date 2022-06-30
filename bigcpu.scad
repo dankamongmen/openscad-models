@@ -44,14 +44,6 @@ mirror([1, 0, 0]){
   plug3d();
 }
 
-// cuboid joiners on top/bottom
-translate([-(distance / 2 + cyldist + r + outerr), r - 2, 0]){
-  cube([distance + (r + outerr + cyldist) * 2, 2, 4]);
-}
-translate([-(distance / 2 + cyldist + r + outerr), -r, 0]){
-  cube([distance + (r + outerr + cyldist) * 2, 2, 4]);
-}
-
 module shearAlongX(p) {
   multmatrix([
     [1, 0, 0, 0],
@@ -60,19 +52,26 @@ module shearAlongX(p) {
   ]) children();
 }
 
-// crossbar
-shearAlongX([1, .125, 0]){
-  translate([-(distance / 2 + r + outerr), -1, 0]){
-    cube([distance + (r + outerr) * 2, 2, 4]);
+module crossbar(){
+  // cuboid joiners on top/bottom
+  translate([-(distance / 2 + cyldist + r + outerr), r - 2, -2]){
+    cube([distance + (r + outerr + cyldist) * 2, 2, 6]);
   }
-}
-shearAlongX([1, -.125, 0]){
-  translate([-(distance / 2 + r + outerr), -1, 0]){
-    cube([distance + (r + outerr) * 2, 2, 4]);
+  translate([-(distance / 2 + cyldist + r + outerr), -r, 0]){
+    cube([distance + (r + outerr + cyldist) * 2, 2, 4]);
+  }
+  shearAlongX([1, .125, 0]){
+    translate([-(distance / 2 + r + outerr), -1, 0]){
+      cube([distance + (r + outerr) * 2, 2, 4]);
+    }
+  }
+  shearAlongX([1, -.125, 0]){
+    translate([-(distance / 2 + r + outerr), -1, 0]){
+      cube([distance + (r + outerr) * 2, 2, 4]);
+    }
   }
 }
 
-// inverted crossbar
 module angle(){
   translate([0, r / 2 + 2, 0]){
     shearAlongX([1, -.125, 0]){
@@ -81,18 +80,30 @@ module angle(){
   }
 }
 
-angle();
-mirror([0, 1, 0]){
-  angle();
-}
-
-mirror([1, 0, 0]){
+module invcross(){
   angle();
   mirror([0, 1, 0]){
     angle();
   }
+  
+  mirror([1, 0, 0]){
+    angle();
+    mirror([0, 1, 0]){
+      angle();
+    }
+  }
 }
 
+module bridge(){
+  crossbar();
+  invcross();
+}
+
+bridge();
+
+translate([0, 0, -10]){
+  bridge();
+}
 
 // cpu side
 
@@ -159,19 +170,22 @@ module horn(){
         
           // hollow vertical straightaway, without back
           difference(){  
-              translate([20, -25, 4]){
-                rotate([90, 90, 0]){
+            scale([1, 1.5, 1])
+            translate([20, -42, -9]){
+            rotate([270, 90, 0]){
+              
+                
                   cplug();
                 }
               }
               // remove back of vertical straightaway
-              translate([10, -50, -25]){
-                cube([10, 15, 30]);
+              translate([5, -65, -39]){
+                cube([15, 45, 30]);
               }
           }
           
             // sheared joiner
-            shearAlongY([0, -30, -30]){
+            shearAlongY([0, -20, -30]){
               translate([20, 0, lwidth]){
                 rotate([90, 90, 0]){
                   cplug();
@@ -215,6 +229,7 @@ translate([-90, -20, -10]){
 }
 
 // left horn gets cut off higher up
+// we'll also want to remove its back to hide the molex
 difference(){
   mirror([1, 0, 0]){
       translate([-90, -20, -10]){
@@ -223,7 +238,26 @@ difference(){
           }
       }
   }
-  translate([50, -100, -100]){
-    cube([100, 80, 100]);
+  union(){
+    translate([50, -100, -100]){
+      cube([100, 70, 100]);
+    }
+    translate([75, -30, -30]){
+      shearAlongY([1, -1, 0]){
+        cube([20, 10, 10]);
+      }
+    }
+  }
+}
+
+// now we bring left horn even further to the left, and cap it at the bottom
+//scale([1.1, 0, 0])
+translate([90.5, -30, -30]){
+  rotate([90, 0, 0]){
+    linear_extrude(1){
+      hull(){
+        plug2d();
+      }
+    }
   }
 }
