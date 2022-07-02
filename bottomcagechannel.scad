@@ -129,15 +129,3 @@ translate([sidew - 1, 0, 5]){
     }
   }
 }
-
-/*
-fchunk(height, sidew);
-shearAlongX([1, -1, 0]){
-  translate([-40, -40, 0]){
-    fchunk(height, sidew);
-  }
-}
-translate([-80, 40, 0]){
-  fchunk(height, sidew);
-}
-*/

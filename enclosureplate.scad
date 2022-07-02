@@ -8,7 +8,7 @@ gap = 0.3;
 difference(){
   minkowski(){
     sphere(minkow);
-    cube([tall - (minkow + gap) * 2, 132, 1], true);
+    cube([tall - (minkow + gap) * 2, 132, 0.5], true);
   }
   union(){
     translate([0, 0, -3]){
