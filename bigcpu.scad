@@ -31,19 +31,6 @@ module plug2d(){
   }  
 }
 
-module plug3d(){
-  translate([-(outerplug / 2 + distance / 2), 0, 0]){
-    linear_extrude(plugheight){
-      plug2d();
-    }
-  }
-}
-
-plug3d();
-mirror([1, 0, 0]){
-  plug3d();
-}
-
 module shearAlongX(p) {
   multmatrix([
     [1, 0, 0, 0],
@@ -54,11 +41,11 @@ module shearAlongX(p) {
 
 module crossbar(){
   // cuboid joiners on top/bottom
-  translate([-(distance / 2 + cyldist + r + outerr), r - 2, -2]){
-    cube([distance + (r + outerr + cyldist) * 2, 2, 6]);
+  translate([-(distance / 2 + r + outerr), r - 2, -2]){
+    cube([distance + (r + outerr) * 2, 2, 6]);
   }
-  translate([-(distance / 2 + cyldist + r + outerr), -r, 0]){
-    cube([distance + (r + outerr + cyldist) * 2, 2, 4]);
+  translate([-(distance / 2 + r + outerr), -r, 0]){
+    cube([distance + (r + outerr) * 2, 2, 4]);
   }
   shearAlongX([1, .125, 0]){
     translate([-(distance / 2 + r + outerr), -1, 0]){
@@ -157,7 +144,9 @@ module shearAlongZ(p) {
 }
 
 module horn(){
-           
+         
+        // first, the curved section emerging from the hole
+        // into the motherboard chamber
         difference(){
           union(){
             rotate_extrude(angle=90){
@@ -168,23 +157,22 @@ module horn(){
               }
             }
         
+          // right horn bottom:
           // hollow vertical straightaway, without back
           difference(){  
-            scale([1, 1.5, 1])
-            translate([20, -42, -9]){
-            rotate([270, 90, 0]){
-              
-                
+            scale([1, 1.7, 1])
+              translate([20, -39, -8]){
+                rotate([270, 90, 0]){
                   cplug();
                 }
               }
               // remove back of vertical straightaway
-              translate([5, -65, -39]){
-                cube([15, 45, 30]);
+              translate([5, -67, -39]){
+                cube([15, 48, 30]);
               }
           }
           
-            // sheared joiner
+            // right horn middle: sheared joiner
             shearAlongY([0, -20, -30]){
               translate([20, 0, lwidth]){
                 rotate([90, 90, 0]){
@@ -192,9 +180,9 @@ module horn(){
                 }
               }  
             }
-        
-            // hollow horizontal straightaway  
-            scale([1, 1, 1]){
+  
+            // hollow horizontal straightaway behind curved section
+            scale([5, 1, 1]){
               translate([-10, 20, lwidth]){
                 rotate([0, 90, 0]){
                   cplug(jheight / 2);
@@ -202,9 +190,8 @@ module horn(){
               }
             }
         
-        
-          }
-        
+    }
+
         
           // hollow out top bend  
           union(){
@@ -220,6 +207,7 @@ module horn(){
           }
         
         }
+    
     }
 
 translate([-90, -20, -10]){
@@ -244,7 +232,7 @@ difference(){
     }
     translate([75, -30, -30]){
       shearAlongY([1, -1, 0]){
-        cube([20, 10, 10]);
+        cube([20, 20, 10]);
       }
     }
   }
@@ -252,9 +240,9 @@ difference(){
 
 // now we bring left horn even further to the left, and cap it at the bottom
 //scale([1.1, 0, 0])
-translate([90.5, -30, -30]){
+translate([90.5, -29.5, -30]){
   rotate([90, 0, 0]){
-    linear_extrude(1){
+    linear_extrude(1, scale=1.1){
       hull(){
         plug2d();
       }
