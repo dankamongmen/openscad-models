@@ -100,9 +100,9 @@ lwidth = 29;
 
 module topplug(){
   hull(){
-    circle(jradius);
+    circle(jradius + 1);
     translate([lwidth, 0, 0]){
-      circle(jradius);
+      circle(jradius + 1);
     }
   }
 }

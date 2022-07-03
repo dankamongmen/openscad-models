@@ -19,11 +19,17 @@ wthick = wlock + 2 * wwall;
 // 2mm top and bottom
 twall = 2;
 
+// side includes top/bottom, and half of interior height
+wheight = height / 2 + twall;
+
+// additional height of the plug / depth of the receptacle
+pheight = wheight - 2;
+
 module sidefemale(l, h){
     difference(){
         cube([wthick, h, l]);
-        translate([wwall, 1, 3]){
-            cube([wlock, h - 1, l - 6]);
+        translate([wwall, wheight - pheight, 3]){
+            cube([wlock, pheight, l - 6]);
         }
     }
 }
@@ -31,7 +37,7 @@ module sidefemale(l, h){
 module sidemale(l, h){
     cube([wthick, h, l]);
     translate([wwall, h, 3]){
-        cube([wlock, h - 1 - gap, l - 6 - gap * 2]);
+        cube([wlock, pheight - gap, l - 6 - gap * 2]);
     }
 }
 
@@ -39,8 +45,10 @@ module topbot(l){
     cube([width, twall, l]);
 }
 
-sidefemale(length, height / 2 + twall);
-translate([width, 0, 0]){
-    sidemale(length, height / 2 + twall);
+sidefemale(length, wheight);
+translate([width + wthick, 0, 0]){
+    sidemale(length, wheight);
 }
-topbot(length);
+translate([wthick, 0, 0]){
+  topbot(length);
+}
