@@ -37,7 +37,7 @@ module sidefemale(l, h){
 module sidemale(l, h){
     cube([wthick, h, l]);
     translate([wwall, h, 3]){
-        cube([wlock, pheight - gap, l - 6 - gap * 2]);
+        cube([wlock - gap *2, pheight - gap, l - 6 - gap * 2]);
     }
 }
 
