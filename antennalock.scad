@@ -65,4 +65,27 @@ translate([-plugd / 2 - gap / 2, 6, -27]){
 	}
 }
 
-holder();
+// now make the lock that plugs in through the back
+translate([100, 0, 3]){
+	difference(){
+		// first, get a cube minus the existing structure
+		difference(){
+			cube([80, 80, 60], true);
+			holder();
+		}
+		union(){
+			translate([0, 30, 0]){
+				cube([80, 40, 60], true);
+			}
+			translate([0, -20, 0]){
+				cube([80, 40, 60], true);
+			}
+			translate([0, 0, 20]){
+				cube([80, 40, 60], true);
+			}
+			translate([0, 0, 0]){
+				cube([20, 40, 54 ], true);
+			}
+		}
+	}
+}
