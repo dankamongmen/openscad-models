@@ -3,12 +3,13 @@
 // off of enclosurewrapper.scad.
 
 gap = 0.6;
+vgap = 1.2;
 
 linear_extrude(1){
 	polygon([
-					 [10 - gap, 40 - gap],
-					 [0 + gap, 0 + gap],
-					 [-10 + gap, 0 + gap],
-					 [0 - gap, 40 - gap]
+					 [10 - vgap, 40 - gap],
+					 [0 + vgap, 0 + gap],
+					 [-10 + vgap, 0 + gap],
+					 [0 - vgap, 40 - gap]
 					]);
 }
