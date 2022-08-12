@@ -6,9 +6,9 @@ gap = 0.6;
 
 linear_extrude(2 - gap){
 	polygon([
-					 [10 - gap, 12 - gap],
-					 [0 + gap, -10 + gap],
-					 [-10 + gap, -10 + gap],
-					 [0 + gap, 12 - gap]
+					 [10 - gap, 40 - gap],
+					 [0 + gap, -0 + gap],
+					 [-10 + gap, -0 + gap],
+					 [0 + gap, 40 - gap]
 					]);
 }
