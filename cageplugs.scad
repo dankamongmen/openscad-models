@@ -2,10 +2,10 @@
 // the labels on hard drive cages. the polygon is based
 // off of enclosurewrapper.scad.
 
-gap = 0.6;
-vgap = 1.8;
+gap = 2;
+vgap = 3;
 
-linear_extrude(.6){
+linear_extrude(.8){
 	polygon([
 					 [10 - vgap, 40 - gap],
 					 [0 + vgap, 0 + gap],
