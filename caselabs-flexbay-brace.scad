@@ -25,7 +25,7 @@ difference(){
 difference(){
     cube([1.7, h,12.5]);
     union(){
-        translate([0, 18, 6.16]){
+        translate([0, 21, 6.16]){
             rotate([0, 90, 0]){
                 cylinder(2, 1.67, 1.67);
             }
