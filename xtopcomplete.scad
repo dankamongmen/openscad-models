@@ -37,24 +37,6 @@ translate([-w/2, 0, 0]){
     translate([-(i + ww), 0, -h2]){
         cube([ww, m1, h2]);
     }
-    // upper support (what the pump mates)
-    translate([(w - iw) / 2, 0, 0]){
-        
-        difference(){
-            minkowski(){
-                cube([iw, m1, h1]);
-                cylinder(r = 2, h = 2);
-            }
-            union(){
-                translate([(iw - hw) / 2, m1 / 2, h1 - 2]){
-                    cylinder(h1, sw, true);
-                }
-                translate([(iw - hw) / 2 + hw, m1 / 2, h1 - 2]){
-                    cylinder(h1, sw, true);
-                }
-            }
-        }
-    }
     // common layer
     translate([-(i + ww), 0, 0]){
         minkowski(){

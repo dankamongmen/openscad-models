@@ -157,6 +157,7 @@ module horn(){
               }
             }
         
+						/* need connect it without slanted joiner
           // right horn bottom:
           // hollow vertical straightaway, without back
           difference(){  
@@ -171,7 +172,10 @@ module horn(){
                 cube([15, 48, 30]);
               }
           }
+						*/
           
+					//not big enough for power!
+					/*
             // right horn middle: sheared joiner
             shearAlongY([0, -20, -30]){
               translate([20, 0, lwidth]){
@@ -180,6 +184,8 @@ module horn(){
                 }
               }  
             }
+					*/
+					
   
             // hollow horizontal straightaway behind curved section
             scale([5, 1, 1]){
@@ -223,8 +229,17 @@ difference(){
       translate([-90, -20, -10]){
           rotate([0, 90, 0]){
               horn();
+						/*
+						// right horn middle: sheared joiner
+            shearAlongY([0, -20, -30]){
+              translate([20, 0, lwidth]){
+                rotate([90, 90, 0]){
+                  cplug();
+                }
+              }  
+            }*/
           }
-      }
+				}
   }
   union(){
     translate([50, -100, -100]){
@@ -238,6 +253,7 @@ difference(){
   }
 }
 
+/*
 // now we bring left horn even further to the left, and cap it at the bottom
 //scale([1.1, 0, 0])
 translate([90.5, -29.5, -30]){
@@ -249,3 +265,4 @@ translate([90.5, -29.5, -30]){
     }
   }
 }
+*/
