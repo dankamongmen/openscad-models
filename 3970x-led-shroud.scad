@@ -5,16 +5,16 @@ l = 120;
 
 gap = 5;
 hgap = 3;
-shroud = 10;
+shroud = 11;
 
 // temporary split in half
 difference(){
 
 difference(){
-	cube([w + gap, l + gap, h + gap]);
+	cube([w + gap, l + gap, h + gap + hgap]);
 	union(){
 		translate([gap / 2 + shroud, gap / 2 + shroud, 0]){
-			cube([w - shroud * 2, l - shroud * 2, h + gap]);
+			cube([w - shroud * 2, l - shroud * 2, h + gap + hgap]);
 		}
 		translate([gap / 2, gap / 2, 0]){
 			cube([w, l, h + hgap]);
@@ -22,6 +22,8 @@ difference(){
 	}
 }
 
-cube([100, 20, 60]);
+//translate([20, 0, 0]){
+	//	cube([100, 14, 60]);
+//}
 
 }
