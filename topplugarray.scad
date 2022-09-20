@@ -1,48 +1,52 @@
+// hard-won measurements
+
 gap = 79; // 79mm apart
-nheight = 5; // 4mm hole, 1mm gap
+holey = 2.977;
+gapy = 1.718;
+holer = holey / 2; // radius of circles
+holexshort = 4.8 - (2 * holer);
+holexlong = 12.08 - (2 * holer);
 
 module smallplug(){
-  // 5mm wide at its largest
-	translate([-3, (nheight - 1) / 2, 0]){
-		circle((nheight - 1) / 2, $fn=50);
+  translate([-holexshort / 2, -holey / 2, 0]){
+		circle(holer, $fn=50);
 	}
-	translate([-3.5, 0, 0]){
-		square([2, nheight - 1]);
+	translate([-(holexshort / 2), -holey, 0]){
+		square([holexshort, holey]);
 	}
-	translate([-2, (nheight - 1) / 2, 0]){
-		circle((nheight - 1) / 2, $fn=50);
+	translate([holexshort / 2, -holey / 2, 0]){
+		circle(holer, $fn=50);
 	}
 }
 
 module plug(){
-	// 13mm wide at its largest
-	translate([-11, (nheight - 1) / 2, 0]){
-		circle((nheight - 1) / 2, $fn=50);
+  translate([-holexlong / 2, -holey / 2, 0]){
+		circle(holer, $fn=50);
 	}
-	
-	translate([-11.5, 0, 0]){
-		square([10, nheight - 1]);
+	translate([-(holexlong / 2), -holey, 0]){
+		square([holexlong, holey]);
 	}
-	translate([-2, (nheight - 1) / 2, 0]){
-		circle((nheight - 1) / 2, $fn=50);
+	translate([holexlong / 2, -holey / 2, 0]){
+		circle(holer, $fn=50);
 	}
 }
 
+
 module pair(){
-	translate([0, 5, 0]){
+	translate([(holexlong - holexshort) / 2, gapy + holey, 0]){
 	  smallplug();
 	}
 	plug();
 }
 
 linear_extrude(10){
-	for(i = [0 : 1]){
-		translate([0, 10 * i, 0]){
+	for(i = [0 : 5]){
+		translate([0, (holey + gapy) * 2 * i, 0]){
 			pair();
 		}
 	}
 }
 
-translate([-3.5, 0, 5]){
-	cube([2, 20, 5]);
+translate([-(holexlong / 2) - holer, -holey, 10]){
+	cube([holexlong + 2 * holer, (holey + gapy) * 12, 5]);
 }
