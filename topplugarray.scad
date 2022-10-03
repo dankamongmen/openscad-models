@@ -1,6 +1,6 @@
 // hard-won measurements
 
-usbw = 52.75; // usb hub
+usbw = 53.5; // usb hub
 usbwall = 5;
 gap = 78 + 11; // 78mm apart + 11 for shrinking
 holey = 2.577; // measured at 2.977
@@ -58,6 +58,6 @@ copymirror([1, 0, 0]){
 		cube([holexlong / 2 * holer + (gap / 2), (holey + gapy) * 12, 5]);
 	}
 	translate([-(usbw / 2) - usbwall, -holey, plugh + 5]){
-		cube([usbwall, 12 * (holey + gapy), 10]);
+		cube([usbwall, 12 * (holey + gapy), 15]);
 	}
 }

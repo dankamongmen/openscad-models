@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 //uncomment this for example
 //fan_mount(size=60,thick=3);
 
+moraw=126;
+
 module fan_mount(size=40,thick = 4)
 {
 if(size == 25)
@@ -155,4 +157,29 @@ echo(offset1,offset2,thickness);
 }
 
 fan_mount(120);
+translate([0, 0, -2]){
+	difference(){
+		cube([120, 120, 7]);
+		translate([10, 10, 2]){
+			cube([100, 100, 3]);
+		}
+	}
+}
 
+excess=moraw - 120;
+wallt = 3;
+
+translate([-excess/2, -excess/2, -2]){
+	difference(){
+		cube([moraw, moraw, 2]);
+		translate([7.5, 7.5, 0]){
+			cube([110, 110, 2]);
+		}
+	}
+	translate([-wallt, 0, -13]){
+	  cube([wallt, moraw, 15]);
+  }
+	translate([moraw, 0, -13]){
+	  cube([wallt, moraw, 15]);
+  }
+}

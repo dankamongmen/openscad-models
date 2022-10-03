@@ -86,11 +86,13 @@ module bridge(){
   invcross();
 }
 
+/*
 bridge();
 
 translate([0, 0, -10]){
   bridge();
 }
+*/
 
 // cpu side
 
@@ -115,14 +117,20 @@ module cplug(jh = jheight){
         cylinder(jh, jradius, jradius);
       }
     }
-    scale([0.9, 0.9, 1]){
-      hull(){
-        cylinder(jh, jradius, jradius);
-        translate([lwidth, 0, 0]){
-          cylinder(jh, jradius, jradius);
-        }
-      }
-    }
+		union(){
+			scale([0.9, 0.9, 1]){
+				hull(){
+					cylinder(jh, jradius, jradius);
+					translate([lwidth, 0, 0]){
+						cylinder(jh, jradius, jradius);
+					}
+				}
+			}
+			// remove back
+			translate([0, 0, 0]){
+			  cube([jh, 48, 30]);
+			}
+		}
   }
 }
 
@@ -157,40 +165,35 @@ module horn(){
               }
             }
         
-						/* need connect it without slanted joiner
+						
           // right horn bottom:
           // hollow vertical straightaway, without back
           difference(){  
             scale([1, 1.7, 1])
-              translate([20, -39, -8]){
+              translate([20, -39, -7]){
                 rotate([270, 90, 0]){
                   cplug();
                 }
               }
-              // remove back of vertical straightaway
-              translate([5, -67, -39]){
-                cube([15, 48, 30]);
-              }
           }
-						*/
+						
           
 					//not big enough for power!
-					/*
-            // right horn middle: sheared joiner
+					// right horn middle: sheared joiner
             shearAlongY([0, -20, -30]){
-              translate([20, 0, lwidth]){
-                rotate([90, 90, 0]){
+              translate([20, 0, lwidth - 28]){
+                rotate([90, 270, 0]){
                   cplug();
                 }
               }  
             }
-					*/
+					
 					
   
             // hollow horizontal straightaway behind curved section
             scale([5, 1, 1]){
-              translate([-10, 20, lwidth]){
-                rotate([0, 90, 0]){
+              translate([0, 20, lwidth]){
+                rotate([180, 90, 0]){
                   cplug(jheight / 2);
                 }
               }
@@ -222,6 +225,7 @@ translate([-90, -20, -10]){
     }
 }
 
+/*
 // left horn gets cut off higher up
 // we'll also want to remove its back to hide the molex
 difference(){
@@ -229,7 +233,6 @@ difference(){
       translate([-90, -20, -10]){
           rotate([0, 90, 0]){
               horn();
-						/*
 						// right horn middle: sheared joiner
             shearAlongY([0, -20, -30]){
               translate([20, 0, lwidth]){
@@ -237,7 +240,7 @@ difference(){
                   cplug();
                 }
               }  
-            }*/
+            }
           }
 				}
   }
@@ -253,7 +256,6 @@ difference(){
   }
 }
 
-/*
 // now we bring left horn even further to the left, and cap it at the bottom
 //scale([1.1, 0, 0])
 translate([90.5, -29.5, -30]){
