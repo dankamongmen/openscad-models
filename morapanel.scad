@@ -1,45 +1,36 @@
-// panel for running kool through the wall
+// panel for running zmt through the wall
+// this one is longer than morapanel.scad, and has slightly
+// wider tubes so that the other panel can lock in.
+// overall width and height remain the same, and the tubes
+// are centered at the same points. tubes are 3/4 of wall depth.
+
+PHI = 1.61803398874;
 
 wall = 150;  // thickness of transfixed wall
-//zmt = 19.05; // three-fourths of an inch diameter
-kool = 28;  // max diameter of Koolance QD4 is 28mm
-// golden ratio:
-//  a = 2 * kool == 56
-//  (a+x)/a = a/x
-//  ax/a + xx/a = a
-//  x + xx/a = a
-//  xx/a = a - x
-//  xx = aa - xa
-//  xx = 3136 - 56x
-//  x = 34.6
-x = 34.6; // amount of free space in width
-w = 2 * kool + x;
-// (w+h) / w = w/h
-// hh = ww - wh
-// hh = 8208.36 - 90.6h
-// h = 55.99
-h = 60;
+zmt = 19.5; // three-fourths of an inch diameter == 19.05, we leave 0.45
+x = zmt * 2 / PHI; // amount of free space in width
+w = 2 * zmt + x;
+h = w / PHI;
 
-// placement of right hole
-centx = x / 6 + kool / 2;
+centx = (x / 6) + (zmt / 2);
 
-module rounded( width, height, radius_corner ) {
-	translate( [ radius_corner, radius_corner, 0 ] )
+module rounded(width, height, radius_corner){
+	translate([radius_corner, radius_corner, 0])
 		minkowski() {
-			square( [width - 2 * radius_corner, height - 2 * radius_corner]);
-			circle( radius_corner );
+			square([width - 2 * radius_corner, height - 2 * radius_corner]);
+			circle(radius_corner);
 		}
 }
 
 // combined thickness of walls around tubes
-cthick = 2;
-// combined gaproom of walls around tubes
+cthick = 4;
+// thickness of plugin component's walls, cgap < cthick
 cgap = 1;
 
 module tube(){
 	difference(){
-		cylinder(wall / 2, (kool + cthick + cgap) / 2, (kool + cthick + cgap) / 2);
-		cylinder(wall / 2, (kool + cgap) / 2, (kool + cgap) / 2);
+		cylinder(wall / 2, (zmt + cthick) / 2, (zmt + cthick) / 2);
+		cylinder(wall / 2, (zmt + cgap) / 2, (zmt + cgap) / 2);
 	}
 }
 
@@ -59,10 +50,10 @@ difference(){
 	}
 	linear_extrude(3){
 		translate([-centx, 0, 0]){
-			circle((kool + cgap) / 2);
+			circle(zmt / 2);
 		}
 		translate([centx, 0, 0]){
-			circle((kool + cgap) / 2);
+			circle(zmt / 2);
 		}
 	}
 }

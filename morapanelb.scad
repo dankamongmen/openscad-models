@@ -1,23 +1,18 @@
-// panel for running kool through the wall
+// panel for running zmt through the wall
 // this one is longer than morapanel.scad, and has slightly
-// wider tubes so that the other panel can lock in (kool is
-// 28.5, not 28). overall width and height remain the same,
-// and the tubes are centered at the same points.
+// wider tubes so that the other panel can lock in.
+// overall width and height remain the same, and the tubes
+// are centered at the same points. tubes are 3/4 of wall depth.
+
+PHI = 1.61803398874;
 
 wall = 150;  // thickness of transfixed wall
-//zmt = 19.05; // three-fourths of an inch diameter
-kool = 28.5;  // max diameter of Koolance QD4 is 28mm
-x = 33.6; // amount of free space in width
-w = 2 * kool + x;
-// (w+h) / w = w/h
-// hh = ww - wh
-// hh = 8208.36 - 90.6h
-// h = 55.99
-h = 60;
+zmt = 19.5; // three-fourths of an inch diameter == 19.05, we leave 0.45
+x = zmt * 2 / PHI; // amount of free space in width
+w = 2 * zmt + x;
+h = w / PHI;
 
-// placement of right hole. i fucked this up on the other
-// panel, so we have a fudge factor, ugh.
-centx = (34.6 / 6) + (28 / 2);
+centx = (x / 6) + (zmt / 2);
 
 module rounded(width, height, radius_corner){
 	translate([radius_corner, radius_corner, 0])
@@ -28,14 +23,14 @@ module rounded(width, height, radius_corner){
 }
 
 // combined thickness of walls around tubes
-cthick = 2;
-// combined gap room of walls around tubes
-cgap = 1;
+cthick = 10;
+// thickness of plugin component's walls, cgap < cthick
+cgap = 5;
 
 module tube(){
 	difference(){
-		cylinder(3 * wall / 4, (kool + cthick + cgap) / 2, (kool + cthick + cgap) / 2);
-		cylinder(3 * wall / 4, (kool + cgap) / 2, (kool + cgap) / 2);
+		cylinder(3 * wall / 4, (zmt + cthick) / 2, (zmt + cthick) / 2);
+		cylinder(3 * wall / 4, (zmt + cgap) / 2, (zmt + cgap) / 2);
 	}
 }
 
@@ -55,10 +50,10 @@ difference(){
 	}
 	linear_extrude(3){
 		translate([-centx, 0, 0]){
-			circle((kool + cgap) / 2);
+			circle(zmt / 2);
 		}
 		translate([centx, 0, 0]){
-			circle((kool + cgap) / 2);
+			circle(zmt / 2);
 		}
 	}
 }
