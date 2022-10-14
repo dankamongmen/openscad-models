@@ -14,15 +14,6 @@ difference(){
     translate([0, 0, -3]){
       cube([400, 400, 3], true);
     }
-      translate([70, -50, 2]){
-        rotate([0, 0, 90]){
-          linear_extrude(3){
-            offset(0.1){
-              import("/home/dank/src/dankamongmen/openscad-models/tux.svg");
-            }
-          }
-        }
-      }
   }
 }
 
