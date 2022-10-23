@@ -25,8 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 moraw=127;
 
-module fan_mount(size=40,thick = 4)
-{
+module fan_mount(size=40,thick = 4){
 if(size == 25)
 	{
 	_fan_mount(
@@ -94,15 +93,13 @@ if(size == 120)
 	}
 }
 
-
 //inner module
 module _fan_mount(
 			fan_size, //nominsl size of fan
 			fan_mounting_pitch, //pitch between mounting holes
 			fan_m_hole_dia, //mounting hole diameter
 			holder_thickness //user defined thickness
-		 )
-{
+		 ){
 
 offset1 = (fan_size-(fan_mounting_pitch + fan_m_hole_dia))/2;
 offset2 = (fan_size-(fan_mounting_pitch))/2;
@@ -152,34 +149,50 @@ module _corner_hole()
 				}
 }
 
-
-echo(offset1,offset2,thickness);
 }
 
-fan_mount(120);
-translate([0, 0, -2]){
-	difference(){
-		cube([120, 120, 7]);
-		translate([10, 10, 2]){
-			cube([100, 100, 3]);
+// we can only print 120mm in the y dimension on a Saturn,
+// so cut the ends off
+difference(){
+	wallt = 6;
+	// here's the ideal brace; we'll truncate it...
+	union(){
+		fan_mount(120);
+		translate([-excess - wallt / 2, 0, -2]){
+			difference(){
+				cube([moraw + excess + wallt, 120, 7]);
+				translate([10, 10, 2]){
+					cube([100, 100, 3]);
+				}
+			}
+		}
+		
+		excess=moraw - 120;
+		
+		translate([-excess/2, -excess/2, -2]){
+			difference(){
+				cube([moraw, moraw, 2]);
+				translate([7.5, 7.5, 0]){
+					cube([110, 110, 2]);
+				}
+			}
+			translate([-wallt, 0, -13]){
+				cube([wallt, moraw, 15]);
+			}
+			translate([moraw, 0, -13]){
+				cube([wallt, moraw, 15]);
+			}
 		}
 	}
-}
-
-excess=moraw - 120;
-wallt = 6;
-
-translate([-excess/2, -excess/2, -2]){
-	difference(){
-		cube([moraw, moraw, 2]);
-		translate([7.5, 7.5, 0]){
-			cube([110, 110, 2]);
+	// these ends are cut off grotesquely
+	union(){
+		// bottom end (why this +1? FIXME)
+		translate([-10, -10, -15]){
+			cube([moraw + 2 * wallt + 1, 15, 20]);
+		}
+		// top end (why this +1? FIXME)
+		translate([-10, 115, -15]){
+			cube([moraw + 2 * wallt + 1, 15, 20]);
 		}
 	}
-	translate([-wallt, 0, -13]){
-	  cube([wallt, moraw, 15]);
-  }
-	translate([moraw, 0, -13]){
-	  cube([wallt, moraw, 15]);
-  }
 }

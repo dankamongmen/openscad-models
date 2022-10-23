@@ -50,10 +50,10 @@ difference(){
 	}
 	linear_extrude(3){
 		translate([-centx, 0, 0]){
-			circle(zmt / 2);
+			circle(zmt / 2 + 1);
 		}
 		translate([centx, 0, 0]){
-			circle(zmt / 2);
+			circle(zmt / 2 + 1);
 		}
 	}
 }
