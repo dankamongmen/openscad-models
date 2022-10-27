@@ -152,7 +152,7 @@ module _corner_hole()
 }
 
 // we can only print 120mm in the y dimension on a Saturn,
-// so cut the ends off
+// so cut the ends off, and hollow it out.
 difference(){
 	wallt = 6;
 	// here's the ideal brace; we'll truncate it...
@@ -184,7 +184,8 @@ difference(){
 			}
 		}
 	}
-	// these ends are cut off grotesquely
+	// these ends are cut off grotesquely, and we hollow it out
+	// with a drainage port on both sides
 	union(){
 		// bottom end (why this +1? FIXME)
 		translate([-10, -10, -15]){
@@ -193,6 +194,14 @@ difference(){
 		// top end (why this +1? FIXME)
 		translate([-10, 115, -15]){
 			cube([moraw + 2 * wallt + 1, 15, 20]);
+		}
+		// drainage port
+		translate([moraw / 2, moraw / 2, -3]){
+			cylinder(10, 2, 2);
+		}
+		// main hollow
+		translate([-5, 10, 0]){
+			cube([130, 100, 3]);
 		}
 	}
 }
