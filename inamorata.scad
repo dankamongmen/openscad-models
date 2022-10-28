@@ -4,7 +4,13 @@ color([0, 1.0, 0.5]){
 	translate([0, 0, 40]){
 		import("/home/dank/src/dankamongmen/openscad-models/ImprovedArduinoHolder.stl");
 	}
+	// fill in the right side (it says "ARDUINO")
+	translate([0, 58.85, 37]){
+		cube([102, 1, 9]);
+	}
 }
+
+
 // breadboard: 165x53x10mm
 // stub 13mm down, 1mm up, 5mm x 5mm x 2mm
 
