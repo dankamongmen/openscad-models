@@ -17,9 +17,20 @@ color([0, 1.0, 0.5]){
 bby = 53 + 1;  // 1 for 0.5 gap on each side
 bbx = 165 + 1; // 1 for 0.5 gap on each side
 
-// bottom support, equal in area to breadboard
-translate([-0.5, -0.5, 0]){
-	cube([bbx, bby, 5]);
+difference(){
+	// bottom support, equal in area to breadboard
+	translate([-0.5, -0.5, 0]){
+		cube([bbx, bby, 5]);
+	}
+	union(){
+		// core out bottom support for resin printing
+		translate([1.5, 1.5, 1.5]){
+			cube([bbx - 4, bby - 4, 2]);
+		}
+		translate([bbx / 2, bby / 2, 0]){
+			cube([4, 4, 5]);
+		}
+	}
 }
 
 // back support
