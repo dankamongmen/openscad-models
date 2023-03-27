@@ -28,14 +28,14 @@ translate([0, 2.95, 0]){
 	difference(){
 		union(){
 			for(i = [-conth, bh]){
-				translate([1, i, -4]){
+				translate([1, i, 0]){
 					cube([contw, conth, t + 4]);
 				}
 			}
 		}
 		for(i = [6.05, 62.05]){
 			for(j = [-2.95, 91.05]){
-				translate([i, j, -4]){
+				translate([i, j, 0]){
 					cylinder(t + 4, 2.44, 2.44);
 				}
 			}
