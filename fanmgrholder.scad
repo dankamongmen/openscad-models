@@ -1,17 +1,29 @@
-translate([0, 0, 2]){
-	cube([3, 90, 2]);
+l = 76;
+w = 76;
+translate([0, 1, 5]){
+	cube([l, 5, 2]);
 }
-translate([47, 0, 2]){
-	cube([3, 90, 2]);
+translate([0, w - 6, 5]){
+	cube([l, 5, 2]);
 }
+
 difference(){
-	translate([-3, 0, -2]){
-		cube([56, 96, 6]);
-	}
+	cube([l, w, 7]);
 	union(){
-		cube([50, 90, 5]);
-		translate([20, 90, 0]){
-			cube([10, 6, 6]);
+		translate([0, 6, 0]){
+			cube([l, w - 12, 2]);
 		}
+		translate([0, 1, 2]){
+			cube([l, w - 2, 5]);
+		}
+	}
+}
+
+difference(){
+	translate([0, 3, -5]){
+		cube([l, w - 6, 5]);
+	}
+	translate([0, 6, -3]){
+		cube([l, w - 12, 3]);
 	}
 }
