@@ -7,7 +7,7 @@ w3 = 29.53;
 iw = 21.25;
 
 split = 4.3; // distance between cutouts
-cutoutd = 3.9; // diameter of cutout
+cutoutd = 4.3; // diameter of cutout
 
 $fn = 50;
 difference(){
@@ -32,9 +32,12 @@ difference(){
 					}
 				}
 			}
+			translate([-split / 2, -cutoutd / 2, 0]){
+				cube([split, cutoutd, h3]);
+			}
 		}
-		translate([-split / 2, -cutoutd / 2, 0]){
-			cube([(cutoutd + split) / 2, cutoutd, h3]);
+		translate([-split / 2 + 1, -cutoutd / 2, 0]){
+			cube([split - 2, cutoutd, h3]);
 		}
 	}
 }

@@ -34,60 +34,56 @@ frontt = insetdepth + viewt + backt;
 backw = 9;
 backdepth = 10;
 
-// we put the front on the top (z-axis wise), as it has the most delicate
-// printing to do, and we want the finest finish there
-translate([backw, 0, 0]){
-    difference(){
-        union(){
-            cube([ew, eh, frontt]);
-        }
-        union(){
-            translate([framel, frameb, 0]){
-                cube([vieww, viewh, frontt]);
-            }
-            // underneath the front frame, we have the section where the screen is
-            // held in place/inserted, by widening the cutaway to not include the
-            // device's side bezel
-            translate([(ew - devw) / 2, frameb, backt]){
-                cube([devw, viewh + framet, viewt]);
-            }
-            // cut away the top behind the device, and everything on the left,
-            // where we run a power cable
-            translate([0, eh - framet, 0]){
-                cube([vieww + framel, framet, backt + viewt]);
-            }
-            // we need bridge out the holes in the letters here
-            difference(){
-              translate([0, 2.5, 0]){
-                  linear_extrude(frontt){
-                      text("“schwarzgerät III”", size=6.5, font="Liberation Serif:style=Italic");
-                  }
-              }
-              // first 'a'
-              translate([24.5, 2.7, 0]){
-                cube([0.5, 0.5, frontt]);
-              }
-              // 'g'
-              translate([36, 2.3, 0]){
-                cube([0.5, 2, frontt]);
-              }
- 
-              // 'e'
-              translate([40, 4, 0]){
-                cube([1, 1, frontt]);
-              }
-              // second 'a'
-              translate([47.5, 2, 0]){
-                cube([0.5, 2, frontt]);
-              }
-            }
-            translate([ew - 42, 0, 0]){
-                linear_extrude(frontt){
-                    text("nick black", size=8, font="Stencil Brush");
-                }
-            }
-        }
-    }
+difference(){
+	union(){
+		translate([23, 10, 15]){
+			cube([vieww, 5, viewt]);
+		}
+	
+		// we put the front on the top (z-axis wise), as it has the most delicate
+		// printing to do, and we want the finest finish there
+		translate([backw, 0, 0]){
+				difference(){
+						union(){
+								cube([ew, eh, frontt]);
+						}
+						union(){
+							translate([4, 3, 10]){
+								cube([vieww + 18, 8, 5]);
+							}
+							translate([backw, 2, 3]){
+								cube([devw, frameb, 7]);
+							}
+								translate([framel, frameb, 0]){
+										cube([vieww, viewh, frontt]);
+								}
+								// underneath the front frame, we have the section where the screen is
+								// held in place/inserted, by widening the cutaway to not include the
+								// device's side bezel
+								translate([(ew - devw) / 2, frameb, backt]){
+										cube([devw, viewh + framet, viewt]);
+								}
+								// cut away the top behind the device, and everything on the left,
+								// where we run a power cable
+								translate([0, eh - framet, 0]){
+										cube([vieww + framel, framet, backt + viewt]);
+								}
+						}
+				}
+			}
+	}
+	union(){
+		translate([12, 4.5, backdepth]){
+			linear_extrude(frontt - 5){
+				text("“schwarzgerät III”", size=8, font="Liberation Serif:style=Bold Italic");
+			}
+		}
+		translate([ew - 42, 4.5, backdepth]){
+			linear_extrude(frontt - 5){
+				text("nick black", size=8, font="Liberation Serif:style=Bold");
+			}
+		}
+	}
 }
 
 holes = [25, 38.5, 66, 81.5];
@@ -96,6 +92,10 @@ difference(){
         cube([backw, eh - framet, backdepth]);
     }
     union(){
+				translate([backw, 2, 3]){
+					cube([devw, frameb, 7]);
+				}
+
         for(i = holes){
             translate([4, i, -2]){
                 rotate([180, 0, 90]){
@@ -111,6 +111,10 @@ translate([backw + ew, 0, 0]){
           cube([backw, eh, backdepth]);
         }
         union(){
+					translate([backw - 10, 2, 3]){
+						cube([backw + 2, frameb, 7]);
+					}
+
             for(i = holes){
                 translate([6, i, -2]){
                     rotate([180, 0, 90]){
