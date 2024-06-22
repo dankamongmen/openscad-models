@@ -99,7 +99,7 @@ difference(){
         for(i = holes){
             translate([4, i, -2]){
                 rotate([180, 0, 90]){
-                    hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
+                    hole_through("M4", l=100, cld=0.1, h=1, hcld=1);
                 }
             }
         }
@@ -118,7 +118,7 @@ translate([backw + ew, 0, 0]){
             for(i = holes){
                 translate([6, i, -2]){
                     rotate([180, 0, 90]){
-                        hole_through("M3", l=100, cld=0.1, h=1, hcld=1);
+                        hole_through("M4", l=100, cld=0.1, h=1, hcld=1);
                     }
                 }
             }
