@@ -1,5 +1,7 @@
 include<roundedcube.scad>
 
+$fa=5;
+
 catx = 55;
 caty = 70;
 catz = 40;
@@ -46,7 +48,7 @@ difference(){
 	union(){
 		for(i = [0 : 2]){
 			translate([wallthiccness, floorthiccness + i * (innery + floorthiccness), 0]){
-				cube([innerx, innery, innerz]);
+				roundedcube([innerx, innery, innerz], false, 10, "zmax");
 			}
 		}
   }
