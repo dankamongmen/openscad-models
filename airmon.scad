@@ -20,5 +20,8 @@ difference(){
 		translate([(outw + 2) / 2, outl - 5, h]){
 		  hole_threaded(name="M4", h, "yes", cltd=0.6);
 		}
+		translate([2 + thick, 37, 0]){
+			cube([4, 27, h]);
+		}
 	}
 }
