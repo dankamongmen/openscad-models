@@ -4,10 +4,10 @@ $fa=5;
 
 catx = 55;
 caty = 70;
-catz = 40;
+catz = 45;
 
 // golden ratio calculations
-phiz = 24.721 / 2; // too large otherwise
+phiz = 27.812 / 2;
 phiy = 43.262 / 5;
 phix = 33.992 / 2;
 
@@ -44,12 +44,15 @@ totalwidth = 2 * wallthiccness + innerx;
 totaldepth = innerz + backthiccness;
 
 difference(){
-	roundedcube([totalwidth, totalheight, totaldepth], false, 10, "ymax");
+	roundedcube([totalwidth, totalheight, totaldepth], false, 20, "ymax");
 	union(){
 		for(i = [0 : 2]){
 			translate([wallthiccness, floorthiccness + i * (innery + floorthiccness), 0]){
 				roundedcube([innerx, innery, innerz], false, 10, "zmax");
 			}
 		}
-  }
+		translate([0, -40, totaldepth - 4])
+      linear_extrude(height=backthiccness)
+		    import("bitmap.dxf");
+	}
 }
