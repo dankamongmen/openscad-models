@@ -83,6 +83,65 @@ wall=1.8; //[:0.01]
 // Height of the hexagon
 height=20;
 
+
+module mirror_copy(v){
+	children();
+	mirror(v) children();
+}
+
+longd = 224;
+hexd = 8;
+y = -44;
+
+// fill in the partial hexagons on the bottom of a face
+module bottom(){
+	hexw = 23.5;
+	hexh = 8;
+	for(x = [-100:hexw:100]){
+		linear_extrude(hexd){
+			polygon([[x - hexw / 2, y], [x + hexw / 2, y], [x, y + hexh]]);
+		}
+	}
+	linear_extrude(hexd){
+		polygon([[(longd / 2), y], [(longd / 2), y + hexh], [(longd / 2) - hexw / 2, y]]);
+	}
+}
+
+// fill in the partial hexagons on the top of a face
+module top(){
+	rotate([180, 180, 0]){
+		bottom();
+	}
+}
+
+// fill in the two partial hexagons on the right side of a face
+module oneside(){
+	for(oy = [y:40:20]){
+		translate([-112, 0, 0]){
+			linear_extrude(hexd){
+  			polygon([[0, oy], [0, oy + 28], [12, oy + 21], [12, oy + 7]]);
+			}
+		}
+	}
+}
+
+// flip and move the side filling produced by oneside()
+module translate_copy(v){
+	children();
+	mirror([1, 0, 0]){
+		translate(v){
+			children();
+		}
+	}
+}
+
+// fills in the two partial hexagons on either side of a face
+module sides(){
+	translate_copy([0, 20, 0]){
+		oneside();
+	}
+}
+
 // Calculates the long diagonal (the diameter of a circle inscribed on the hexagon) from the short diagonal (the height of the hexagon)
 function ld_from_sd(short_diameter) =
     (2/sqrt(3)*short_diameter);
@@ -124,6 +183,7 @@ module section_unioned_with_cutout(numx,numy) {
     }
 }
 
+// make a face, filling in the partial hexagons on all four sides
 module hcomb() {
 	difference() {
 			if (odd) {
@@ -138,63 +198,39 @@ module hcomb() {
 					right(mounting_screw_x) ycopies(spacing=mounting_screw_spacing, l=mounting_screw_distance) screw_hole(mounting_screw_spec,head=mounting_screw_head,anchor=TOP,l=20,orient=BOTTOM);
 			}
 	}
-}
-
-module mirror_copy(v){
-	children();
-	mirror(v) children();
-}
-
-longd = 224;
-hexd = 8;
-y = -44;
-
-
-/*translate([-112, -45, 0]){
-	cube([112, 90, 8]);
-}*/
-/*translate([0, -45, 0]){
-	cube([112, 90, 8]);
-}*/
-module bottom(){
-	hexw = 23.5;
-	hexh = 8;
-	for(x = [-100:hexw:100]){
-		linear_extrude(hexd){
-			polygon([[x - hexw / 2, y], [x + hexw / 2, y], [x, y + hexh]]);
-		}
-	}
-}
-
-module side(){
-	for(oy = [y:24:-y]){
-		translate([-112, 0, 0]){
-			linear_extrude(hexd){
-				polygon([[0, oy], [hexd / 2, oy + 8], [hexd / 2, oy + 12], [0, oy + 16]]);
-			}
-		}
-	}
-}
-
-bottom();
-
-hcomb();
-//side();
-translate([0, 0, longd - hexd]){
-	hcomb();
 	bottom();
-	//side();
+	top();
+	sides();
 }
-mirror_copy([1, 0, 0]){
-	translate([-(longd / 2), 0, longd / 2]){
-		rotate([0, 90, 0]){
-			hcomb();
-			bottom();
-			//side();
-		}
+
+// solid bottom
+both = 3;
+translate([-(longd / 2), y - both, 0]){
+	cube([longd, both, longd]);
+}
+
+// side at z==0
+hcomb();
+/*linear_extrude(hexd){
+		polygon([[-110, 36], [-104, 36], [-104, 42]]);
+}
+
+// side opposite previous
+translate([0, 0, longd]){
+	rotate([0, 180, 0]){
+		hcomb();
 	}
 }
 
-translate([-(longd / 2), y - 5, 0]){
-	cube([longd, 5, longd]);
+// left and right side
+translate([-(longd / 2) + 8, 0, longd / 2]){
+	rotate([0, 270, 0]){
+		hcomb();
+	}
 }
+	
+translate([longd / 2 - 8, 0, longd / 2]){
+	rotate([0, 90, 0]){
+		hcomb();
+	}
+}*/
