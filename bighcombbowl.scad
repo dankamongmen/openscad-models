@@ -24,7 +24,7 @@ include <BOSL2/screws.scad>
 
 
 // Number of hexagons to make in the X axis
-numx=9;
+numx=9.5;
 
 // Number of hexagons to make in the Y axis
 numy=4;
@@ -37,7 +37,7 @@ odd = false;
 // Solid section for extra modifiers
 solid_section = false;
 
-solid_start=7;
+solid_start=4;
 solid_end=9;
 
 /* [Wall Modifiers: cutout]  */
@@ -83,13 +83,18 @@ wall=1.8; //[:0.01]
 // Height of the hexagon
 height=20;
 
+// fill in one 2-d hexagon with the lower right vertex at [ox, oy]
+module hex(ox, oy){
+	polygon([[ox, oy], [ox, oy + 12], [ox + 12, oy + 20],
+					[ox + 24, oy + 12], [ox + 24, oy], [ox + 12, oy - 8]]);
+}
 
 module mirror_copy(v){
 	children();
 	mirror(v) children();
 }
 
-longd = 224;
+longd = 236;
 hexd = 8;
 y = -44;
 
@@ -97,29 +102,36 @@ y = -44;
 module bottom(){
 	hexw = 23.5;
 	hexh = 8;
-	for(x = [-100:hexw:100]){
+	for(x = [-longd / 2 + hexw:hexw:longd / 2 - hexw]){
 		linear_extrude(hexd){
 			polygon([[x - hexw / 2, y], [x + hexw / 2, y], [x, y + hexh]]);
 		}
 	}
-	linear_extrude(hexd){
+	/*linear_extrude(hexd){
 		polygon([[(longd / 2), y], [(longd / 2), y + hexh], [(longd / 2) - hexw / 2, y]]);
-	}
+	}*/
 }
 
 // fill in the partial hexagons on the top of a face
 module top(){
-	rotate([180, 180, 0]){
+/*	rotate([180, 180, 0]){
 		bottom();
-	}
+	}*/
 }
 
-// fill in the two partial hexagons on the right side of a face
+// fill in the four hexagons on the right side of a face
 module oneside(){
 	for(oy = [y:40:20]){
-		translate([-112, 0, 0]){
+		translate([-longd / 2, 20, 0]){
 			linear_extrude(hexd){
   			polygon([[0, oy], [0, oy + 28], [12, oy + 21], [12, oy + 7]]);
+			}
+		}
+	}
+	for(oy = [y - 20:40:0]){
+		translate([-longd / 2, 28, 0]){
+			linear_extrude(hexd){
+				hex(0, oy);
 			}
 		}
 	}
@@ -137,7 +149,7 @@ module translate_copy(v){
 
 // fills in the two partial hexagons on either side of a face
 module sides(){
-	translate_copy([0, 20, 0]){
+	translate_copy([0, 0, 0]){
 		oneside();
 	}
 }
@@ -202,41 +214,47 @@ module hcomb() {
 	top();
 	sides();
 }
-		// fill in one 2-d hexagon with the lower right vertex at [ox, oy]
-module hex(ox, oy){
-	polygon([[ox, oy], [ox, oy + 12], [ox + 12, oy + 20],
-					[ox + 24, oy + 12], [ox + 24, oy], [ox + 12, oy - 8]]);
-}
 
-// solid bottom
-both = 3;
-translate([-(longd / 2), y - both, 0]){
-	cube([longd, both, longd]);
-}
-
-// side at z==0
-hcomb();
-/*linear_extrude(hexd){
-		polygon([[-110, 36], [-104, 36], [-104, 42]]);
-}*/
-
-// side opposite previous
-translate([0, 0, longd]){
-	rotate([0, 180, 0]){
+difference(){
+	union(){
+		// solid bottom
+		both = 3;
+		translate([-(longd / 2), y - both, 0]){
+			cube([longd, both, longd]);
+		}
+		
+		// side at z==0
 		hcomb();
-	}
-}
-
-// left and right sides
-translate([-(longd / 2), 0, longd / 2]){
-	rotate([0, 90, 0]){
-		hcomb();
-	}
-}
-
-translate([longd / 2, 0, longd / 2]){
-	rotate([0, 270, 0]){
-		hcomb();
+		/*linear_extrude(hexd){
+				polygon([[-110, 36], [-104, 36], [-104, 42]]);
+		}*/
+		
+		// side opposite previous
+		translate([0, 0, longd]){
+			rotate([0, 180, 0]){
+				hcomb();
+			}
+		}
+		
+		
+		// left and right sides
+		translate([-(longd / 2), 0, longd / 2]){
+			rotate([0, 90, 0]){
+				hcomb();
+			}
+		}
+		
+		translate([longd / 2, 0, longd / 2]){
+			rotate([0, 270, 0]){
+				hcomb();
+			}
+		}
+	} // union of main material
+	// subtract out front panel
+	union(){
+		translate([0, -20.25, longd - 5]){
+			cube([longd - 95.5, 31, 10], center=true);
+		}		
 	}
 }
 
@@ -245,7 +263,7 @@ difference(){
 		// hanging panel with mounting holes
 		//translate([0, 54, hexd / 2]){
 		linear_extrude(hexd){
-			for(ox=[-30:24:21]){
+			for(ox=[-24:24:28]){
 				for(oy=[y + 8:40:11]){
 					hex(ox, oy);
 					hex(ox - 12, oy + 20);
@@ -253,8 +271,8 @@ difference(){
 			}
 		}
 		// hacks to fill in mesh until we fix hex() geometry
-		translate([-30, y, 0]){
-			cube([60, 2 * -y, hexd]);
+		translate([-24, y, 0]){
+			cube([60, 2 * -y - 8, hexd]);
 		}
 	}
 	translate([0, 20, hexd]){
