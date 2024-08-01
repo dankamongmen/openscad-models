@@ -24,7 +24,7 @@ include <BOSL2/screws.scad>
 
 
 // Number of hexagons to make in the X axis
-numx=9;
+numx=5;
 
 // Number of hexagons to make in the Y axis
 numy=4;
@@ -90,6 +90,7 @@ module mirror_copy(v){
 }
 
 longd = 224;
+longz = 210;
 hexd = 8;
 y = -44;
 
@@ -211,7 +212,7 @@ module hex(ox, oy){
 // solid bottom
 both = 3;
 translate([-(longd / 2), y - both, 0]){
-	cube([longd, both, longd]);
+	cube([longd, both, longz]);
 }
 
 // side at z==0

@@ -32,6 +32,14 @@ module joint(offx){
 	}
 }
 
+module fingergrip(xoff){
+	translate([xoff, -10, 50]){
+		/*linear_extrude(
+		polygon([[], [], []])*/
+		cube([20, 15, 10]);
+	}
+}
+
 difference(){
 	roundedcube([totx, toty, totz], false, totrad, "zmin");
 	union(){
@@ -40,8 +48,11 @@ difference(){
 		zone(wallx * 3 + zonex * 2);
 		// hole in the back for type-c cable (8.94x3.26mm)
 		translate([wallx + zonex / 2, wally * 5, totz - wallz * 2]){
-			roundedcube([11.5, 5.5, wallz * 3], false, 1);
+			roundedcube([11.5, 6.5, wallz * 3], false, 1);
 		}
+		// hand grips on bottom
+		fingergrip(totx / 3 - 8.7);
+		fingergrip(2 * totx / 3 - 10);
 	}
 }
 
@@ -49,4 +60,3 @@ mirror([1, 0, 0]){
 	joint(0);
 }
 joint(totx);
-
