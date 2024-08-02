@@ -31,16 +31,24 @@ module join(){
 }
 }
 
-hws_insert(centerHole=true);
-translate([-5, 0, -5]){
-	cube([10, 270, 5]);
-}
-translate([0, 270, 0]){
+rotate([0, 0, 30]){
 	hws_insert(centerHole=true);
 }
-translate([-10, 0, -5]){
-	join();
+translate([-5.5, 0, -5]){
+	cube([10, 210, 5]);
 }
-translate([-10, 270, -5]){
-	join();
+translate([0, 210, 0]){
+	rotate([0, 0, 30]){
+		hws_insert(centerHole=true);
+	}
+}
+translate([-9, -5, -5]){
+	rotate([0, 0, 30]){
+		join();
+	}
+}
+translate([-9, 205, -5]){
+	rotate([0, 0, 30]){
+		join();
+	}
 }
