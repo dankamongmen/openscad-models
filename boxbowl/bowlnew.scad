@@ -14,23 +14,6 @@ include <hex.scad>
 // two next to one another are 225mm wide.
 // a carton is 250mm tall.
 
-//bottom honeycomb
-difference(){
-	translate([0, 4, 0]){
-		rotate([90, 0, 0]){
-			hexwall(8, 10);
-		}
-	}
-	translate([0, -4, 0]){
-		cube([totx, 2, totz], true);
-	}
-}
-
-/*for(i = [0:1:numx]){
-	translate([-htotx / 2 + i * htot , 0, 0]){
-		cube([4, 4, 4]);
-	}
-}*/
 wallr = 3;
 wallx = 8;
 wally = wallr;
@@ -42,6 +25,95 @@ totx = mainx + wallx * 2;
 totz = mainz + wallz * 2;
 toty = mainy + wally;
 
+// bottom honeycomb
+difference(){
+	translate([0, 4, 0]){
+		rotate([90, 0, 0]){
+			hexwall(8, 10);
+		}
+	}
+	translate([0, -4, 0]){
+		cube([totx, 2, totz], true);
+	}
+}
+// boundary around bottom honeycomb
+translate([0, 0, 0]){
+	difference(){
+		cube([mainx, 7, mainz], true);
+		cube([mainx - 14, 7, mainz - 14], true);
+	}
+}
+// fill in all partials on bottom right
+translate([mainx / 2 - 13.5, -3, -mainz / 2]){
+	cube([13.5, 7, mainz]);
+	mirror([1, 0, 0]){
+		for(i = [0:1:3]){
+			translate([0, 7, 41 + i * 41]){
+				rotate([90, 0, 0]){
+					linear_extrude(7){
+						polygon([
+							[0, -2],
+							[12, 6],
+							[12, 18],
+							[0, 26]
+						]);
+					}
+				}		
+			}
+		}
+	}
+}
+// fill in all partials on bottom left
+translate([-mainx / 2, -3, -mainz / 2]){
+	cube([14.2, 7, mainz]);
+	for(i = [0:1:3]){
+		translate([14.2, 7, 21 + i * 41]){
+			rotate([90, 0, 0]){
+				linear_extrude(7){
+					polygon([
+						[0, 0],
+						[10, 6],
+						[10, 18],
+						[0, 24]
+					]);
+				}
+			}		
+		}
+	}
+}
+// front bottom fillins
+for(i = [-4:1:3]){
+	translate([i * 23.6 - 5, 4, 80])
+	rotate([90, 0, 0]){
+		linear_extrude(7){
+			polygon([
+								[0, 18],
+								[11, 24],
+								[22, 18],
+								[22, 4],
+								[11, -2],
+								[0, 4]
+							]);
+		}
+	}
+}
+// back bottom fillins
+mirror([0, 0, 1])
+for(i = [-4:1:3]){
+	translate([i * 23.6 + 7, 4, 80])
+	rotate([90, 0, 0]){
+		linear_extrude(7){
+			polygon([
+								[0, 18],
+								[11, 24],
+								[22, 18],
+								[22, 4],
+								[11, -2],
+								[0, 4]
+							]);
+		}
+	}
+}
 
 // viewport for hydrogmeter on front face. we use a kite
 // to eliminate any need for supports.
@@ -111,6 +183,26 @@ module sidecomb(){
 		}
 	}
 }
+
+// front face, with two viewports
+module frontface(){
+	viewport(wallx + 18);
+	viewport(totx - wallx - 18 - vx);
+}
+
+module frontgates(xoff){
+	glen = mainy;
+	translate([xoff, glen, 1]){
+		rotate([90, 0, 0]){
+			cylinder(glen, wally / 2, wally / 2);
+		}
+	}
+	translate([xoff + mainx / 2 - 6, glen, 1]){
+		rotate([90, 0, 0]){
+			cylinder(glen, wally / 2, wally / 2);
+		}
+	}
+}
 			
 translate([-totx / 2, -wally, -totz / 2]){
 	difference(){
@@ -120,13 +212,14 @@ translate([-totx / 2, -wally, -totz / 2]){
 			translate([wallx, 0, wallz]){
 				cube([mainx, toty, mainz]);
 			}
+			// rip off the front
+			translate([wallx, 7, totz - wallz]){
+				cube([mainx, mainy, wallz]);
+			}
 			// cut out the core of the left and right faces
 			translate([0, (toty - corey) / 2, (totz - corez) / 2]){
 				cube([totx, corey, corez]);
 			}
-			viewport(wallx + 18);
-			viewport(totx - wallx - 18 - vx);
-      // front face, with two viewports
 			translate([totx / 2 - 10, 2 * toty / 3, 0]){
 				screw_hole("M5", head="pan", length=12);
 			}
@@ -147,10 +240,7 @@ translate([-totx / 2, -wally, -totz / 2]){
 	}
 }
 
-// boundary around bottom honeycomb
-translate([0, 1, 0]){
-	difference(){
-		cube([mainx, 6, mainz], true);
-		cube([mainx - 14, 6, mainz - 14], true);
-	}
+translate([0, 0, totz / 2 - wallz]){
+	frontgates(-mainx / 2 + 3);
+	frontgates(3);
 }
