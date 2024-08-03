@@ -2,10 +2,12 @@ include <BOSL2/std.scad>
 include <BOSL2/screws.scad>
 include <roundedcube.scad>
 include <hex.scad>
+include <bowl.scad>
 
 // FIXME need front to be hinged for hot swapping boxen
 // FIXME need channel through middle bottom for power
 // FIXME need cutaways for LEDs in front of viewports
+// FIXME left and right ought have hexen in the same places
 
 // uses "OpenSCAD Parameterized Honeycomb Storage Wall"
 // Inspired by: https://www.printables.com/model/152592-honeycomb-storage-wall
@@ -13,17 +15,6 @@ include <hex.scad>
 // a carton is 210mm long.
 // two next to one another are 225mm wide.
 // a carton is 250mm tall.
-
-wallr = 3;
-wallx = 8;
-wally = wallr;
-wallz = wallr;
-mainx = 204;
-mainy = 80;
-mainz = 210;
-totx = mainx + wallx * 2;
-totz = mainz + wallz * 2;
-toty = mainy + wally;
 
 // bottom honeycomb
 difference(){
@@ -190,7 +181,7 @@ module frontface(){
 	viewport(totx - wallx - 18 - vx);
 }
 
-module frontgates(xoff){
+/*module frontgates(xoff){
 	glen = mainy;
 	translate([xoff, glen, 1]){
 		rotate([90, 0, 0]){
@@ -202,7 +193,7 @@ module frontgates(xoff){
 			cylinder(glen, wally / 2, wally / 2);
 		}
 	}
-}
+}*/
 			
 translate([-totx / 2, -wally, -totz / 2]){
 	difference(){
@@ -226,6 +217,12 @@ translate([-totx / 2, -wally, -totz / 2]){
 			translate([totx / 2 + 10, 2 * toty / 3, 0]){
 				screw_hole("M5", head="pan", length=12);
 			}
+			// passageway for bolts
+			translate([0, toty - boltd - 1, totz - boltd - 1]){
+				rotate([0, 90, 0]){
+					cylinder(totx, boltd / 2, boltd / 2); // use screw_hole! FIXME
+				}
+			}
 		}
 	}
 	// we need to rotate the left side so that the correct (plug)
@@ -240,7 +237,35 @@ translate([-totx / 2, -wally, -totz / 2]){
 	}
 }
 
-translate([0, 0, totz / 2 - wallz]){
-	frontgates(-mainx / 2 + 3);
-	frontgates(3);
+// tower in front center for bolts
+// we have about 20mm of gap between the two boxes
+translate([-towerw / 2, 4, totz / 2])
+rotate([0, 90, 0]){
+	difference(){
+		// the main trapezoid of the tower
+		linear_extrude(towerw){
+			polygon([
+			 [0, 0],
+			 [0, mainy],
+			 [towerd / 2, mainy],
+			 [towerd, 0]
+			]);
+		}
+		// two threaded M5 holes (need different thread orientation on each side)
+		union(){
+			translate([boltd + 1, mainy - boltd - 1, 0]){
+				screw_hole("M5", length=towerw * 2);
+			}
+		}
+	}
 }
+
+// a cylindrical bar at the front bottom onto which the front panels can
+// be clipped (along with their bolt along the top), and around which they
+// can rotate. this way, removing the bolt causes the panel to fall forward,
+// rather than separating from the structure entirely.
+// we want it to rotate through 90 degrees. if we provide 90 degrees for
+// support of the bar, that allows 180 degrees for the panel's clamp.
+translate([-mainx / 2, 5, totz / 2 - bard / 2])
+	rotate([0, 90, 0])
+		cylinder(mainx, bard / 2, bard / 2);
