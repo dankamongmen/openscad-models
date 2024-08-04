@@ -29,4 +29,4 @@ swatchz = 2;
 fpanelx = (mainx - towerw) / 2;
 clampr = bard / 2 + 0.2;
 fpanely = mainy;
-fpanelz = 7;
+fpanelz = 8;

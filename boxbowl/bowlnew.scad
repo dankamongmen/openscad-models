@@ -171,6 +171,21 @@ translate([-totx / 2, -wally, -totz / 2]){
 					translate([wallx, 7, totz - wallz]){
 						cube([mainx, mainy, wallz]);
 					}
+					// cut holes into back panel to reduce material requirements
+					linear_extrude(wallz){
+						polygon([
+							[20, 20],
+							[20, toty / 2],
+							[mainx / 2, 20]
+						]);
+					}
+					linear_extrude(wallz){
+						polygon([
+							[totx - 20, 20],
+							[totx - 20, toty / 2],
+							[totx - mainx / 2, 20]
+						]);
+					}
 					// cut out the core of the left and right faces
 					translate([0, (toty - corey) / 2, (totz - corez) / 2]){
 						cube([totx, corey, corez]);
