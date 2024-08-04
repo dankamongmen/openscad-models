@@ -3,18 +3,13 @@ include <BOSL2/screws.scad>
 include <roundedcube.scad>
 include <hex.scad>
 include <bowl.scad>
+include <bolt.scad>
 
-// FIXME need front to be hinged for hot swapping boxen
 // FIXME need channel through middle bottom for power
 // FIXME need cutaways for LEDs in front of viewports
-// FIXME left and right ought have hexen in the same places
 
 // uses "OpenSCAD Parameterized Honeycomb Storage Wall"
 // Inspired by: https://www.printables.com/model/152592-honeycomb-storage-wall
-
-// a carton is 210mm long.
-// two next to one another are 225mm wide.
-// a carton is 250mm tall.
 
 // bottom honeycomb
 difference(){
@@ -106,19 +101,6 @@ for(i = [-4:1:3]){
 	}
 }
 
-// viewport for hydrogmeter on front face. we use a kite
-// to eliminate any need for supports.
-vx = 60;
-module viewport(xoff){
-	// a rectangular viewport would be 60x36
-	vy = 36;
-	// one from 20-70x, 20-50y
-	translate([xoff, 27, totz - wallz]){
-		linear_extrude(wallz){
-			polygon([[0, vy / 2], [vx / 2, vy], [vx, vy / 2], [vx / 2, 0]]);
-		}
-	}
-}
 
 // core is a roundedcube using tot{x,y,z}, with a cube using
 // main{x,y,z} removed from it. we then remove faces, replacing
@@ -174,86 +156,79 @@ module sidecomb(){
 		}
 	}
 }
-
-// front face, with two viewports
-module frontface(){
-	viewport(wallx + 18);
-	viewport(totx - wallx - 18 - vx);
-}
-
-/*module frontgates(xoff){
-	glen = mainy;
-	translate([xoff, glen, 1]){
-		rotate([90, 0, 0]){
-			cylinder(glen, wally / 2, wally / 2);
-		}
-	}
-	translate([xoff + mainx / 2 - 6, glen, 1]){
-		rotate([90, 0, 0]){
-			cylinder(glen, wally / 2, wally / 2);
-		}
-	}
-}*/
 			
 translate([-totx / 2, -wally, -totz / 2]){
 	difference(){
-		roundedcube([totx, toty, totz], false, wallr);
 		union(){
-			// scoop out the bowl
-			translate([wallx, 0, wallz]){
-				cube([mainx, toty, mainz]);
+			difference(){
+				roundedcube([totx, toty, totz], false, wallr);
+				union(){
+					// scoop out the bowl
+					translate([wallx, 0, wallz]){
+						cube([mainx, toty, mainz]);
+					}
+					// rip off the front
+					translate([wallx, 7, totz - wallz]){
+						cube([mainx, mainy, wallz]);
+					}
+					// cut out the core of the left and right faces
+					translate([0, (toty - corey) / 2, (totz - corez) / 2]){
+						cube([totx, corey, corez]);
+					}
+					translate([totx / 2 - 10, 2 * toty / 3, 0]){
+						screw_hole("M5", head="pan", length=12);
+					}
+					translate([totx / 2 + 10, 2 * toty / 3, 0]){
+						screw_hole("M5", head="pan", length=12);
+					}
+				}
 			}
-			// rip off the front
-			translate([wallx, 7, totz - wallz]){
-				cube([mainx, mainy, wallz]);
+			// we need to rotate the left side so that the correct (plug)
+			// side of the hexagons is facing outward
+			translate([8, toty, 0]){
+				rotate([180, 180, 0]){
+					sidecomb();
+				}
 			}
-			// cut out the core of the left and right faces
-			translate([0, (toty - corey) / 2, (totz - corez) / 2]){
-				cube([totx, corey, corez]);
+			translate([totx - 8, 0, 0]){
+				sidecomb();
 			}
-			translate([totx / 2 - 10, 2 * toty / 3, 0]){
-				screw_hole("M5", head="pan", length=12);
-			}
-			translate([totx / 2 + 10, 2 * toty / 3, 0]){
-				screw_hole("M5", head="pan", length=12);
-			}
-			// passageway for bolts
-			translate([0, toty - boltd - 1, totz - boltd - 1]){
+		}
+		union(){
+			// passageways for bolts
+			translate([wallx / 2, mainy - boltd / 2 - 1, totz - boltd / 2 - wallz - 1]){
 				rotate([0, 90, 0]){
-					cylinder(totx, boltd / 2, boltd / 2); // use screw_hole! FIXME
+					screw_hole("M5", length=wallx * 2);
+				}
+			}		
+			translate([totx - wallx / 2, mainy - boltd / 2 - 1, totz - boltd / 2 - wallz - 1]){
+				rotate([0, 90, 0]){
+					screw_hole("M5", length=wallx * 2);
 				}
 			}
 		}
-	}
-	// we need to rotate the left side so that the correct (plug)
-	// side of the hexagons is facing outward
-	translate([8, 0, totz]){
-		rotate([0, 180, 0]){
-			sidecomb();
-		}
-	}
-	translate([totx - 8, 0, 0]){
-		sidecomb();
 	}
 }
 
 // tower in front center for bolts
 // we have about 20mm of gap between the two boxes
-translate([-towerw / 2, 4, totz / 2])
+translate([-towerw / 2, wallr / 2, totz / 2])
 rotate([0, 90, 0]){
-	difference(){
-		// the main trapezoid of the tower
-		linear_extrude(towerw){
-			polygon([
-			 [0, 0],
-			 [0, mainy],
-			 [towerd / 2, mainy],
-			 [towerd, 0]
-			]);
+	// triangle support for tower
+	translate([0, 0, wallr]){
+		linear_extrude(towerw - wallr * 2){
+				polygon([
+				 [towerd / 2, 0],
+				 [towerd / 2, mainy - 4],
+				 [towerd, 0]
+				]);
 		}
+	}
+	difference(){
+		roundedcube([towerd - wallz * 3, mainy - 2, towerw], false, wallr, "ymax");
 		// two threaded M5 holes (need different thread orientation on each side)
 		union(){
-			translate([boltd + 1, mainy - boltd - 1, 0]){
+			translate([boltd + 1.5, mainy - boltd - 3, 0]){
 				screw_hole("M5", length=towerw * 2);
 			}
 		}
@@ -269,3 +244,9 @@ rotate([0, 90, 0]){
 translate([-mainx / 2, 5, totz / 2 - bard / 2])
 	rotate([0, 90, 0])
 		cylinder(mainx, bard / 2, bard / 2);
+
+/*translate([totx / 2 - 100, mainy - 7, totz / 2 - 6.5]){
+rotate([0, 90, 0]){
+  bolt();
+}
+}*/

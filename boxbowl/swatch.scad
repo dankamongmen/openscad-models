@@ -1,4 +1,5 @@
-// swatch for filament box bowl
+// swatch for filament box bowl, specialized by swatch-*.scad
 
-// FIXME label with filament type
-cube([20, 20, 2]);
+include <bowl.scad>
+
+cube([swatchx, swatchy, swatchz]);
