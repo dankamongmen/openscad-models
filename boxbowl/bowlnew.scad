@@ -35,14 +35,6 @@ multicolor("black"){
 			cube([totx, 2, totz], true);
 		}
 	}
-	// we have two strange long gaps in the front and back.
-	// hack to fill them until we figure out why.
-	translate([-mainx / 2, -3, totz / 2 - wallz - 4]){
-		cube([mainx, 8, 4]);
-	}
-	translate([-mainx / 2, -3, -mainz / 2]){
-		cube([mainx, 8, 4]);
-	}
 	// fill in all partials on bottom right
 	translate([mainx / 2 - 14, -3, -mainz / 2 + 1]){
 		cube([14, 7, mainz - 1]);
@@ -87,9 +79,9 @@ multicolor("black"){
 		rotate([90, 0, 0]){
 			linear_extrude(7){
 				polygon([
-									[0, 25],
-									[12, 25],
-									[24, 25],
+									[0, 28],
+									[12, 28],
+									[24, 28],
 									[24, 1],
 									[12, -5],
 									[0, 1]
@@ -104,9 +96,9 @@ multicolor("black"){
 		rotate([90, 0, 0]){
 			linear_extrude(7){
 				polygon([
-									[0, 25],
-									[12, 25],
-									[24, 25],
+									[0, 27],
+									[12, 27],
+									[24, 27],
 									[24, 2],
 									[12, -4],
 									[0, 2]
@@ -251,7 +243,10 @@ multicolor("green"){
 			}
 		}
 	}
-	
+} // green
+
+/*
+multicolor("blue"){
 	// tower in front center for bolts
 	// we have about 20mm of gap between the two boxes
 	translate([-towerw / 2, wallr / 2, totz / 2]){
@@ -289,4 +284,4 @@ multicolor("green"){
 			cylinder(mainx, bard / 2, bard / 2);
 		}
 	}
-} // green
+}*/

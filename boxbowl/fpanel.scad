@@ -33,44 +33,37 @@ module fpanel(filtype){
 			}
 			// we need a cylinder at the top through which our m5 bolt can go
 			// FIXME we should use screw_hole() for this, not cylinder
-			translate([-2.02, fpanely - 8, 0]){
+			translate([0, fpanely - 8, 0]){
 				difference(){
-					cylinder(fpanelx, 5 + 2, 5 + 2);
+					cylinder(fpanelx, 4, 4);
 				}
 			}	
 		}
 		union(){
 			// we have the top 180 degrees of the clamp
-			translate([-2, 0, 0]){
+			translate([0, 0, 0]){
 				cylinder(fpanelx, clampr, clampr);
 			}
 			viewport();
 			// top cylinder interior
-			translate([-2.02, fpanely - 8, 0]){
-				cylinder(fpanelx, 5, 5);
+			translate([0, fpanely - 8, 0]){
+				screw_hole("M5", length = 200);
 			}
-			translate([-fpanelz / 2, 20, 15]){
-				rotate([90, 0, 0]){
-					rotate([0, 90, 0]){
-						linear_extrude(fpanelz){
-							circle(13, $fn=6);
-						}
+			translate([-4, 20, 14]){
+				rotate([30, 0, 0])
+				rotate([0, 90, 0]){
+					linear_extrude(8){
+						circle(10, $fn=6);
 					}
 				}
 			}
 			translate([0, 16, 90]){
 				rotate([0, 90, 0]){
-					linear_extrude(7){
+					linear_extrude(4){
 						text(filtype, font="Prosto One");
 					}
 				}
 			}
-		}
-	}
-	
-	translate([-4, 20, 20]){
-		rotate([0, 90, 0]){
-			hexwall(1, 1);
 		}
 	}
 }
