@@ -21,7 +21,7 @@ module join(){
 
 // add some strength along the main axis, hopefully
 sbarx = 5;
-sbary = 210;
+sbary = 235;
 sbarz = 2;
 translate([-sbarx / 2, 0, -sbarz - 5]){
 	cube([sbarx, sbary, sbarz]);
@@ -36,15 +36,15 @@ module tophex(yoff){
 }
 
 tophex(0);
-tophex(210);
+tophex(sbary);
 
 rotate([0, 0, 30]){
 	hws_insert(centerHole=false);
 }
 translate([-5.5, 0, -5]){
-	cube([10, 210, 5]);
+	cube([10, sbary, 5]);
 }
-translate([0, 210, 0]){
+translate([0, sbary, 0]){
 	rotate([0, 0, 30]){
 		hws_insert(centerHole=false);
 	}
@@ -54,7 +54,7 @@ translate([-9, -5, -5]){
 		join();
 	}
 }
-translate([-9, 205, -5]){
+translate([-9, sbary - 5, -5]){
 	rotate([0, 0, 30]){
 		join();
 	}
