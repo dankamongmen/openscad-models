@@ -35,6 +35,14 @@ multicolor("black"){
 			cube([totx, 2, totz], true);
 		}
 	}
+	// we have two strange long gaps in the front and back.
+	// hack to fill them until we figure out why.
+	translate([-mainx / 2, -3, totz / 2 - wallz - 4]){
+		cube([mainx, 8, 4]);
+	}
+	translate([-mainx / 2, -3, -mainz / 2]){
+		cube([mainx, 8, 4]);
+	}
 	// fill in all partials on bottom right
 	translate([mainx / 2 - 14, -3, -mainz / 2 + 1]){
 		cube([14, 7, mainz - 1]);
@@ -59,7 +67,7 @@ multicolor("black"){
 	translate([-mainx / 2, -3, -mainz / 2]){
 		cube([14.2, 7, mainz]);
 		for(i = [0:1:3]){
-			translate([14.2, 7, 23 + i * 41]){
+			translate([14.2, 7, 25.5 + i * 41]){
 				rotate([90, 0, 0]){
 					linear_extrude(7){
 						polygon([
@@ -132,8 +140,13 @@ module sidecomb(){
 	translate([0, toty / 2, totz / 2]){
 		rotate([0, 90, 0]){
 			hexwall(8, 3);
-			translate([mainz / 2 - 9, -mainy / 2 + wally, 0]){
-				cube([3, mainy - wally * 2, 8]);
+			// back center gap
+			translate([mainz / 2 - 11.5, -mainy / 2 + wally, 0]){
+				cube([5.5, mainy - wally * 2, 8]);
+			}
+			// front center gap
+			translate([-mainz / 2 + 6, -mainy / 2 + wally, 0]){
+				cube([5.5, mainy - wally * 2, 8]);
 			}
 			// fill in the top holes
 			for(i = [0:1:7]){
@@ -154,7 +167,9 @@ module sidecomb(){
 				         [xoffbase + 8 * htotx + wall + height / 2, -25],
 				         [xoffbase + 8 * htotx + wall + height / 2, -34]]);
 				// fill in the front holes on both sides
-				lfill();
+				translate([0, -1, 0]){
+					lfill();
+				}
 				translate([0, height * 2, 0]){
 					lfill();
 				}
