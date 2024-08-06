@@ -1,7 +1,7 @@
 // common constants used across multiple files
 
-// a carton is 217mm long.
-// two next to one another are 204mm wide.
+// a carton is 222mm long where it intersects with the bolt.
+// two next to one another are 204mm wide with a ~20mm clearance.
 // a carton is 250mm tall.
 
 
@@ -12,7 +12,7 @@ wally = wallr;
 wallz = wallr;
 mainx = 204;
 mainy = 80;
-mainz = 217;
+mainz = 222;
 totx = mainx + wallx * 2;
 totz = mainz + wallz * 2;
 toty = mainy + wally;
