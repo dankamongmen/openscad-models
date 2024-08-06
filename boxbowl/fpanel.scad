@@ -29,22 +29,24 @@ module fpanel(filtype){
 		union(){
 			// main panel cube
 			translate([-fpanelz / 2, 0, 0]){
-				cube([fpanelz, fpanely - clampr - 2.5, fpanelx]);
+				cube([fpanelz, fpanely - clampr - 5.5, fpanelx]);
 			}
 			// we need a cylinder at the top through which our m5 bolt can go
 			// FIXME we should use screw_hole() for this, not cylinder
-			translate([-2.02, fpanely - 4.5, 0]){
+			translate([-2.02, fpanely - 8, 0]){
 				difference(){
-					cylinder(fpanelx, 5 + 1, 5 + 1);
+					cylinder(fpanelx, 5 + 2, 5 + 2);
 				}
 			}	
 		}
 		union(){
 			// we have the top 180 degrees of the clamp
-			cylinder(fpanelx, clampr, clampr);
+			translate([-2, 0, 0]){
+				cylinder(fpanelx, clampr, clampr);
+			}
 			viewport();
 			// top cylinder interior
-			translate([-1.72 - 0.1, fpanely - 4.5 - 0.1, 0]){
+			translate([-2.02, fpanely - 8, 0]){
 				cylinder(fpanelx, 5, 5);
 			}
 			translate([-fpanelz / 2, 20, 15]){
@@ -72,26 +74,3 @@ module fpanel(filtype){
 		}
 	}
 }
-
-// add slot for swatch
-/*
-translate([fpanelz / 2, 6, 6]){
-	difference(){
-		cube([swatchz + 1, swatchy + 1, swatchx + 2]);
-		union(){
-			translate([1, 1, 1]){
-				cube([swatchz - 1, swatchy, swatchx]);
-			}
-			translate([swatchz - 1, 1, 2]){
-				cube([2, swatchy, swatchx - 2]);
-			}
-		}
-	}
-	linear_extrude(swatchx + 2){
-		polygon([
-			[0, 0],
-			[swatchz + 1, 0],
-			[0, -swatchz - 1]
-		]);
-	}
-}*/
