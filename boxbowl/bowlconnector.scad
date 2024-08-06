@@ -29,7 +29,7 @@ module tophex(yoff){
 	translate([0, yoff, -sbarz - 5]){
 		rotate([0, 0, 30]){
 			linear_extrude(sbarz){
-				circle(5, $fn = 6);
+				circle(7, $fn = 6);
 			}
 		}
 	}
@@ -38,12 +38,12 @@ module tophex(yoff){
 tophex(0);
 tophex(sbary);
 
-hws_insert(centerHole=true);
+hws_insert(centerHole=false);
 translate([-5, 0, -5]){
 	cube([10, sbary, 5]);
 }
 translate([0, sbary, 0]){
-	hws_insert(centerHole=true);
+	hws_insert(centerHole=false);
 }
 translate([-10, 0, -5]){
 	join();

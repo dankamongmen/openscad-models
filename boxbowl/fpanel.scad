@@ -15,7 +15,7 @@ module viewport(){
 	// a rectangular viewport would be 60x36
 	vy = 36;
 	// from 20-70x, 20-50y
-	translate([-fpanelz / 2, 27, (fpanelx + vx) / 2]){
+	translate([-fpanelz / 2, 17, (fpanelx + vx) / 2]){
 		rotate([0, 90, 0]){
 			linear_extrude(fpanelz){
 				polygon([[0, vy / 2], [vx / 2, vy], [vx, vy / 2], [vx / 2, 0]]);
@@ -46,7 +46,7 @@ module fpanel(filtype){
 			}
 			viewport();
 			// top cylinder interior
-			translate([0, fpanely - 8, 0]){
+			translate([0, fpanely - 12, 0]){
 				screw_hole("M5", length = 200);
 			}
 			translate([-4, 20, 14]){
@@ -57,7 +57,7 @@ module fpanel(filtype){
 					}
 				}
 			}
-			translate([0, 16, 90]){
+			translate([0, 14, 90]){
 				rotate([0, 90, 0]){
 					linear_extrude(4){
 						text(filtype, font="Prosto One");

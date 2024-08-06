@@ -2,21 +2,22 @@ include <hcomb-insert.scad>
 
 module join(){
 	hull(){
-	linear_extrude(3)
-		polygon([
-			[0, 0],
-			[5, 8],
-			[15, 8],
-			[20, 0],
-			[15, -8],
-			[5, -8]
-		]);
-	translate([10, -0.5, 0]){
-		rotate_extrude($fn=6, convexity=10){
-			polygon([[11.6, 5], [11.6, 2], [0, 5]]);
+		linear_extrude(3){
+			polygon([
+				[0, 0],
+				[5, 8],
+				[15, 8],
+				[20, 0],
+				[15, -8],
+				[5, -8]
+			]);
+		}
+		translate([10, -0.5, 0]){
+			rotate_extrude($fn=6, convexity=10){
+				polygon([[11.6, 5], [11.6, 2], [0, 5]]);
+			}
 		}
 	}
-}
 }
 
 // add some strength along the main axis, hopefully
@@ -30,7 +31,7 @@ translate([-sbarx / 2, 0, -sbarz - 5]){
 module tophex(yoff){
 	translate([0, yoff, -sbarz - 5]){
 		linear_extrude(sbarz){
-			circle(5, $fn = 6);
+			circle(7, $fn = 6);
 		}
 	}
 }
