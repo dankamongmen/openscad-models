@@ -64,9 +64,9 @@ multicolor("black"){
 					linear_extrude(7){
 						polygon([
 							[0, -1],
-							[10, 6],
-							[10, 21],
-							[0, 26]
+							[11, 6],
+							[11, 21],
+							[0, 28]
 						]);
 					}
 				}		
@@ -100,7 +100,7 @@ multicolor("black"){
 									[12, 27],
 									[24, 27],
 									[24, 2],
-									[12, -4],
+									[12, -6],
 									[0, 2]
 								]);
 			}
@@ -208,12 +208,16 @@ multicolor("green"){
 						translate([0, (toty - corey) / 2, (totz - corez) / 2]){
 							cube([totx, corey, corez]);
 						}
-						// external bolt holes
-						translate([totx / 2 - 10, 2 * toty / 3, 0]){
+						// external bolt holes for stud-mounted variant
+						/*translate([totx / 2 - 10, 2 * toty / 3, 0]){
 							screw_hole("M5", head="pan", length=12);
 						}
 						translate([totx / 2 + 10, 2 * toty / 3, 0]){
 							screw_hole("M5", head="pan", length=12);
+						}*/
+						// external block hole for cement-mounted variant
+						translate([totx / 2, 3 * toty / 5, 0]){
+							cylinder(wallz, 22, 22);
 						}
 					}
 				}
@@ -245,7 +249,6 @@ multicolor("green"){
 	}
 } // green
 
-/*
 multicolor("blue"){
 	// tower in front center for bolts
 	// we have about 20mm of gap between the two boxes
@@ -284,4 +287,4 @@ multicolor("blue"){
 			cylinder(mainx, bard / 2, bard / 2);
 		}
 	}
-}*/
+}
