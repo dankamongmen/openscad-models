@@ -1,8 +1,8 @@
-// wallhole is 45.5mm
-// backhole is 45mm
+// wallhole is 44.5 mm
+// backhole is 44mm
 
-wallr = 45 / 2;
-backr = 44.5 / 2;
+wallr = 44.5 / 2;
+backr = 44 / 2;
 innerr = 20; // FIXME strengthen for final version once fitted
 wlen = 20;
 bowllen = 3.5;
