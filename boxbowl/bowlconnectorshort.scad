@@ -20,12 +20,32 @@ module join(){
 	}
 }
 
-// add some strength along the main axis, hopefully
 sbarx = 5;
 sbary = 235;
 sbarz = 2;
+
+// TOPMOST section-add some strength along the main axis, hopefully
 translate([-sbarx / 2, 0, -sbarz - 5]){
 	cube([sbarx, sbary, sbarz]);
+}
+
+// triangle channels on top to avoid floats
+module toptri(){
+	translate([2, 3, -5]){
+		rotate([-90, 0, 0]){
+			linear_extrude(sbary){
+				polygon([
+									[0, 0],
+									[5 - sbarx / 2, 0],
+									[0, sbarz]
+								]);
+			}
+		}
+	}
+}
+toptri();
+mirror([1, 0, 0]){
+	toptri();
 }
 
 module tophex(yoff){

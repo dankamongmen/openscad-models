@@ -41,7 +41,7 @@ module fpanel(filtype){
 		}
 		union(){
 			// we have the top 180 degrees of the clamp
-			translate([0, 0, 0]){
+			translate([clampr, 0, 0]){
 				cylinder(fpanelx, clampr, clampr);
 			}
 			viewport();
