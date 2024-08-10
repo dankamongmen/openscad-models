@@ -25,43 +25,54 @@ module viewport(){
 }
 
 module fpanel(filtype){
-	difference(){
-		union(){
-			// main panel cube
-			translate([-fpanelz / 2, 0, 0]){
-				cube([fpanelz, fpanely - clampr - 5.5, fpanelx]);
-			}
-			// we need a cylinder at the top through which our m5 bolt can go
-			// FIXME we should use screw_hole() for this, not cylinder
-			translate([0, fpanely - 8, 0]){
-				difference(){
-					cylinder(fpanelx, 4, 4);
+	multicolor("black"){
+		difference(){
+			union(){
+				// main panel cube
+				translate([-fpanelz / 2, 0, 0]){
+					cube([fpanelz, fpanely - clampr - 5.5, fpanelx]);
 				}
-			}	
+				// we need a cylinder at the top through which our m5 bolt can go
+				// FIXME we should use screw_hole() for this, not cylinder
+				translate([0, fpanely - 8, 0]){
+					difference(){
+						cylinder(fpanelx, 4, 4);
+					}
+				}	
+			}
+			union(){
+				// we have the top 180 degrees of the clamp
+				translate([clampr, 0, 0]){
+					cylinder(fpanelx, clampr, clampr);
+				}
+				viewport();
+				// top cylinder interior
+				translate([0, fpanely - 12, 0]){
+					screw_hole("M5", length = 200);
+				}
+				translate([-4, 20, 14]){
+					rotate([30, 0, 0])
+					rotate([0, 90, 0]){
+						linear_extrude(8){
+							circle(10, $fn=6);
+						}
+					}
+				}
+				translate([0, 14, 90]){
+					rotate([0, 90, 0]){
+						linear_extrude(4){
+							text(filtype, font="Prosto One");
+						}
+					}
+				}
+			}
 		}
-		union(){
-			// we have the top 180 degrees of the clamp
-			translate([clampr, 0, 0]){
-				cylinder(fpanelx, clampr, clampr);
-			}
-			viewport();
-			// top cylinder interior
-			translate([0, fpanely - 12, 0]){
-				screw_hole("M5", length = 200);
-			}
-			translate([-4, 20, 14]){
-				rotate([30, 0, 0])
-				rotate([0, 90, 0]){
-					linear_extrude(8){
-						circle(10, $fn=6);
-					}
-				}
-			}
-			translate([0, 14, 90]){
-				rotate([0, 90, 0]){
-					linear_extrude(4){
-						text(filtype, font="Prosto One");
-					}
+	}
+	multicolor("white"){
+		translate([0, 14, 90]){
+			rotate([0, 90, 0]){
+				linear_extrude(4){
+					text(filtype, font="Prosto One");
 				}
 			}
 		}

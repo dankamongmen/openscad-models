@@ -1,7 +1,3 @@
-include <BOSL2/std.scad>
-include <BOSL2/screws.scad>
-include <roundedcube.scad>
-include <hex.scad>
 include <bowl.scad>
 include <bolt.scad>
 
@@ -12,16 +8,6 @@ include <bolt.scad>
 // Inspired by: https://www.printables.com/model/152592-honeycomb-storage-wall
 
 current_color = "ALL";
-
-module multicolor(color) {
-	if (current_color != "ALL" && current_color != color) { 
-			// ignore our children.
-			// (I originally used "scale([0,0,0])" which also works but isn't needed.) 
-	} else {
-			color(color)
-			children();
-	}        
-}
 
 multicolor("black"){
 	// bottom honeycomb
@@ -209,15 +195,11 @@ multicolor("green"){
 							cube([totx, corey, corez]);
 						}
 						// external bolt holes for stud-mounted variant
-						/*translate([totx / 2 - 10, 2 * toty / 3, 0]){
+						translate([totx / 2 - 10, 2 * toty / 3, 0]){
 							screw_hole("M5", head="pan", length=12);
 						}
 						translate([totx / 2 + 10, 2 * toty / 3, 0]){
 							screw_hole("M5", head="pan", length=12);
-						}*/
-						// external block hole for cement-mounted variant
-						translate([totx / 2, 3 * toty / 5, 0]){
-							cylinder(wallz, 22, 22);
 						}
 					}
 				}
@@ -231,6 +213,22 @@ multicolor("green"){
 				translate([totx - 8, 0, 0]){
 					sidecomb();
 				}
+				/*translate([(totx + towerw) / 2, 0, 0]){//-totz / 2 + wallz]){
+					// now another tower in the back, to screw the cap in
+					rotate([0, 270, 0]){
+						// triangle support for tower
+						translate([2, 0, wallr]){
+							linear_extrude(towerw - wallr * 2){
+									polygon([
+										[towerd / 2, 0],
+										[towerd / 2, mainy - 5],
+										[towerd, 0]
+									]);
+							}
+						}
+						roundedcube([towerd - wallz * 3 + 1, mainy - 2, towerw], false, wallr, "ymax");
+					}
+				}*/
 			}
 			union(){
 				// passageways for bolts
@@ -244,10 +242,21 @@ multicolor("green"){
 						screw_hole("M5", length=wallx * 2);
 					}
 				}
+				/*
+				// all of this is only used with the circular hole model
+				// external block hole for cement-mounted variant
+				translate([totx / 2, 3 * toty / 5, 0]){
+					cylinder(wallz, backholer, backholer);
+					translate([0, 0, 0]){
+						screw_hole("M6", length=towerw * 2, thread=true);
+					}
+				}*/
 			}
 		}
 	}
 } // green
+
+
 
 multicolor("blue"){
 	// tower in front center for bolts
@@ -287,4 +296,4 @@ multicolor("blue"){
 			cylinder(mainx, bard / 2, bard / 2);
 		}
 	}
-}
+} // blue
