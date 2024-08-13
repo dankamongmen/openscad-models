@@ -1,10 +1,9 @@
 include <bowl.scad>
-// wallhole is 44.5 mm
+// wallhole is 43 mm at entry, but gets smaller
 // backhole is 44mm
 
-wallr = 44.5 / 2;
-innerr = 20; // FIXME strengthen for final version once fitted
-wlen = 20;
+wallr = 43 / 2;
+wlen = 30;
 bowllen = 3.5;
 difference(){
 	union(){
