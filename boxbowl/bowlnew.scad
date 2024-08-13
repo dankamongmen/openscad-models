@@ -102,8 +102,6 @@ multicolor("black"){
 corey = 4 * mainy / 5;
 corez = 11 * mainz / 12 + 4;
 
-height = 20;
-wall = 1.8;
 htotx = height + 2 * wall;
 xoffbase = -100;
 
@@ -255,8 +253,6 @@ multicolor("green"){
 		}
 	}
 } // green
-
-
 
 multicolor("blue"){
 	// tower in front center for bolts

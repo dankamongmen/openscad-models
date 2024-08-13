@@ -44,5 +44,8 @@ clampr = bard / 2 + 0.2;
 fpanely = mainy;
 fpanelz = 8;
 
+height = 20;
+wall = 1.8;
+
 // in the cement model, the back circular hole is 22mm in radius
 backholer = 44 / 2;
