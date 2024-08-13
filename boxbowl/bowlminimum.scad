@@ -94,12 +94,11 @@ difference(){
 			cube([mtotx, mainy - rwallr - wallr -1, mainz - wallr - 19]);
 		}
 		// passageways for bolts
-		translate([0, mainy - boltd / 2, mtotz - rwallr - boltd / 2]){
+		translate([0, mtoty - rwallr - boltd / 2, mtotz - towerd / 2 + boltd / 2]){
 			rotate([0, 90, 0]){
 				cylinder(mtotx, boltd / 2, boltd / 2);
-				//screw_hole("M5", length=wallx * 2);
 			}
-		}		
+		}
 	}
 }
 
@@ -119,7 +118,7 @@ translate([totx - 8, 1, 3]){
 multicolor("blue"){
 	// tower in front center for bolts
 	// we have about 20mm of gap between the two boxes
-	translate([(mtotx - towerw) / 2, rwallr, mtotz - bard - boltd / 2 + 1]){
+	translate([(mtotx - towerw) / 2, rwallr, mtotz - bard / 2]){
 		rotate([0, 90, 0]){
 			// triangle support for tower
 			translate([2, 0, wallr]){
@@ -156,7 +155,7 @@ multicolor("blue"){
 
 // for testing
 /*multicolor("red"){
-	translate([0, mtoty - rwallr - boltd / 2, mtotz - rwallr - boltd / 2]){
+	translate([0, mtoty - rwallr - boltd / 2, mtotz - towerd / 2 + boltd / 2]){
 		rotate([0, 90, 0]){
 			cylinder(mtotx, boltd / 2, boltd / 2);
 		}

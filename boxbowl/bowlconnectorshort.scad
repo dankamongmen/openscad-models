@@ -46,7 +46,7 @@ module tophex(yoff){
 }
 
 sbarx = 5;
-sbary = 235;
+sbary = 214;
 sbarz = 2;
 
 difference(){
