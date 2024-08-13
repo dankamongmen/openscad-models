@@ -6,15 +6,15 @@ rwallr = 8; // same thickness as honeycomb
 
 mtotx = mainx + rwallr * 2;
 mtoty = mainy + rwallr;
-mtotz = mainz + rwallr * 2;
+mtotz = mainz + rwallr * 2 - 6;
 
 htotx = height + 2 * wall - 0.05; // FIXME eliminate
 xoffbase = -100.2; // FIXME eliminate
 module lfill(){
-	polygon([[xoffbase - 5, -36],
-				 [xoffbase - 5, -27 + htotx],
-				 [xoffbase + mtotx / 2, -29 + 2 * mtotx / 3],
-				 [xoffbase + mtotx / 2, -35 + mtotx / 3]]);
+	polygon([[xoffbase, -33],
+				 [xoffbase, -29 + htotx],
+				 [xoffbase + htotx / 2 + 0.5, -28 + 2 * htotx / 3],
+				 [xoffbase + htotx / 2 + 0.5, -35 + htotx / 3]]);
 }
 
 //hexh = 5.77349; // 10**2 + x**2 = 11.547**2
@@ -24,15 +24,6 @@ module sidecomb(){
 	translate([0, mtoty / 2, mtotz / 2 - 3]){
 		rotate([0, 90, 0]){
 			hexwall(8, 3);
-			/*
-			// back center gap
-			translate([mainz / 2 - 11.5, -mainy / 2 + wally, 0]){
-				cube([5.5, mainy - wally * 2, 8]);
-			}
-			// front center gap
-			translate([-mainz / 2 + 6, -mainy / 2 + wally, 0]){
-				cube([5.5, mainy - wally * 2, 8]);
-			}*/
 			// fill in the top holes (on the left side, bottom on right)
 			for(i = [0:1:7]){
 				linear_extrude(8){
@@ -44,13 +35,12 @@ module sidecomb(){
 									 [xoffbase + i * htotx + 23.6, -hexy - hexh]]);
 				}
 			}
-			/*
 			linear_extrude(8){
 				polygon([[xoffbase + 8 * htotx, 34],
-				         [xoffbase + 8 * htotx + wall + height / 2, 25],
+				         [xoffbase + 8 * htotx + wall + height / 2, 27],
 				         [xoffbase + 8 * htotx + wall + height / 2, 34]]);
 				polygon([[xoffbase + 8 * htotx, -34],
-				         [xoffbase + 8 * htotx + wall + height / 2, -25],
+				         [xoffbase + 8 * htotx + wall + height / 2, -27],
 				         [xoffbase + 8 * htotx + wall + height / 2, -34]]);
 				// fill in the front holes on both sides
 				translate([0, -1, 0]){
@@ -60,12 +50,12 @@ module sidecomb(){
 					lfill();
 				}
 				// fill in the back hole on both sides
-				translate([0, height, 0]){
+				translate([0, height - 1, 0]){
 					mirror([1, 0, 0]){
 						lfill();
 					}
 				}
-			}*/
+			}
 		}
 	}
 }
@@ -92,11 +82,15 @@ difference(){
 		translate([0, 0, 0]){
 			cube([mtotx, rwallr / 2, mtotz]);
 		}
+		// remove the back half of the back
+		translate([0, 0, 0]){
+			cube([mtotx, mtoty, rwallr / 2]);
+		}
 		// cut triangles into back panel to reduce material requirements
 		backtriangle(20, mainx / 2);
 		backtriangle(totx - 20, totx - mainx / 2);
 		// remove the sides to insert the honeycomb
-		translate([0, rwallr + wallr, rwallr + wallr + 8]){
+		translate([0, rwallr + wallr, rwallr + wallr + 5]){
 			cube([mtotx, mainy - rwallr - wallr -1, mainz - wallr - 19]);
 		}
 		// passageways for bolts
