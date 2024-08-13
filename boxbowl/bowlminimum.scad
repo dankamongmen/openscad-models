@@ -8,8 +8,8 @@ mtotx = mainx + rwallr * 2;
 mtoty = mainy + rwallr;
 mtotz = mainz + rwallr * 2;
 
-htotx = height + 2 * wall; // FIXME eliminate
-xoffbase = -100; // FIXME eliminate
+htotx = height + 2 * wall - 0.05; // FIXME eliminate
+xoffbase = -100.2; // FIXME eliminate
 module lfill(){
 	polygon([[xoffbase - 5, -36],
 				 [xoffbase - 5, -27 + htotx],
@@ -17,6 +17,9 @@ module lfill(){
 				 [xoffbase + mtotx / 2, -35 + mtotx / 3]]);
 }
 
+//hexh = 5.77349; // 10**2 + x**2 = 11.547**2
+hexh = 7.5;
+hexy = 26.5;
 module sidecomb(){
 	translate([0, mtoty / 2, mtotz / 2 - 3]){
 		rotate([0, 90, 0]){
@@ -29,18 +32,19 @@ module sidecomb(){
 			// front center gap
 			translate([-mainz / 2 + 6, -mainy / 2 + wally, 0]){
 				cube([5.5, mainy - wally * 2, 8]);
-			}
-			// fill in the top holes
+			}*/
+			// fill in the top holes (on the left side, bottom on right)
 			for(i = [0:1:7]){
 				linear_extrude(8){
-					polygon([[xoffbase + i * htotx, 34],
-									 [xoffbase + i * htotx + wall + height / 2, 25],
-									 [xoffbase + i * htotx + height + wall * 2, 34]]);
-					polygon([[xoffbase + i * htotx, -34],
-									 [xoffbase + i * htotx + wall + height / 2, -25],
-									 [xoffbase + i * htotx + height + wall * 2, -34]]);
+					polygon([[xoffbase + i * htotx, hexy + hexh],
+									 [xoffbase + i * htotx + 11.8, hexy],
+									 [xoffbase + i * htotx + 23.6, hexy + hexh]]);
+					polygon([[xoffbase + i * htotx, -hexy - hexh],
+									 [xoffbase + i * htotx + 11.8, -hexy],
+									 [xoffbase + i * htotx + 23.6, -hexy - hexh]]);
 				}
 			}
+			/*
 			linear_extrude(8){
 				polygon([[xoffbase + 8 * htotx, 34],
 				         [xoffbase + 8 * htotx + wall + height / 2, 25],
@@ -82,7 +86,7 @@ difference(){
 	union(){
 		// remove the core, leaving filleted inside
 		translate([(mtotx - mainx) / 2, rwallr, rwallr]){
-			roundedcube([mainx, mainy, mainz + 200 * rwallr], false, wallr, "ymin");
+			roundedcube([mainx, mainy, mainz * rwallr], false, wallr, "ymin");
 		}
 		// remove the bottom half of the bottom
 		translate([0, 0, 0]){
@@ -92,64 +96,52 @@ difference(){
 		backtriangle(20, mainx / 2);
 		backtriangle(totx - 20, totx - mainx / 2);
 		// remove the sides to insert the honeycomb
-		translate([0, rwallr + wallr, rwallr + wallr]){
-			cube([mtotx, mainy - rwallr - wallr, mainz - wallr]);
+		translate([0, rwallr + wallr, rwallr + wallr + 8]){
+			cube([mtotx, mainy - rwallr - wallr -1, mainz - wallr - 19]);
 		}
+		// passageways for bolts
+		translate([0, mainy - boltd / 2, mtotz - rwallr - boltd / 2]){
+			rotate([0, 90, 0]){
+				cylinder(mtotx, boltd / 2, boltd / 2);
+				//screw_hole("M5", length=wallx * 2);
+			}
+		}		
 	}
 }
 
-difference(){
-	union(){
-		translate([0, 1, wallz]){
-			// left side
-			translate([8, mtoty, 0]){
-				rotate([180, 180, 0]){
-					sidecomb();
-				}
-			}
-		}
-		// right side
-		translate([totx - 8, 0, 0]){
+translate([0, 1, wallz]){
+	// left side
+	translate([8, mtoty, 0]){
+		rotate([180, 180, 0]){
 			sidecomb();
 		}
 	}
-	union(){
-		// passageways for bolts
-		translate([wallx / 2, mainy - boltd / 2 - 1, totz - boltd / 2 - wallz - 1]){
-			rotate([0, 90, 0]){
-				screw_hole("M5", length=wallx * 2);
-			}
-		}		
-		translate([totx - wallx / 2, mainy - boltd / 2 - 1, totz - boltd / 2 - wallz - 1]){
-			rotate([0, 90, 0]){
-				screw_hole("M5", length=wallx * 2);
-			}
-		}
-	}
+}
+// right side
+translate([totx - 8, 1, 3]){
+	sidecomb();
 }
 
 multicolor("blue"){
 	// tower in front center for bolts
 	// we have about 20mm of gap between the two boxes
-	translate([(mtotx - towerw) / 2, rwallr, mtotz]){
+	translate([(mtotx - towerw) / 2, rwallr, mtotz - bard - boltd / 2 + 1]){
 		rotate([0, 90, 0]){
 			// triangle support for tower
 			translate([2, 0, wallr]){
 				linear_extrude(towerw - wallr * 2){
 						polygon([
 							[towerd / 2, 0],
-							[towerd / 2, mainy - 5],
+							[towerd / 2, mainy - 2],
 							[towerd, 0]
 						]);
 				}
 			}
 			difference(){
-				roundedcube([towerd - wallz * 3 + 1, mainy - 2, towerw], false, wallr, "ymax");
+				roundedcube([towerd - wallz * 3 + 1, mainy - 2, towerw], false, wallr, "y");
 				// two threaded M5 holes (need different thread orientation on each side)
-				union(){
-					translate([(towerd + wallr * 2 - wallz * 3 - boltd) / 2, mainy - boltd - 3, 0]){
-						screw_hole("M5", length=towerw * 2, thread=true);
-					}
+				translate([(towerd + wallr * 2 - wallz * 3 - boltd) / 2, mainy - 8 - boltd / 2, 0]){
+					screw_hole("M5", length=towerw * 2, thread=true);
 				}
 			}
 		}
@@ -167,3 +159,12 @@ multicolor("blue"){
 		}
 	}
 } // blue
+
+// for testing
+/*multicolor("red"){
+	translate([0, mtoty - rwallr - boltd / 2, mtotz - rwallr - boltd / 2]){
+		rotate([0, 90, 0]){
+			cylinder(mtotx, boltd / 2, boltd / 2);
+		}
+	}
+}*/
