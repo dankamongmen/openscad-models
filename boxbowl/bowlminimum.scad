@@ -97,6 +97,10 @@ difference(){
 		translate([0, mtoty - rwallr - boltd / 2, mtotz - towerd / 2 + boltd / 2]){
 			rotate([0, 90, 0]){
 				cylinder(mtotx, boltd / 2, boltd / 2);
+				// smaller one on bottom is actual screw hole
+				translate([0, -65, 0]){
+					screw_hole("M4", length=mtotx*3, thread=true);
+				}
 			}
 		}
 	}
@@ -132,23 +136,15 @@ multicolor("blue"){
 			}
 			difference(){
 				roundedcube([towerd - wallz * 3 + 1, mainy - 2, towerw], false, wallr, "y");
-				// two threaded M5 holes (need different thread orientation on each side)
+				// M5 holes on top
 				translate([(towerd + wallr * 2 - wallz * 3 - boltd) / 2, mainy - 8 - boltd / 2, 0]){
 					screw_hole("M5", length=towerw * 2, thread=true);
 				}
+				// M4s on bottom for permanent inserts
+				translate([6, 4.5, towerw / 2 - totx / 8]){
+					screw_hole("M4", length=mtotx*3, thread=true);
+				}
 			}
-		}
-	}
-	
-	// a cylindrical bar at the front bottom onto which the front panels can
-	// be clipped (along with their bolt along the top), and around which they
-	// can rotate. this way, removing the bolt causes the panel to fall forward,
-	// rather than separating from the structure entirely.
-	// we want it to rotate through 90 degrees. if we provide 90 degrees for
-	// support of the bar, that allows 180 degrees for the panel's clamp.
-	translate([rwallr, rwallr, mtotz - bard / 2]){
-		rotate([0, 90, 0]){
-			cylinder(mainx, bard / 2, bard / 2);
 		}
 	}
 } // blue
@@ -158,6 +154,9 @@ multicolor("blue"){
 	translate([0, mtoty - rwallr - boltd / 2, mtotz - towerd / 2 + boltd / 2]){
 		rotate([0, 90, 0]){
 			cylinder(mtotx, boltd / 2, boltd / 2);
+			translate([0, -65, 0]){
+				cylinder(mtotx, 2, 2);
+			}
 		}
 	}
 }*/
