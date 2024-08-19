@@ -18,7 +18,7 @@ module base(w, l, bh, s){
 		cube([w, l, bh], true);
 		translate([-w / 2 + 2, 0, bh / 2 - 1]){
 			linear_extrude(1){
-				text(s, size = 5);
+				text(s, size = 5, font="Prosto One");
 			}
 		}
 	}
@@ -53,17 +53,19 @@ module ecookiedevboard(height, bh){
 // holes: 38.66/32.4 (3.44)
 module mux16(height, bh){
 	r = 3.44 / 2;
-	w = 17.83;
-	l = 40.47;
-	holegapl = 35.53;
+	l = 17.83;
+	w = 40.47;
+	holegapw = 35.53;
 	offsetw = 0.83;
-	translate([-w / 2 + r + offsetw, -holegapl / 2, 0]){
-		stub(r, height);
-		translate([0, holegapl, 0]){
+	translate([0, -l / 2 + r + offsetw, 0]){
+		translate([-holegapw / 2, 0, 0]){
+			stub(r, height);
+		}
+		translate([holegapw / 2, 0, 0]){
 			stub(r, height);
 		}
 	}
-	base(w, l, bh, "mux");
+	base(w, l, bh, "    mux");
 }
 
 // 5V relay: 3x1 + 3x1
@@ -149,19 +151,36 @@ module buck(height, bh){
 	base(w, l, bh, "12V->5V");
 }
 
+// tobsun 12V->5V 15A buck converter
+//  63.64x53
+// holes: 59.9/54.3 (3.32)
+module tobsun5V(height, bh){
+	w = 63.64;
+	l = 53;
+	r = 3.32 / 2;
+	holegapw = 54.3 + r;
+	translate([-holegapw / 2, 0, 0]){
+		stub(r, height);
+	}
+	translate([holegapw / 2, 0, 0]){
+		stub(r, height);
+	}
+	base(w, l, bh, "   12V->5V 15A");
+}
+
 ecookiedevboard(stubh, baseh);
-translate([50, 50, 0]){
+translate([85, -20, 0]){
 	mux16(stubh, baseh);
 }
-translate([60, 0, 0]){
+translate([55, 5, 0]){
 	relay5v(stubh, baseh);
 }
 translate([0, 60, 0]){
 	ceramheat(stubh, baseh);
 }
-translate([60, -40, 0]){
+translate([45, -30, 0]){
 	therm(stubh, baseh);
 }
-translate([90, 50, 0]){
-	buck(stubh, baseh);
+translate([65, 50, 0]){
+	tobsun5V(stubh, baseh);
 }

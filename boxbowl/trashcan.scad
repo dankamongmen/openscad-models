@@ -5,6 +5,8 @@ tcanw = 130;
 tcanh = 216;
 tcand = 128;
 
+// FIXME need eliminate some weight! take in the bottom as a pyramid
+// at the bare minimum. currently 300g+
 
 rotate([90, 0, 0]){ // put the final object in the xy plane
 	translate([0, 0, -tcand]){
