@@ -28,7 +28,7 @@ module base(w, l, bh, s){
 //  88.82 x 52
 // holes: 80.82/76.84 (3.98), 37.63/33.69 (3.94), r = 2
 module ecookiedevboard(height, bh){
-	r = 2;
+	r = 1.14;
 	w = 52;
 	l = 88.82;
 	holegapw = 35.7;
@@ -73,8 +73,8 @@ module relay5v(height, bh){
 	r = 3.15 / 2;
 	w = 50;
 	l = 26;
-	holegapw = 41.56 + r;
-	holegapl = 17.58 + r;
+	holegapw = 41 + r;
+	holegapl = 17 + r;
 	translate([-holegapw / 2, -holegapl / 2, 0]){
 		stub(r, height);
 		translate([holegapw, 0, 0]){
@@ -115,14 +115,38 @@ module therm(height, bh){
 	r = 3.5 / 2;
 	holegapw = 20 + r * 2;
 	p = sqrt(holegapw * holegapw / 4);
-	translate([-p, -p, 0]){
+	translate([-p / 2, -p / 2, 0]){
 		stub(r, height);
 	}
-	translate([p, p, 0]){
+	translate([p / 2, p / 2, 0]){
 		stub(r, height);
 	}
 	// make it square to accomodate rotating hookup
 	base(w, w, bh, "60C");
+}
+
+// hiletgo buck converter with led display
+//  56.42x35.33
+// holes: 53/46.69, 31.6/25.2 (3.3)
+module buck(height, bh){
+	r = 3.3 / 2;
+	w = 56.42;
+	l = 35.33;
+	holegapw = 46.69 + r;
+	holegapl = 25.2 + r;
+	translate([-holegapw / 2, -holegapl / 2, 0]){
+		stub(r, height);
+		translate([holegapw, 0, 0]){
+			stub(r, height);
+			translate([0, holegapl, 0]){
+				stub(r, height);
+			}
+		}
+		translate([0, holegapl, 0]){
+			stub(r, height);
+		}
+	}
+	base(w, l, bh, "12V->5V");
 }
 
 ecookiedevboard(stubh, baseh);
@@ -137,4 +161,7 @@ translate([0, 60, 0]){
 }
 translate([60, -40, 0]){
 	therm(stubh, baseh);
+}
+translate([90, 50, 0]){
+	buck(stubh, baseh);
 }
