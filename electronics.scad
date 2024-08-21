@@ -1,4 +1,4 @@
-stubh = 15;
+stubh = 10;
 baseh = 3;
 
 $fn=20;
@@ -10,7 +10,7 @@ $fn=20;
 
 module stub(r, height){
 	cylinder(height, r, r);
-	cylinder(2 * height / 3, r + 0.5, r + 0.5);
+	cylinder(height / 3, r + 0.5, r + 0.5);
 }
 
 module base(w, l, bh, s){
@@ -28,7 +28,7 @@ module base(w, l, bh, s){
 //  88.82 x 52
 // holes: 80.82/76.84 (3.98), 37.63/33.69 (3.94), r = 2
 module ecookiedevboard(height, bh){
-	r = 1.14;
+	r = 1;
 	w = 52;
 	l = 88.82;
 	holegapw = 35.7;
@@ -75,8 +75,8 @@ module relay5v(height, bh){
 	r = 3.15 / 2;
 	w = 50;
 	l = 26;
-	holegapw = 41 + r;
-	holegapl = 17 + r;
+	holegapw = 40 + r;
+	holegapl = 18 + r;
 	translate([-holegapw / 2, -holegapl / 2, 0]){
 		stub(r, height);
 		translate([holegapw, 0, 0]){
@@ -115,7 +115,7 @@ module therm(height, bh){
 	w = 34;
 	l = 18;
 	r = 3.5 / 2;
-	holegapw = 20 + r * 2;
+	holegapw = 25 + r * 2;
 	p = sqrt(holegapw * holegapw / 4);
 	translate([-p / 2, -p / 2, 0]){
 		stub(r, height);
@@ -154,15 +154,16 @@ module buck(height, bh){
 // tobsun 12V->5V 15A buck converter
 //  63.64x53
 // holes: 59.9/54.3 (3.32)
+// FIXME there are two more holes at the bottom; use them!
 module tobsun5V(height, bh){
 	w = 63.64;
 	l = 53;
 	r = 3.32 / 2;
 	holegapw = 54.3 + r;
-	translate([-holegapw / 2, 0, 0]){
+	translate([-holegapw / 2, 5, 0]){
 		stub(r, height);
 	}
-	translate([holegapw / 2, 0, 0]){
+	translate([holegapw / 2, 5, 0]){
 		stub(r, height);
 	}
 	base(w, l, bh, "   12V->5V 15A");
