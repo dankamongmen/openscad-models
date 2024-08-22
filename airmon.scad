@@ -1,27 +1,20 @@
-include <cyl_head_bolt.scad>
+// distance between sensors is 28.6 on the inside and 30.16
+// on the outside, roughly checking out with their ~1mm width.
+gap = 28.6;
+sensorw = 1.1;
 
-outw = 37.5;
 outl = 88.37;
-thick = 1.5 + .6;
-h = 8;
+thick = sensorw + 0.6;
+h = 4;
 
 difference(){
-	cube([outw + 2, outl + 2, h]);
+	cube([gap + 2 * (1 + sensorw), outl + 2, h]);
 	union(){
 		translate([1, 1, 2]){
 			cube([thick, outl, h]);
 		}
-		translate([outw + 1 - thick, 1, 2]){
+		translate([1 + gap, 1, 2]){
 			cube([thick, outl, h]);
-		}
-		translate([(outw + 2) / 2, 5, h]){
-		  hole_threaded(name="M4", h, "yes", cltd=0.6);
-		}
-		translate([(outw + 2) / 2, outl - 5, h]){
-		  hole_threaded(name="M4", h, "yes", cltd=0.6);
-		}
-		translate([2 + thick, 37, 0]){
-			cube([4, 27, h]);
 		}
 	}
 }

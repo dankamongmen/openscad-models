@@ -3,6 +3,17 @@ baseh = 3;
 
 $fn=20;
 
+current_color = "ALL";
+
+module multicolor(color) {
+	if (current_color != "ALL" && current_color != color) { 
+		// ignore our children.
+	} else {
+		color(color)
+		children();
+	}        
+}
+
 // for each component, measure its total geometry, and the geometry
 // of all standoff holes. by convention, use w/l for width and
 // length of the part, and holegapw/holegapl for spacing of the
@@ -27,12 +38,12 @@ module base(w, l, bh, s){
 // electrocookie dev board: 5x30 + 5x30 + 2x30 + 2x30
 //  88.82 x 52
 // holes: 80.82/76.84 (3.98), 37.63/33.69 (3.94), r = 2
+devboardl = 52;
+devboardw = 88.82;
 module ecookiedevboard(height, bh){
 	r = 1;
-	w = 52;
-	l = 88.82;
-	holegapw = 35.7;
-	holegapl = 78.8;
+	holegapl = 35.7;
+	holegapw = 78.8;
 	translate([-holegapw / 2, -holegapl / 2, 0]){
 		stub(r, height);
 		translate([holegapw, 0, 0]){
@@ -45,19 +56,19 @@ module ecookiedevboard(height, bh){
 			stub(r, height);
 		}
 	}
-	base(w, l, bh, "devboard");
+	base(devboardw, devboardl, bh, "     devboard");
 }
 
 // 16 channel analog multiplexer: 16x1 + 8x1
 //  17.83 x 40.47
 // holes: 38.66/32.4 (3.44)
+muxl = 17.83;
 module mux16(height, bh){
 	r = 3.44 / 2;
-	l = 17.83;
 	w = 40.47;
 	holegapw = 35.53;
 	offsetw = 0.83;
-	translate([0, -l / 2 + r + offsetw, 0]){
+	translate([0, -muxl / 2 + r + offsetw, 0]){
 		translate([-holegapw / 2, 0, 0]){
 			stub(r, height);
 		}
@@ -65,18 +76,19 @@ module mux16(height, bh){
 			stub(r, height);
 		}
 	}
-	base(w, l, bh, "    mux");
+	base(w, muxl, bh, "    mux");
 }
 
 // 5V relay: 3x1 + 3x1
 //  50 x 26
 // holes: 22.89/17.58 (3.15), 46.9/41.56
+relay5vh = 22.5;
 module relay5v(height, bh){
 	r = 3.15 / 2;
 	w = 50;
 	l = 26;
-	holegapw = 40 + r;
-	holegapl = 18 + r;
+	holegapw = 42.8 + r;
+	holegapl = 19.6 + r;
 	translate([-holegapw / 2, -holegapl / 2, 0]){
 		stub(r, height);
 		translate([holegapw, 0, 0]){
@@ -115,7 +127,7 @@ module therm(height, bh){
 	w = 34;
 	l = 18;
 	r = 3.5 / 2;
-	holegapw = 25 + r * 2;
+	holegapw = 29 + r * 2;
 	p = sqrt(holegapw * holegapw / 4);
 	translate([-p / 2, -p / 2, 0]){
 		stub(r, height);
@@ -155,33 +167,59 @@ module buck(height, bh){
 //  63.64x53
 // holes: 59.9/54.3 (3.32)
 // FIXME there are two more holes at the bottom; use them!
+tobsunl = 53;
+tobsunh = 28; // includes spokes+gap, ought parameterize FIXE
 module tobsun5V(height, bh){
 	w = 63.64;
-	l = 53;
 	r = 3.32 / 2;
 	holegapw = 54.3 + r;
-	translate([-holegapw / 2, 5, 0]){
+	translate([-holegapw / 2, 7.5, 0]){
 		stub(r, height);
 	}
-	translate([holegapw / 2, 5, 0]){
+	translate([holegapw / 2, 7.5, 0]){
 		stub(r, height);
 	}
-	base(w, l, bh, "   12V->5V 15A");
+	base(w, tobsunl, bh, "   12V->5V 15A");
 }
 
-ecookiedevboard(stubh, baseh);
-translate([85, -20, 0]){
-	mux16(stubh, baseh);
+translate([0, tobsunl / 2, muxl + tobsunh + devboardw / 2]){
+	rotate([0, 90, 0]){
+		rotate([90, 0, 0]){
+			ecookiedevboard(stubh, baseh);
+		}
+	}
 }
-translate([55, 5, 0]){
-	relay5v(stubh, baseh);
+multicolor("red"){
+	translate([0, tobsunl / 2, muxl / 2 + tobsunh]){
+		rotate([90, 0, 0]){
+			mux16(stubh, baseh);
+		}
+	}
 }
-translate([0, 60, 0]){
-	ceramheat(stubh, baseh);
+multicolor("blue"){
+	translate([-45, 0, 0]){
+		rotate([0, 0, 90]){
+			relay5v(stubh, baseh);
+		}
+	}
 }
-translate([45, -30, 0]){
-	therm(stubh, baseh);
+translate([-50, 0, relay5vh + 10]){
+	multicolor("green"){
+		ceramheat(stubh, baseh);
+	}
 }
-translate([65, 50, 0]){
-	tobsun5V(stubh, baseh);
+
+translate([-75, 0, 15.5]){
+	rotate([0, 0, 90]){
+		rotate([90, 0, 0]){
+			multicolor("pink"){
+				therm(stubh, baseh);
+			}
+		}
+	}
+}
+multicolor("black"){
+	translate([0, 0, 0]){
+		tobsun5V(stubh, baseh);
+	}
 }
