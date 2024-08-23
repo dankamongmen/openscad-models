@@ -4,6 +4,4 @@ current_color="ALL";
 //current_color="black";
 //current_color="white";
 
-rotate([0, 0, 270]){
-	fpanel("pa6");
-}
+fpanel("pa6");
