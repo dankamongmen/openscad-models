@@ -79,6 +79,30 @@ module mux16(height, bh){
 	base(w, muxl, bh, "    mux");
 }
 
+// 3V relay: 3x1 + 3x1
+//  70 x 17
+// holes: 63, 10
+module relay3v(height, bh){
+  r = 1.3;
+	w = 70;
+	l = 17;
+	holegapl = 10 + r;
+	holegapw = 63 + r;
+	translate([-holegapw / 2, -holegapl / 2, 0]){
+		stub(r, height);
+		translate([holegapw, 0, 0]){
+			stub(r, height);
+			translate([0, holegapl, 0]){
+				stub(r, height);
+			}
+		}
+		translate([0, holegapl, 0]){
+			stub(r, height);
+		}
+	}
+	base(w, l, bh, "relay3v");
+}
+
 // 5V relay: 3x1 + 3x1
 //  50 x 26
 // holes: 22.89/17.58 (3.15), 46.9/41.56
@@ -101,7 +125,7 @@ module relay5v(height, bh){
 			stub(r, height);
 		}
 	}
-	base(w, l, bh, "relay");
+	base(w, l, bh, "relay5v");
 }
 
 // ceramic heater
@@ -221,5 +245,11 @@ translate([-75, 0, 15.5]){
 multicolor("black"){
 	translate([0, 0, 0]){
 		tobsun5V(stubh, baseh);
+	}
+}
+
+translate([-70, -50, 0]){
+	multicolor("white"){
+		relay3v(stubh, baseh);
 	}
 }
