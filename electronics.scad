@@ -1,5 +1,5 @@
-stubh = 10;
-baseh = 3;
+include <BOSL2/std.scad>
+include <BOSL2/screws.scad>
 
 $fn=20;
 
@@ -18,10 +18,25 @@ module multicolor(color) {
 // of all standoff holes. by convention, use w/l for width and
 // length of the part, and holegapw/holegapl for spacing of the
 // holes (of radius r). r ought be (outergap - innergap) / 4.
+module stub(stype, height, bh){
+	translate([0, 0, bh / 2])
+		screw(stype, length=height, head="flat", anchor=TOP, orient=DOWN);
+}
 
-module stub(r, height){
-	cylinder(height, r, r);
-	cylinder(height / 3, r + 0.5, r + 0.5);
+// for the common pattern of four stubs forming a quadrilateral
+module fourstubs(holegapw, holegapl, r, height, bh){
+	translate([-holegapw / 2, -holegapl / 2, 0]){
+		stub(r, height, bh);
+		translate([holegapw, 0, 0]){
+			stub(r, height, bh);
+			translate([0, holegapl, 0]){
+				stub(r, height, bh);
+			}
+		}
+		translate([0, holegapl, 0]){
+			stub(r, height, bh);
+		}
+	}
 }
 
 module base(w, l, bh, s){
@@ -44,18 +59,7 @@ module ecookiedevboard(height, bh){
 	r = 1;
 	holegapl = 35.7;
 	holegapw = 78.8;
-	translate([-holegapw / 2, -holegapl / 2, 0]){
-		stub(r, height);
-		translate([holegapw, 0, 0]){
-			stub(r, height);
-			translate([0, holegapl, 0]){
-				stub(r, height);
-			}
-		}
-		translate([0, holegapl, 0]){
-			stub(r, height);
-		}
-	}
+	fourstubs(holegapw, holegapl, "M2", height, bh);
 	base(devboardw, devboardl, bh, "     devboard");
 }
 
@@ -70,10 +74,10 @@ module mux16(height, bh){
 	offsetw = 0.83;
 	translate([0, -muxl / 2 + r + offsetw, 0]){
 		translate([-holegapw / 2, 0, 0]){
-			stub(r, height);
+			stub("M1.6", height, bh);
 		}
 		translate([holegapw / 2, 0, 0]){
-			stub(r, height);
+			stub("M1.6", height, bh);
 		}
 	}
 	base(w, muxl, bh, "    mux");
@@ -88,18 +92,7 @@ module relay3v(height, bh){
 	l = 17;
 	holegapl = 10 + r;
 	holegapw = 63 + r;
-	translate([-holegapw / 2, -holegapl / 2, 0]){
-		stub(r, height);
-		translate([holegapw, 0, 0]){
-			stub(r, height);
-			translate([0, holegapl, 0]){
-				stub(r, height);
-			}
-		}
-		translate([0, holegapl, 0]){
-			stub(r, height);
-		}
-	}
+	fourstubs(holegapw, holegapl, "M2.5", height, bh);
 	base(w, l, bh, "relay3v");
 }
 
@@ -113,54 +106,56 @@ module relay5v(height, bh){
 	l = 26;
 	holegapw = 42.8 + r;
 	holegapl = 19.6 + r;
-	translate([-holegapw / 2, -holegapl / 2, 0]){
-		stub(r, height);
-		translate([holegapw, 0, 0]){
-			stub(r, height);
-			translate([0, holegapl, 0]){
-				stub(r, height);
-			}
-		}
-		translate([0, holegapl, 0]){
-			stub(r, height);
-		}
-	}
+	fourstubs(holegapw, holegapl, "M3", height, bh);
 	base(w, l, bh, "relay5v");
 }
 
-// ceramic heater
+// ceramic heater 100C
 //  28x60
 // holes: 35/28.5 (3.5)
-module ceramheat(height, bh){
+ceramheat100w = 60;
+ceramheat100l = 28;
+ceramheat100h = 7.22;
+module ceramheat100(height, bh){
 	r = 3.5 / 2;
-	w = 60;
-	l = 28;
 	holegapw = 28.5 + r * 2;
 	offsetl = 2.2;
-	translate([-holegapw / 2, -l / 2 + r + offsetl, 0]){
-		stub(r, height);
+	translate([-holegapw / 2, -ceramheat100l / 2 + r + offsetl, 0]){
+		stub("M3", height, bh);
 		translate([holegapw, 0, 0]){
-			stub(r, height);
+			stub("M3", height, bh);
 		}
 	}
-	base(w, l, bh, "heater");
+	base(ceramheat100w, ceramheat100l, bh, "heater100");
+}
+
+// ceramic heater 230C
+//  77x62
+// holes: 28.3/48.6 3.5
+ceramheat230w = 77;
+ceramheat230l = 62;
+module ceramheat230(height, bh){
+	r = 3.5 / 2;
+	holegapw = 28.5 + r * 2;
+	holegapl = 48.6 + r * 2;
+	fourstubs(holegapw, holegapl, "M3", height, bh);
+	base(ceramheat230w, ceramheat230l, bh, "heater230");
 }
 
 // thermostat control. not rectangular, holes are ovals.
+thermw = 34;
 module therm(height, bh){
-	w = 34;
-	l = 18;
 	r = 3.5 / 2;
 	holegapw = 29 + r * 2;
 	p = sqrt(holegapw * holegapw / 4);
 	translate([-p / 2, -p / 2, 0]){
-		stub(r, height);
+		stub("M3", height, bh);
 	}
 	translate([p / 2, p / 2, 0]){
-		stub(r, height);
+		stub("M3", height, bh);
 	}
 	// make it square to accomodate rotating hookup
-	base(w, w, bh, "60C");
+	base(thermw, thermw, bh, "60C");
 }
 
 // hiletgo buck converter with led display
@@ -172,18 +167,7 @@ module buck(height, bh){
 	l = 35.33;
 	holegapw = 46.69 + r;
 	holegapl = 25.2 + r;
-	translate([-holegapw / 2, -holegapl / 2, 0]){
-		stub(r, height);
-		translate([holegapw, 0, 0]){
-			stub(r, height);
-			translate([0, holegapl, 0]){
-				stub(r, height);
-			}
-		}
-		translate([0, holegapl, 0]){
-			stub(r, height);
-		}
-	}
+	fourstubs(holegapw, holegapl, "M3", height, bh);
 	base(w, l, bh, "12V->5V");
 }
 
@@ -193,19 +177,23 @@ module buck(height, bh){
 // FIXME there are two more holes at the bottom; use them!
 tobsunl = 53;
 tobsunh = 28; // includes spokes+gap, ought parameterize FIXE
-module tobsun5V(height, bh){
+module tobsun5v(height, bh){
 	w = 63.64;
 	r = 3.32 / 2;
 	holegapw = 54.3 + r;
 	translate([-holegapw / 2, 7.5, 0]){
-		stub(r, height);
+		stub("M3", height, bh);
 	}
 	translate([holegapw / 2, 7.5, 0]){
-		stub(r, height);
+		stub("M3", height, bh);
 	}
 	base(w, tobsunl, bh, "   12V->5V 15A");
 }
 
+stubh = 8;
+baseh = 3;
+
+/*
 translate([0, tobsunl / 2, muxl + tobsunh + devboardw / 2]){
 	rotate([0, 90, 0]){
 		rotate([90, 0, 0]){
@@ -229,7 +217,7 @@ multicolor("blue"){
 }
 translate([-50, 0, relay5vh + 12]){
 	multicolor("green"){
-		ceramheat(stubh, baseh);
+		ceramheat100(stubh, baseh);
 	}
 }
 
@@ -244,7 +232,7 @@ translate([-75, 0, 15.5]){
 }
 multicolor("black"){
 	translate([0, 0, 0]){
-		tobsun5V(stubh, baseh);
+		tobsun5v(stubh, baseh);
 	}
 }
 
@@ -253,3 +241,10 @@ translate([-70, -50, 0]){
 		relay3v(stubh, baseh);
 	}
 }
+
+translate([10, -60, 0]){
+	multicolor("orange"){
+		ceramheat230(stubh, baseh);
+	}
+}
+*/
