@@ -212,6 +212,14 @@ module tobsun5v(height, bh){
 	base(w, tobsunl, bh, "   12V->5V 15A");
 }
 
+// geartisan 12V motor (cylindrical)
+ga37rgh = 53.3;
+ga37rgr = 37 / 2;
+ga37rgshaftr = 6;
+module ga37rg(height, bh){
+    // FIXME do what here?
+}
+
 /*
 stubh = 8;
 baseh = 3;
