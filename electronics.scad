@@ -110,6 +110,17 @@ module relay5v(height, bh){
 	base(w, l, bh, "relay5v");
 }
 
+rectifier2aw = 45.55;
+rectifier2al = 86.7;
+rectifier2ah = 24.4;
+module rectifier2a(height, bh){
+	r = 3.3 / 2;
+	holegapw = 35;
+	holegapl = 73.3;
+	fourstubs(holegapw, holegapl, "M3.5", height, bh);
+	base(rectifier2aw, rectifier2al, bh, "rectifier2a");
+}
+
 // ceramic heater 100C
 //  28x60
 // holes: 35/28.5 (3.5)
@@ -161,12 +172,23 @@ module therm(height, bh){
 // hiletgo buck converter with led display
 //  56.42x35.33
 // holes: 53/46.69, 31.6/25.2 (3.3)
-module buck(height, bh){
+module bucklm2596(height, bh){
 	r = 3.3 / 2;
 	w = 56.42;
-	l = 35.33;
+	l = 36;
 	holegapw = 46.69 + r;
 	holegapl = 25.2 + r;
+	fourstubs(holegapw, holegapl, "M3", height, bh);
+	base(w, l, bh, "12V->5V");
+}
+
+// xhm401 buck converter with led display
+module buckxhm401(height, bh){
+	r = 3.3 / 2;
+	w = 38.2;
+	l = 66;
+	holegapw = 34 - r;
+	holegapl = 64 - r;
 	fourstubs(holegapw, holegapl, "M3", height, bh);
 	base(w, l, bh, "12V->5V");
 }
@@ -190,10 +212,9 @@ module tobsun5v(height, bh){
 	base(w, tobsunl, bh, "   12V->5V 15A");
 }
 
+/*
 stubh = 8;
 baseh = 3;
-
-/*
 translate([0, tobsunl / 2, muxl + tobsunh + devboardw / 2]){
 	rotate([0, 90, 0]){
 		rotate([90, 0, 0]){
@@ -245,6 +266,12 @@ translate([-70, -50, 0]){
 translate([10, -60, 0]){
 	multicolor("orange"){
 		ceramheat230(stubh, baseh);
+	}
+}
+
+translate([80, -30, 0]){
+	multicolor("orange"){
+		rectifier2a(stubh, baseh);
 	}
 }
 */
