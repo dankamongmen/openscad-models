@@ -84,13 +84,13 @@ module mainunit(){
 							}
 							
 							// put a floor underneath the cutout devboard area, with a hole for wires
-							translate([0, bambuy - devboardside, chamberz - devboardw - 1]){
+							translate([0, bambuy - devboardside - 1, chamberz - devboardw - 1]){
 								linear_extrude(1){
                                     difference(){
 										polygon([
 											[0, 0],
-											[0, devboardside],
-                                            [devboardside, devboardside],
+											[0, devboardside + 1],
+                                            [devboardside + 1, devboardside + 1],
                                             
 										]);
 										translate([devboardside / 2 - 1, devboardside / 2 + 1, 0]){
@@ -118,7 +118,7 @@ module mainunit(){
 						// hole for wires running to heater / perfboard
 						translate([bambux - ceramheat100w - ceramheat100h,
 											 wallt * 2, chamberz - walls]){
-							cylinder(wallt, 6, 6);
+							cylinder(wallt, 6.5, 6.5);
 						}
 					} // close difference
 
@@ -130,7 +130,7 @@ module mainunit(){
 						}
 					}
 
-					translate([bambux - thermw / 2 - 10, bambuy - wallt + bh / 2, chamberz - 60]){
+					/*translate([bambux - thermw / 2 - 10, bambuy - wallt + bh / 2, chamberz - 60]){
 						rotate([90, 90, 0]){
 							relay5v(stub, bh);
 						}
@@ -140,7 +140,7 @@ module mainunit(){
 						rotate([90, 0, 0]){
 							therm(stub, bh);
 						}
-					}
+					}*/
 					
 					// our perfboard is just wide enough not to fit in a typical
 					// orientation. instead, it goes up the external side.
