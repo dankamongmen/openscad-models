@@ -51,14 +51,14 @@ module base(w, l, bh, s){
 }
 
 // electrocookie dev board: 5x30 + 5x30 + 2x30 + 2x30
-//  88.82 x 52
+//  88.9 x 52.1
 // holes: 80.82/76.84 (3.98), 37.63/33.69 (3.94), r = 2
-devboardl = 52;
-devboardw = 88.82;
+devboardl = 52.1;
+devboardw = 88.9;
 module ecookiedevboard(height, bh){
 	r = 1;
-	holegapl = 35.7;
-	holegapw = 78.8;
+	holegapl = 35.6;
+	holegapw = 78.7;
 	fourstubs(holegapw, holegapl, "M2", height, bh);
 	base(devboardw, devboardl, bh, "     devboard");
 }

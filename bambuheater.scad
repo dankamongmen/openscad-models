@@ -84,20 +84,25 @@ module mainunit(){
 							}
 							
 							// put a floor underneath the cutout devboard area, with a hole for wires
-							translate([0, bambuy - devboardside - 3, chamberz - devboardw - 1]){
+							translate([0, bambuy - devboardside, chamberz - devboardw - 1]){
 								linear_extrude(1){
-									difference(){
+                                    difference(){
 										polygon([
 											[0, 0],
-											[0, devboardside - wallt],
-											[devboardside - wallt, devboardside - wallt]
+											[0, devboardside],
+                                            [devboardside, devboardside],
+                                            
 										]);
-										translate([devboardside / 2 - 4, devboardside / 2 + 4, 0]){
+										translate([devboardside / 2 - 1, devboardside / 2 + 1, 0]){
 											circle(2);
 										}
 									}
 								}
 							}
+                            // fill in the space next to the floor, as we'll be blocking the top pane
+                            translate([0, bambuy - 10, chamberz - devboardw - 1]){
+                                cube([bambux, 10, 1]);
+                            }
 						} // close union
 
 						// remove the back, so we can pack stuff into the chamber.
@@ -110,7 +115,7 @@ module mainunit(){
 								]);
 						}
 						
-						// hole for wires running to heater / perfboard (must admit ~10mm USBA plug)
+						// hole for wires running to heater / perfboard
 						translate([bambux - ceramheat100w - ceramheat100h,
 											 wallt * 2, chamberz - walls]){
 							cylinder(wallt, 6, 6);
@@ -194,7 +199,7 @@ module backwall(){
 			smudge = 0.2;
 			translate([bambux + 10, 0, 0]){
 				translate([wallt, wallt, 0]){
-					cube([bambux - wallt * 2, bambuy - wallt * 2, walls]);
+					cube([bambux - wallt * 2, bambuy - wallt * 2 - 2, walls]);
 				}
 				difference(){
 					translate([wallt * 2, 0, 0]){
@@ -285,5 +290,13 @@ multicolor("blue"){
 			frontwall();
 		}
 	}
+}
+
+multicolor("purple"){
+    translate([-bambux - 10, chamberz - walls, bambuy]){
+        rotate([0, 180, 180]){
+            backwall();
+        }
+    }
 }
 */
