@@ -15,11 +15,12 @@ wallz = 2; // bottom thickness; don't want much
 gapxy = 2; // gap between spool and walls; spool might expand with heat!
 wallxy = 2;
 topz = 5; // height of top piece
+gapz = 2; // spool distance from bottom of top
 elevation = 10; // spool distance from bottom
-chordxy = 10;
+chordxy = 33;
 
 totalxy = spoold + wallxy * 2 + gapxy * 2;
-totalz = spoolh + wallz + topz + elevation;
+totalz = spoolh + wallz + topz + gapz + elevation;
 totald = sqrt(totalxy * totalxy + totalxy * totalxy);
 
 // motor is 37x33mm diameter gearbox and 6x14mm shaft
@@ -56,17 +57,12 @@ module topbottom(height){
     }
 }
 
-module interior(height){
-}
-
-echo(ipoints);
-
 module hotbox(){
     difference(){
         union(){
             topbottom(wallz);
             translate([0, 0, wallz]){
-                linear_extrude(totalz - wallz){
+                linear_extrude(totalz - wallz - topz){
                     polygon(
                         iipoints,
                     , paths=[
@@ -88,8 +84,10 @@ module hotbox(){
     }
 }
 
-// pegs for the ceramic heating element
-translate([0, totalxy / 4, wallz / 2]){
+// pegs for the ceramic heating element. we want it entirely
+// underneath the spool, but further towards the perimeter
+// than the center
+translate([0, totalxy / 4 + 10, wallz / 2]){
     ceramheat230(10, wallz);
 }
 
@@ -121,10 +119,6 @@ multicolor("purple"){
     hotbox();
 }
 
-multicolor("green"){
-    spool();
-}
-
 module top(){
     hull(){
         topbottom(1);
@@ -136,14 +130,22 @@ module top(){
     }
 }
 
-/*multicolor("pink"){
-    translate([0, 0, -motorboxh]){
-        motor();
-    }
-}*/
 
 multicolor("white"){
     translate([totalxy + 10, 0, 0]){
         top();
     }
 }
+
+
+/*
+multicolor("green"){
+    spool();
+}
+
+multicolor("pink"){
+    translate([0, 0, -motorboxh]){
+        motor();
+    }
+}
+*/

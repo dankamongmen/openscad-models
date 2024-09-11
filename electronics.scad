@@ -147,8 +147,8 @@ ceramheat230w = 77;
 ceramheat230l = 62;
 module ceramheat230(height, bh){
 	r = 3.5 / 2;
-	holegapw = 28.5 + r * 2;
-	holegapl = 48.6 + r * 2;
+	holegapw = 32;
+	holegapl = 44;
 	fourstubs(holegapw, holegapl, "M3", height, bh);
 	base(ceramheat230w, ceramheat230l, bh, "heater230");
 }
