@@ -4,13 +4,10 @@
 include <electronics.scad>
 
 
-
+// area available at the left bottom of the X1C
 bambux = 80.8;
 bambuy = 52.8;
 
-// we need enough room to hold our ac adapter, which will
-// be standing up at an angle (125x54x33). we need lots of
-// spare room for the inflexible elements of cabling.
 chamberz = 200;
 
 // we want an enclosed region for our AC electronics
@@ -23,6 +20,7 @@ bh = 2;
 
 // we need a little excess room on each side for the actual board
 devboardside = devboardl / sqrt(2) + 2;
+chamberh = chamberz - devboardw - 2; // give it some skoosh
 
 module mainunit(){
 	translate([0, 0, bambuy]){
@@ -33,9 +31,9 @@ module mainunit(){
 					difference(){
 						union(){
 							// top is a trapezoidal solid.
-							translate([0, 0, chamberz - devboardw]){
+							translate([0, 0, chamberh]){
 								difference(){
-									linear_extrude(devboardw){
+									linear_extrude(chamberz - chamberh){
 										polygon([
 											[0, 0],
 											[bambux, 0],
@@ -57,7 +55,7 @@ module mainunit(){
 							}
 							
 							// bottom is a rectangular prism with two cutouts.
-							linear_extrude(chamberz - devboardw){
+							linear_extrude(chamberh){
 								difference(){
 									polygon([
 										[0, 0],
@@ -84,7 +82,7 @@ module mainunit(){
 							}
 							
 							// put a floor underneath the cutout devboard area, with a hole for wires
-							translate([0, bambuy - devboardside - 1, chamberz - devboardw - 1]){
+							translate([0, bambuy - devboardside - 1, chamberh - 1]){
 								linear_extrude(1){
                                     difference(){
 										polygon([
@@ -100,7 +98,7 @@ module mainunit(){
 								}
 							}
                             // fill in the space next to the floor, as we'll be blocking the top pane
-                            translate([0, bambuy - 10, chamberz - devboardw - 1]){
+                            translate([0, bambuy - 10, chamberh - 1]){
                                 cube([bambux, 10, 1]);
                             }
 						} // close union
@@ -118,30 +116,18 @@ module mainunit(){
 						// hole for wires running to heater / perfboard
 						translate([bambux - ceramheat100w - ceramheat100h,
 											 wallt * 2, chamberz - walls]){
-							cylinder(wallt, 6.5, 6.5);
+							cylinder(wallt, 7, 7);
 						}
 					} // close difference
 
 
 					// we'll mount the ceramic heating element on top
-					translate([bambux - ceramheat100w / 2, ceramheat100l / 2 + wallt, chamberz - bh / 2]){
-						rotate([0, 0, 180]){
-							ceramheat100(stub, bh);
+					translate([1, ceramheat100l, ceramheat100w / 2 + (chamberh - ceramheat100w) / 2]){
+						rotate([0, 270, 0]){
+							ceramheat100(7, 1);
 						}
 					}
 
-					/*translate([bambux - thermw / 2 - 10, bambuy - wallt + bh / 2, chamberz - 60]){
-						rotate([90, 90, 0]){
-							relay5v(stub, bh);
-						}
-					}
-
-					translate([bambux - thermw / 2 - 7, bambuy - wallt + bh / 2, chamberz - thermw / 2]){
-						rotate([90, 0, 0]){
-							therm(stub, bh);
-						}
-					}*/
-					
 					// our perfboard is just wide enough not to fit in a typical
 					// orientation. instead, it goes up the external side.
 					translate([devboardside / 2 + bh / 2, bambuy - devboardside / 2 - bh / 2, chamberz - devboardw / 2]){
@@ -251,7 +237,7 @@ module frontwall(justtext){
 	translate([bambux * 2 + 20, 0, 0]){
 		if(!justtext){
 			difference(){
-				linear_extrude(chamberz - devboardw){
+				linear_extrude(chamberh){
 					polygon([
 						[wallt * 2, 0],
 						[bambux - wallt * 2, 0],
@@ -269,14 +255,14 @@ module frontwall(justtext){
 
 mainunit();
 backwall();	
-translate([0, chamberz - devboardw, 0]){
+translate([0, chamberh, 0]){
 	rotate([90, 0, 0]){
 		frontwall(false);
 	}
 }
 
 multicolor("blue"){
-	translate([0, chamberz - devboardw, 0]){
+	translate([0, chamberh, 0]){
 		rotate([90, 0, 0]){
 			frontwall(true);
 		}
