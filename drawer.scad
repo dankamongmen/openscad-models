@@ -29,25 +29,25 @@ unitw = 238; // leaves 228 for unitinnerw
 unitinnerw = unitw - wallt * 2;
 unitinnerd = unitd - backd;
 
-module hole(t){
-	cylinder(t, plugr, plugr, true);
+module hole(t, sc){
+	cylinder(t, sc * plugr, sc * plugr, true);
 }
 
-module sidehole(){
+module sidehole(sc = 1){
 	rotate([0, 90, 0]){
-		hole(plugt);
+		hole(plugt, sc);
 	}
 }
 
 module tophole(h){
 	translate([0, 0, (h - topplugt) / 2]){
-		hole(topplugt);
+		hole(topplugt, 1);
 	}
 }
 
 module bothole(h){
 	translate([0, 0, -(h - topplugt) / 2]){
-		hole(topplugt);
+		hole(topplugt, 1);
 	}
 }
 
@@ -99,7 +99,7 @@ function dividerwidth(subs) =
 	(subs == 4) ? 4 : 2;
 
 drawerwallt = 3;
-module drawer(h, d, w){
+module drawer(h, d, w, divs){
 	drawerinnerw = w - drawerwallt * 2;
 	drawerinnerd = d - drawerwallt * 2;
 	drawerinnerh = h - drawerwallt;
@@ -107,6 +107,14 @@ module drawer(h, d, w){
 		cube([w, d, h], true);
 		translate([0, 0, drawerwallt]){
 			cube([drawerinnerw, drawerinnerd, drawerinnerh], true);
+		}
+	}
+	for(j = [1 : 1 : divs - 1]){
+		divt = 4;
+		echo(drawerinnerd / divs * j, " j: ", j);
+		echo((drawerinnerd - divt * (divs - 1)) / divs * j);
+		translate([0, drawerinnerd / 2 - (drawerinnerd - divt * (divs - 1)) / divs * j, drawerwallt]){
+			cube([drawerinnerw, divt, drawerinnerh], true);
 		}
 	}
 }
@@ -145,7 +153,7 @@ module drawerhandle(h, d, w){
 // drawer (used to shape the containing unit).
 // otherwise, draw the drawer itself, scaling it
 // down slightly so it fits into the unit.
-module drawers(h, subs, blockp){
+module drawers(h, subs, divs, blockp){
 	divt = dividerwidth(subs);
 	subw = (unitinnerw - divt * (subs - 1)) / subs;
 	for(i = [1 : 1 : subs]){
@@ -153,13 +161,17 @@ module drawers(h, subs, blockp){
 		translate([(subw -unitinnerw) / 2 + xconsumed, -backd / 2, 2]){
 			if(blockp){
 				hull(){
-					drawer(h, unitinnerd, subw);
+					drawer(h, unitinnerd, subw, divs);
+				}
+				// remove the bottom center
+				translate([0, 0, 0]){
+					cube([subw - 40, unitinnerd, h * 2], true);
 				}
 			}else{
 				scale(0.99){
-					drawer(h, unitinnerd, subw);
+					drawer(h, unitinnerd, subw, divs);
+					drawerhandle(h, unitinnerd, subw);
 				}
-				drawerhandle(h, unitinnerd, subw);
 			}
 		}
 	}
@@ -170,7 +182,7 @@ module drawers(h, subs, blockp){
 module unit(h, subs){
 	difference(){
 		cube([unitw, unitd, h], true);
-		drawers(h - bottomt, subs, true);
+		drawers(h - bottomt, subs, 1, true);
 		allquads(){
 			sideholeQ1();
 		}
@@ -180,31 +192,62 @@ module unit(h, subs){
 	}
 }
 
+module leftwall(h){
+	cube([plugt, unitd, h * 3], true);
+	tx = -plugt;
+	translate([tx, -unitinnerd / 3, 0]){
+		sidehole(0.98);
+	}
+	translate([tx, unitinnerd / 3, 0]){
+		sidehole(0.98);
+	}
+	translate([tx, -unitinnerd / 3, h]){
+		sidehole(0.98);
+	}
+	translate([tx, unitinnerd / 3, h]){
+		sidehole(0.98);
+	}
+	translate([tx, -unitinnerd / 3, -h]){
+		sidehole(0.98);
+	}
+	translate([tx, unitinnerd / 3, -h]){
+		sidehole(0.98);
+	}
+}
+
 module unitanddrawers(h, subs){
 	unit(h, subs);
 	translate([0, -(unitd + unitinnerd) / 2, -wallt]){
-		drawers(h - wallt, subs, false);
+		drawers(h - wallt, subs, 1, false);
 	}
 }
 
 // a set of frictional plugs
 module connectors(h){
 	xskip = plugr * 2 + 1;
-	translate([0, 100, -h / 2 + topplugt]){
-		hole(topplugt * 2);
+	translate([0, 100, topplugt]){
+		hole(topplugt * 2, 0.98);
 		translate([xskip, 0, 0]){
-			hole(topplugt * 2);
-			translate([xskip, 0, -(topplugt - plugt)]){
-				hole(plugt * 2);
-				translate([xskip, 0, 0]){
-					hole(plugt * 2);
-				}
-			}
+			hole(topplugt * 2, 0.98);
 		}
 	}
 }
 
 translate([0, 0, unithquantum / 2]){
 	unitanddrawers(unithquantum, 2);
-	connectors(unithquantum);
+}
+
+translate([250, 0, unithquantum / 2]){
+	unitanddrawers(unithquantum, 3);
+	translate([0, -300, 0]){
+		drawers(unithquantum - wallt, 3, 2, false);
+	}
+}
+
+connectors(unithquantum);
+
+translate([-unitw, 0, 0]){
+	rotate([0, 90, 0]){
+		leftwall(unithquantum);
+	}
 }
